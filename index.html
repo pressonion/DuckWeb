@@ -304,6 +304,7 @@
     </div>
 
     <script>
+        (function() {
         let loadTimer; 
         let isSpinning = false;
         //security
@@ -612,6 +613,11 @@ let activeTheme = save.activeTheme || 'default';
 
         function hideInfo() {
             document.getElementById('info-panel').style.left = '-400px'; 
+        }
+        window.spinSlots = spinSlots;
+        window.openMenu = openMenu;
+        window.playGame = playGame;
+        window.goHome = goHome;
         }
     </script>
 </body>
