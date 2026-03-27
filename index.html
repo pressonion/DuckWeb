@@ -321,58 +321,88 @@
         event.preventDefault();
     }
 });
-        // --- GAME ECONOMY AND SAVES ---
-        let quackCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
-        let unlockedThemes = JSON.parse(localStorage.getItem('unlockedThemes')) || ['default'];
-        let activeTheme = localStorage.getItem('activeTheme') || 'default';
+        // --- GAME ECONOMY AND SAVES (ENCRYPTED + MIGRATION) ---
 
-        const themeData = {
-            'default': { name: 'Daylight (Default)', class: '' },
-            'theme-dark': { name: 'Dark Mode', class: 'theme-dark' },
-            'theme-ocean': { name: 'Ocean Blue', class: 'theme-ocean' },
-            'theme-neon': { name: 'Neon Pink', class: 'theme-neon' }
+const SAVE_KEY = "duckSecureV2";
+const SECRET = "duck_key_v2_secure";
+
+// ===== ENCRYPT / DECRYPT =====
+function encode(data) {
+    return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
+}
+
+function decode(str) {
+    try {
+        let decoded = decodeURIComponent(escape(atob(str)));
+        if (!decoded.endsWith(SECRET)) return null;
+        decoded = decoded.slice(0, -SECRET.length);
+        return JSON.parse(decoded);
+    } catch {
+        return null;
+    }
+}
+
+// ===== LOAD WITH MIGRATION =====
+function loadGame() {
+    const encrypted = localStorage.getItem(SAVE_KEY);
+
+    // ✅ If new encrypted save exists
+    if (encrypted) {
+        const data = decode(encrypted);
+        if (data) return data;
+    }
+
+    // ⚠️ OLD SAVE DETECTED → MIGRATE
+    const oldCoins = localStorage.getItem('quackCoins');
+    const oldThemes = localStorage.getItem('unlockedThemes');
+    const oldActive = localStorage.getItem('activeTheme');
+
+    if (oldCoins !== null || oldThemes !== null || oldActive !== null) {
+        console.log("Old save detected → migrating");
+
+        const newSave = {
+            quackCoins: 50, // 👈 FORCE RESET
+            unlockedThemes: oldThemes ? JSON.parse(oldThemes) : ['default'],
+            activeTheme: oldActive || 'default'
         };
 
-        function saveGame() {
-            localStorage.setItem('quackCoins', quackCoins);
-            localStorage.setItem('unlockedThemes', JSON.stringify(unlockedThemes));
-            localStorage.setItem('activeTheme', activeTheme);
-            updateUI();
-        }
+        saveGame(newSave);
 
-        function updateUI() {
-            document.getElementById('coin-display-home').innerText = quackCoins;
-            document.getElementById('coin-display-slots').innerText = quackCoins;
-            
-            // Apply current theme
-            document.body.className = themeData[activeTheme].class;
+        // delete old data
+        localStorage.removeItem('quackCoins');
+        localStorage.removeItem('unlockedThemes');
+        localStorage.removeItem('activeTheme');
 
-            // Render Theme Buttons
-            const grid = document.getElementById('theme-grid-container');
-            grid.innerHTML = '';
-            
-            for (const [themeId, data] of Object.entries(themeData)) {
-                const btn = document.createElement('button');
-                btn.className = 'theme-item-btn';
-                
-                if (unlockedThemes.includes(themeId)) {
-                    btn.innerHTML = data.name;
-                    if (activeTheme === themeId) {
-                        btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
-                        btn.style.borderColor = 'green';
-                    } else {
-                        btn.onclick = () => { activeTheme = themeId; saveGame(); };
-                    }
-                } else {
-                    btn.innerText = '🔒 Locked (' + data.name + ')';
-                    btn.disabled = true;
-                }
-                grid.appendChild(btn);
-            }
-        }
+        return newSave;
+    }
 
+    // default fresh save
+    return {
+        quackCoins: 0,
+        unlockedThemes: ['default'],
+        activeTheme: 'default'
+    };
+}
+
+// ===== SAVE =====
+function saveGame(dataOverride = null) {
+    const data = dataOverride || {
+        quackCoins,
+        unlockedThemes,
+        activeTheme
+    };
+
+    localStorage.setItem(SAVE_KEY, encode(data));
+    updateUI();
+}
+
+// ===== INIT =====
+let save = loadGame();
+let quackCoins = save.quackCoins;
+let unlockedThemes = save.unlockedThemes;
+let activeTheme = save.activeTheme;
         // Initialize UI on load
-        updateUI();
+        setTimeout(updateUI, 0);
 
         // --- ANTI-AFK COIN MINER ---
         let activeSeconds = 0;
