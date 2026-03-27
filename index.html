@@ -323,6 +323,50 @@
         event.preventDefault();
     }
 });
+        //UPDATE UI
+        function updateUI() {
+    // coins
+    document.getElementById('coin-display-home').innerText = quackCoins;
+    document.getElementById('coin-display-slots').innerText = quackCoins;
+
+    // apply theme
+    document.body.className = activeTheme || '';
+
+    // render theme buttons
+    const themeData = {
+        'default': { name: 'Daylight (Default)', class: '' },
+        'theme-dark': { name: 'Dark Mode', class: 'theme-dark' },
+        'theme-ocean': { name: 'Ocean Blue', class: 'theme-ocean' },
+        'theme-neon': { name: 'Neon Pink', class: 'theme-neon' }
+    };
+
+    const grid = document.getElementById('theme-grid-container');
+    grid.innerHTML = '';
+
+    for (const [themeId, data] of Object.entries(themeData)) {
+        const btn = document.createElement('button');
+        btn.className = 'theme-item-btn';
+
+        if (unlockedThemes.includes(themeId)) {
+            btn.innerHTML = data.name;
+
+            if (activeTheme === themeId) {
+                btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
+                btn.style.borderColor = 'green';
+            } else {
+                btn.onclick = () => {
+                    activeTheme = themeId;
+                    saveGame();
+                };
+            }
+        } else {
+            btn.innerText = '🔒 Locked (' + data.name + ')';
+            btn.disabled = true;
+        }
+
+        grid.appendChild(btn);
+    }
+}
         // --- GAME ECONOMY AND SAVES (ENCRYPTED + MIGRATION) ---
 
 const SAVE_KEY = "duckSecureV2";
