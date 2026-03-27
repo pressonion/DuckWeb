@@ -304,6 +304,16 @@
     </div>
 
     <script>
+        // SECURITY
+        document.onkeydown = function(e) {
+        const forbidden = [123, 73, 74, 67, 85]; // F12, I, J, C, U
+        if (forbidden.includes(e.keyCode) && (e.ctrlKey || e.shiftKey || e.keyCode == 123)) {
+            return false;
+        }
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        reportSecurity("attempted to right click");
+    });
         // --- GAME ECONOMY AND SAVES ---
         let quackCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
         let unlockedThemes = JSON.parse(localStorage.getItem('unlockedThemes')) || ['default'];
