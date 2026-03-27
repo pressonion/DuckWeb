@@ -304,6 +304,7 @@
     </div>
 
     <script>
+        let loadTimer; 
         //security
         document.addEventListener('keydown', function(event) {
     // Disable F12
@@ -366,7 +367,7 @@ function loadGame() {
             activeTheme: oldActive || 'default'
         };
 
-        saveGame(newSave);
+        localStorage.setItem(SAVE_KEY, encode(newSave));
 
         // delete old data
         localStorage.removeItem('quackCoins');
@@ -386,10 +387,10 @@ function loadGame() {
 
 // ===== SAVE =====
 function saveGame(dataOverride = null) {
-    const data = dataOverride || {
-        quackCoins,
-        unlockedThemes,
-        activeTheme
+    const data = dataOverride ? dataOverride : {
+        quackCoins: quackCoins || 0,
+        unlockedThemes: unlockedThemes || ['default'],
+        activeTheme: activeTheme || 'default'
     };
 
     localStorage.setItem(SAVE_KEY, encode(data));
@@ -398,9 +399,19 @@ function saveGame(dataOverride = null) {
 
 // ===== INIT =====
 let save = loadGame();
-let quackCoins = save.quackCoins;
-let unlockedThemes = save.unlockedThemes;
-let activeTheme = save.activeTheme;
+
+// 🛡️ HARD SAFETY CHECK
+if (!save || typeof save !== "object") {
+    save = {
+        quackCoins: 0,
+        unlockedThemes: ['default'],
+        activeTheme: 'default'
+    };
+}
+
+let quackCoins = save.quackCoins || 0;
+let unlockedThemes = save.unlockedThemes || ['default'];
+let activeTheme = save.activeTheme || 'default';
         // Initialize UI on load
         setTimeout(updateUI, 0);
 
@@ -508,8 +519,6 @@ let activeTheme = save.activeTheme;
             document.getElementById('game-frame').style.display = 'none';
             document.getElementById(menuId).style.display = 'block';
         }
-
-        let loadTimer; 
         function playGame(gameUrl) {
             clearTimeout(loadTimer); 
             openMenu('welcome-screen'); // Hide other menus
