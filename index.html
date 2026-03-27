@@ -305,6 +305,7 @@
 
     <script>
         let loadTimer; 
+        let isSpinning = false;
         //security
         document.addEventListener('keydown', function(event) {
     // Disable F12
@@ -442,7 +443,6 @@ let activeTheme = save.activeTheme || 'default';
 
         // --- SLOT MACHINE LOGIC ---
         const symbols = ['🍒', '🦆', '💎', '🎰'];
-        let isSpinning = false;
 
         function spinSlots() {
             if (isSpinning) return;
