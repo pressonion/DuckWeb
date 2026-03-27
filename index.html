@@ -161,7 +161,7 @@
             font-size: 28px; font-weight: bold; display: flex; align-items: center; gap: 8px;
             background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 20px;
         }
-        
+
         .action-btn {
             background: var(--menu-bg); color: white; border: none; padding: 12px 20px;
             font-size: 18px; border-radius: 10px; cursor: pointer; margin: 10px;
@@ -189,7 +189,7 @@
         .duck-decoration { width: 50px; height: 50px; display: inline-block; margin: 0 10px; animation: bob 2s infinite ease-in-out; }
         .duck-decoration:nth-child(2) { animation-delay: 0.3s; }
         .duck-decoration:nth-child(3) { animation-delay: 0.6s; }
-        
+
         #loader { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-gradient); z-index: 50; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
@@ -234,14 +234,14 @@
     </div>
 
     <div id="main-content">
-        
+
         <div id="welcome-screen" class="menu-screen">
             <div id="main-menu-coins">
                 <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span>
             </div>
             <h1>Welcome to Ducky's website</h1>
             <p>Hover your mouse over the <b>☰ menu</b> on the left to browse and play my games</p>
-            
+
             <p style="font-weight: bold; color: var(--btn-hover); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px;">
                 Make sure FN is on and click Ctrl + F5 to update!<br>Play for a minute and get a Quack Coin!
             </p>
@@ -267,10 +267,10 @@
                 🎰🎰🎰 = Neon Pink Theme<br>
                 <i>(Any 2 matching = 1 Coin back)</i>
             </div>
-            
+
             <h2>🎰 Ducky Slots 🎰</h2>
             <p>Coins: <strong id="coin-display-slots">0</strong></p>
-            
+
             <div class="reels">
                 <div class="reel" id="reel1">❓</div>
                 <div class="reel" id="reel2">❓</div>
@@ -278,7 +278,7 @@
             </div>
 
             <div id="slot-message">Match 3 to win!</div>
-            
+
             <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction()">Spin (Cost: 3 Coins)</button>
             <br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
@@ -287,10 +287,10 @@
         <div id="themes-screen" class="menu-screen" style="display: none;">
             <h2>🎨 Theme Locker 🎨</h2>
             <p>Win new themes in the Slot Machine!</p>
-            
+
             <div class="theme-grid" id="theme-grid-container">
                 </div>
-            
+
             <br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
         </div>
@@ -299,7 +299,7 @@
             <div id="loader-duck"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div>
             <div id="loader-text">Loading Game...</div>
         </div>
-        
+
         <iframe id="game-frame" src=""></iframe>
     </div>
 
@@ -307,33 +307,31 @@
         (function() {
         let loadTimer; 
         let isSpinning = false;
-        //security
+
         document.addEventListener('keydown', function(event) {
-    // Disable F12
+
     if (event.keyCode === 123) {
         event.preventDefault();
     }
-    // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (Windows/Linux)
+
     if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
         (event.ctrlKey && event.shiftKey && event.keyCode === 74) ||
         (event.ctrlKey && event.shiftKey && event.keyCode === 67)) {
         event.preventDefault();
     }
-    // Disable Ctrl+U (View Source)
+
     if (event.ctrlKey && event.keyCode === 85) {
         event.preventDefault();
     }
 });
-        //UPDATE UI
+
         function updateUI() {
-    // coins
+
     document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
     document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
 
-    // apply theme
     document.body.className = activeTheme || '';
 
-    // render theme buttons
     const themeData = {
         'default': { name: 'Daylight (Default)', class: '' },
         'theme-dark': { name: 'Dark Mode', class: 'theme-dark' },
@@ -368,12 +366,10 @@
         grid.appendChild(btn);
     }
 }
-        // --- GAME ECONOMY AND SAVES (ENCRYPTED + MIGRATION) ---
 
 const SAVE_KEY = "duckSecureV2";
 const SECRET = "duck_key_v2_secure";
 
-// ===== ENCRYPT / DECRYPT =====
 function encode(data) {
     return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
 }
@@ -389,17 +385,14 @@ function decode(str) {
     }
 }
 
-// ===== LOAD WITH MIGRATION =====
 function hugh43go278872() {
     const encrypted = localStorage.getItem(SAVE_KEY);
 
-    // ✅ If new encrypted save exists
     if (encrypted) {
         const data = decode(encrypted);
         if (data) return data;
     }
 
-    // ⚠️ OLD SAVE DETECTED → MIGRATE
     const oldCoins = localStorage.getItem('absolutelyNothingThatisImportantlol');
     const oldThemes = localStorage.getItem('unlockedThemes');
     const oldActive = localStorage.getItem('activeTheme');
@@ -408,14 +401,14 @@ function hugh43go278872() {
         console.log("Old save detected → migrating");
 
         const newSave = {
-            absolutelyNothingThatisImportantlol: 50, // 👈 FORCE RESET
+            absolutelyNothingThatisImportantlol: 50, 
+
             unlockedThemes: oldThemes ? JSON.parse(oldThemes) : ['default'],
             activeTheme: oldActive || 'default'
         };
 
         localStorage.setItem(SAVE_KEY, encode(newSave));
 
-        // delete old data
         localStorage.removeItem('absolutelyNothingThatisImportantlol');
         localStorage.removeItem('unlockedThemes');
         localStorage.removeItem('activeTheme');
@@ -423,7 +416,6 @@ function hugh43go278872() {
         return newSave;
     }
 
-    // default fresh save
     return {
         absolutelyNothingThatisImportantlol: 0,
         unlockedThemes: ['default'],
@@ -431,7 +423,6 @@ function hugh43go278872() {
     };
 }
 
-// ===== SAVE =====
 function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
     const data = dataOverride ? dataOverride : {
         absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
@@ -443,10 +434,8 @@ function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
     updateUI();
 }
 
-// ===== INIT =====
 let save = hugh43go278872();
 
-// 🛡️ HARD SAFETY CHECK
 if (!save || typeof save !== "object") {
     save = {
         absolutelyNothingThatisImportantlol: 0,
@@ -458,14 +447,12 @@ if (!save || typeof save !== "object") {
 let absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
 let unlockedThemes = save.unlockedThemes || ['default'];
 let activeTheme = save.activeTheme || 'default';
-        // Initialize UI on load
+
         setTimeout(updateUI, 0);
 
-        // --- ANTI-AFK COIN MINER ---
         let activeSeconds = 0;
         let lastInteraction = Date.now();
 
-        // Detect activity in the main window
         window.addEventListener('mousemove', () => lastInteraction = Date.now());
         window.addEventListener('keydown', () => lastInteraction = Date.now());
         window.addEventListener('click', () => lastInteraction = Date.now());
@@ -473,13 +460,14 @@ let activeTheme = save.activeTheme || 'default';
         setInterval(() => {
             let _45230X4xc = absolutelyNothingThatisImportantlol;
             let isIframeActive = document.activeElement === document.getElementById('game-frame');
-            let isWindowActive = (Date.now() - lastInteraction) < 10000; // active in last 10 seconds
+            let isWindowActive = (Date.now() - lastInteraction) < 10000; 
+
             if(_45230X4xc != absolutelyNothingThatisImportantlol) {
                 absolutelyNothingThatisImportantlol = 0;
                 _45230X4xc = 0;
                 alert("CHEATER");
             }
-            // If playing the game OR moving mouse on the menu
+
             if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !== 'none')) {
                 activeSeconds++;
                 if (activeSeconds >= 60) {
@@ -491,8 +479,6 @@ let activeTheme = save.activeTheme || 'default';
             }
         }, 1000);
 
-
-        // --- SLOT MACHINE LOGIC ---
         const symbols = ['🍒', '🦆', '💎', '🎰'];
 
         function randomGoofyAssFunction() {
@@ -529,13 +515,13 @@ let activeTheme = save.activeTheme || 'default';
             const msg = document.getElementById('slot-message');
 
             if (r1 === r2 && r2 === r3) {
-                // JACKPOTS
+
                 if (r1 === '🍒') grantReward('coins', 5, "Jackpot! 5 Coins!");
                 else if (r1 === '🦆') grantReward('theme-dark', 10, "You unlocked DARK MODE!");
                 else if (r1 === '💎') grantReward('theme-ocean', 15, "You unlocked OCEAN BLUE Theme!");
                 else if (r1 === '🎰') grantReward('theme-neon', 25, "You unlocked NEON PINK Theme!");
             } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                // Small Win
+
                 grantReward('coins', 1, "Two matched! You get 1 Coin back.");
             } else {
                 msg.innerText = "No luck this time. Try again!";
@@ -549,9 +535,10 @@ let activeTheme = save.activeTheme || 'default';
             if (type === 'coins') {
                 absolutelyNothingThatisImportantlol += coinFallback;
             } else {
-                // If it's a theme, check if they already have it
+
                 if (unlockedThemes.includes(type)) {
-                    absolutelyNothingThatisImportantlol += coinFallback; // Give coins instead of a duplicate theme
+                    absolutelyNothingThatisImportantlol += coinFallback; 
+
                     successMsg = `You already own that theme! Here are ${coinFallback} Coins instead.`;
                 } else {
                     unlockedThemes.push(type);
@@ -561,8 +548,6 @@ let activeTheme = save.activeTheme || 'default';
             hoihpohivpoweahovropagh4p9h8g4();
         }
 
-
-        // --- MENU NAVIGATION ---
         function openMenu(menuId) {
             document.getElementById('welcome-screen').style.display = 'none';
             document.getElementById('slot-screen').style.display = 'none';
@@ -572,9 +557,10 @@ let activeTheme = save.activeTheme || 'default';
         }
         function playGame(gameUrl) {
             clearTimeout(loadTimer); 
-            openMenu('welcome-screen'); // Hide other menus
+            openMenu('welcome-screen'); 
+
             document.getElementById('welcome-screen').style.display = 'none';
-            
+
             const sidebar = document.getElementById('sidebar');
             sidebar.style.display = 'none';
             setTimeout(() => { sidebar.style.display = ''; }, 100);
@@ -586,12 +572,12 @@ let activeTheme = save.activeTheme || 'default';
                 loader.style.display = 'none';
                 const frame = document.getElementById('game-frame');
                 frame.style.display = 'block';
-                
-                // Cache buster to ensure the newest version always loads!
+
                 const cacheBuster = "?v=" + new Date().getTime();
                 frame.src = gameUrl + cacheBuster; 
-                
-                frame.focus(); // Give iframe focus for the AFK tracker
+
+                frame.focus(); 
+
             }, 2000); 
         }
 
