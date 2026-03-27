@@ -279,7 +279,7 @@
 
             <div id="slot-message">Match 3 to win!</div>
             
-            <button class="action-btn" id="spin-btn" onclick="spinSlots()">Spin (Cost: 3 Coins)</button>
+            <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction()">Spin (Cost: 3 Coins)</button>
             <br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
         </div>
@@ -327,8 +327,8 @@
         //UPDATE UI
         function updateUI() {
     // coins
-    document.getElementById('coin-display-home').innerText = quackCoins;
-    document.getElementById('coin-display-slots').innerText = quackCoins;
+    document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
+    document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
 
     // apply theme
     document.body.className = activeTheme || '';
@@ -357,7 +357,7 @@
             } else {
                 btn.onclick = () => {
                     activeTheme = themeId;
-                    saveGame();
+                    hoihpohivpoweahovropagh4p9h8g4();
                 };
             }
         } else {
@@ -390,7 +390,7 @@ function decode(str) {
 }
 
 // ===== LOAD WITH MIGRATION =====
-function loadGame() {
+function hugh43go278872() {
     const encrypted = localStorage.getItem(SAVE_KEY);
 
     // ✅ If new encrypted save exists
@@ -400,7 +400,7 @@ function loadGame() {
     }
 
     // ⚠️ OLD SAVE DETECTED → MIGRATE
-    const oldCoins = localStorage.getItem('quackCoins');
+    const oldCoins = localStorage.getItem('absolutelyNothingThatisImportantlol');
     const oldThemes = localStorage.getItem('unlockedThemes');
     const oldActive = localStorage.getItem('activeTheme');
 
@@ -408,7 +408,7 @@ function loadGame() {
         console.log("Old save detected → migrating");
 
         const newSave = {
-            quackCoins: 50, // 👈 FORCE RESET
+            absolutelyNothingThatisImportantlol: 50, // 👈 FORCE RESET
             unlockedThemes: oldThemes ? JSON.parse(oldThemes) : ['default'],
             activeTheme: oldActive || 'default'
         };
@@ -416,7 +416,7 @@ function loadGame() {
         localStorage.setItem(SAVE_KEY, encode(newSave));
 
         // delete old data
-        localStorage.removeItem('quackCoins');
+        localStorage.removeItem('absolutelyNothingThatisImportantlol');
         localStorage.removeItem('unlockedThemes');
         localStorage.removeItem('activeTheme');
 
@@ -425,16 +425,16 @@ function loadGame() {
 
     // default fresh save
     return {
-        quackCoins: 0,
+        absolutelyNothingThatisImportantlol: 0,
         unlockedThemes: ['default'],
         activeTheme: 'default'
     };
 }
 
 // ===== SAVE =====
-function saveGame(dataOverride = null) {
+function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
     const data = dataOverride ? dataOverride : {
-        quackCoins: quackCoins || 0,
+        absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
         unlockedThemes: unlockedThemes || ['default'],
         activeTheme: activeTheme || 'default'
     };
@@ -444,18 +444,18 @@ function saveGame(dataOverride = null) {
 }
 
 // ===== INIT =====
-let save = loadGame();
+let save = hugh43go278872();
 
 // 🛡️ HARD SAFETY CHECK
 if (!save || typeof save !== "object") {
     save = {
-        quackCoins: 0,
+        absolutelyNothingThatisImportantlol: 0,
         unlockedThemes: ['default'],
         activeTheme: 'default'
     };
 }
 
-let quackCoins = save.quackCoins || 0;
+let absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
 let unlockedThemes = save.unlockedThemes || ['default'];
 let activeTheme = save.activeTheme || 'default';
         // Initialize UI on load
@@ -471,15 +471,21 @@ let activeTheme = save.activeTheme || 'default';
         window.addEventListener('click', () => lastInteraction = Date.now());
 
         setInterval(() => {
+            let _45230X4xc = absolutelyNothingThatisImportantlol;
             let isIframeActive = document.activeElement === document.getElementById('game-frame');
             let isWindowActive = (Date.now() - lastInteraction) < 10000; // active in last 10 seconds
-
+            if(_45230X4xc != absolutelyNothingThatisImportantlol) {
+                absolutelyNothingThatisImportantlol = 0;
+                _45230X4xc = 0;
+                alert("CHEATER");
+            }
             // If playing the game OR moving mouse on the menu
             if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !== 'none')) {
                 activeSeconds++;
                 if (activeSeconds >= 60) {
-                    quackCoins++;
-                    saveGame();
+                    absolutelyNothingThatisImportantlol++;
+                    _45230X4xc = absolutelyNothingThatisImportantlol;
+                    hoihpohivpoweahovropagh4p9h8g4();
                     activeSeconds = 0;
                 }
             }
@@ -489,15 +495,15 @@ let activeTheme = save.activeTheme || 'default';
         // --- SLOT MACHINE LOGIC ---
         const symbols = ['🍒', '🦆', '💎', '🎰'];
 
-        function spinSlots() {
+        function randomGoofyAssFunction() {
             if (isSpinning) return;
-            if (quackCoins < 3) {
+            if (absolutelyNothingThatisImportantlol < 3) {
                 alert("You need 3 Quack Coins to spin!");
                 return;
             }
 
-            quackCoins -= 3;
-            saveGame();
+            absolutelyNothingThatisImportantlol -= 3;
+            hoihpohivpoweahovropagh4p9h8g4();
             isSpinning = true;
             document.getElementById('spin-btn').disabled = true;
             document.getElementById('slot-message').innerText = "Spinning...";
@@ -541,18 +547,18 @@ let activeTheme = save.activeTheme || 'default';
 
         function grantReward(type, coinFallback, successMsg) {
             if (type === 'coins') {
-                quackCoins += coinFallback;
+                absolutelyNothingThatisImportantlol += coinFallback;
             } else {
                 // If it's a theme, check if they already have it
                 if (unlockedThemes.includes(type)) {
-                    quackCoins += coinFallback; // Give coins instead of a duplicate theme
+                    absolutelyNothingThatisImportantlol += coinFallback; // Give coins instead of a duplicate theme
                     successMsg = `You already own that theme! Here are ${coinFallback} Coins instead.`;
                 } else {
                     unlockedThemes.push(type);
                 }
             }
             document.getElementById('slot-message').innerText = successMsg;
-            saveGame();
+            hoihpohivpoweahovropagh4p9h8g4();
         }
 
 
@@ -614,7 +620,7 @@ let activeTheme = save.activeTheme || 'default';
         function hideInfo() {
             document.getElementById('info-panel').style.left = '-400px'; 
         }
-        window.spinSlots = spinSlots;
+        window.randomGoofyAssFunction = randomGoofyAssFunction;
 window.openMenu = openMenu;
 window.playGame = playGame;
 window.goHome = goHome;
