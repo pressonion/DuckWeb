@@ -304,6 +304,23 @@
     </div>
 
     <script>
+        //security
+        document.addEventListener('keydown', function(event) {
+    // Disable F12
+    if (event.keyCode === 123) {
+        event.preventDefault();
+    }
+    // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (Windows/Linux)
+    if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
+        (event.ctrlKey && event.shiftKey && event.keyCode === 74) ||
+        (event.ctrlKey && event.shiftKey && event.keyCode === 67)) {
+        event.preventDefault();
+    }
+    // Disable Ctrl+U (View Source)
+    if (event.ctrlKey && event.keyCode === 85) {
+        event.preventDefault();
+    }
+});
         // --- GAME ECONOMY AND SAVES ---
         let quackCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
         let unlockedThemes = JSON.parse(localStorage.getItem('unlockedThemes')) || ['default'];
