@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ducky's website</title>
@@ -195,13 +193,13 @@
         #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
         #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10;}
     </style>
-</head>
-<body oncontextmenu="return false;">
+<style type="text/css" id="operaUserStyle"></style><style type="text/css"></style></head>
+<body oncontextmenu="return false;" class="">
 
     <svg style="display: none;">
-        <symbol id="custom-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#fff"/> <rect x="5" y="2" width="6" height="2" fill="#c0392b"/> <rect x="8" y="4" width="1" height="1" fill="#000"/> <rect x="11" y="4" width="4" height="2" fill="#f1c40f"/> <rect x="4" y="7" width="7" height="6" fill="#fff"/> <rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/> <rect x="5" y="13" width="1" height="2" fill="#f1c40f"/> <rect x="8" y="13" width="1" height="2" fill="#f1c40f"/> </symbol>
-        <symbol id="main-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#f1c40f"/> <rect x="8" y="4" width="1" height="1" fill="#000"/> <rect x="11" y="4" width="4" height="2" fill="#e67e22"/> <rect x="4" y="7" width="7" height="6" fill="#f1c40f"/> <rect x="5" y="9" width="4" height="2" fill="#f39c12"/> <rect x="5" y="13" width="1" height="2" fill="#e67e22"/> <rect x="8" y="13" width="1" height="2" fill="#e67e22"/> </symbol>
-        <symbol id="quack-coin" viewBox="0 0 24 24"> <circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/> <text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text> </symbol>
+        <symbol id="custom-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#fff"></rect> <rect x="5" y="2" width="6" height="2" fill="#c0392b"></rect> <rect x="8" y="4" width="1" height="1" fill="#000"></rect> <rect x="11" y="4" width="4" height="2" fill="#f1c40f"></rect> <rect x="4" y="7" width="7" height="6" fill="#fff"></rect> <rect x="5" y="9" width="4" height="2" fill="#e0e0e0"></rect> <rect x="5" y="13" width="1" height="2" fill="#f1c40f"></rect> <rect x="8" y="13" width="1" height="2" fill="#f1c40f"></rect> </symbol>
+        <symbol id="main-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#f1c40f"></rect> <rect x="8" y="4" width="1" height="1" fill="#000"></rect> <rect x="11" y="4" width="4" height="2" fill="#e67e22"></rect> <rect x="4" y="7" width="7" height="6" fill="#f1c40f"></rect> <rect x="5" y="9" width="4" height="2" fill="#f39c12"></rect> <rect x="5" y="13" width="1" height="2" fill="#e67e22"></rect> <rect x="8" y="13" width="1" height="2" fill="#e67e22"></rect> </symbol>
+        <symbol id="quack-coin" viewBox="0 0 24 24"> <circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"></circle> <text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text> </symbol>
     </svg>
 
     <div id="icon-container">
@@ -223,21 +221,21 @@
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over', 'A frustratingly fun physics game.', 'Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="#9b59b6"><path d="M20.46 3.54l-3.54-3.54-4.24 4.24 3.54 3.54zM11.97 9.2L3.48 17.68l2.83 2.83 8.49-8.49z"></path></svg></div> Getting Over</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG', 'Test your luck! Roll for the rarest ducks.', 'Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8" cy="8" r="1.5" fill="#2ecc71"></circle><circle cx="16" cy="16" r="1.5" fill="#2ecc71"></circle><circle cx="12" cy="12" r="1.5" fill="#2ecc71"></circle></svg></div> Duck RNG</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker', 'Test your card skills.', 'Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M12 7c-2 0-3 2-3 4s3 5 3 5 3-3 3-5-1-4-3-4z" fill="#f1c40f"></path></svg></div> Poker</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game', 'Drive fast and drift around corners.', 'Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00ced1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5h11L19 11M3 11h18v6h-2v2h-2v-2H7v2H5v-2H3v-6z"/><circle cx="7.5" cy="15.5" r="1.5" fill="#00ced1"/><circle cx="16.5" cy="15.5" r="1.5" fill="#00ced1"/></svg></div> Car Game</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game', 'Drive fast and drift around corners.', 'Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00ced1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5h11L19 11M3 11h18v6h-2v2h-2v-2H7v2H5v-2H3v-6z"></path><circle cx="7.5" cy="15.5" r="1.5" fill="#00ced1"></circle><circle cx="16.5" cy="15.5" r="1.5" fill="#00ced1"></circle></svg></div> Car Game</button>
     </div>
 
-    <div id="info-panel">
-        <h3 id="info-title">Game Title</h3>
-        <p id="info-desc">Description goes here.</p>
+    <div id="info-panel" style="left: -400px;">
+        <h3 id="info-title">Duck Rogue</h3>
+        <p id="info-desc">Battle endless rooms as a brave duck!</p>
         <strong>Controls:</strong>
-        <p class="controls-text" id="info-controls">Controls go here.</p>
+        <p class="controls-text" id="info-controls">Arrow Keys to move, Space to attack</p>
     </div>
 
     <div id="main-content">
         
         <div id="welcome-screen" class="menu-screen">
             <div id="main-menu-coins">
-                <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span>
+                <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">1</span>
             </div>
             <h1>Welcome to Ducky's website</h1>
             <p>Hover your mouse over the <b>☰ menu</b> on the left to browse and play my games</p>
@@ -269,7 +267,7 @@
             </div>
             
             <h2>🎰 Ducky Slots 🎰</h2>
-            <p>Coins: <strong id="coin-display-slots">0</strong></p>
+            <p>Coins: <strong id="coin-display-slots">1</strong></p>
             
             <div class="reels">
                 <div class="reel" id="reel1">❓</div>
@@ -288,8 +286,7 @@
             <h2>🎨 Theme Locker 🎨</h2>
             <p>Win new themes in the Slot Machine!</p>
             
-            <div class="theme-grid" id="theme-grid-container">
-                </div>
+            <div class="theme-grid" id="theme-grid-container"><button class="theme-item-btn" style="border-color: green;">Daylight (Default)<span class="equipped-stamp">✔ Equipped</span></button><button class="theme-item-btn" disabled="">🔒 Locked (Dark Mode)</button><button class="theme-item-btn" disabled="">🔒 Locked (Ocean Blue)</button><button class="theme-item-btn" disabled="">🔒 Locked (Neon Pink)</button></div>
             
             <br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
@@ -321,10 +318,146 @@
         event.preventDefault();
     }
 });
+const SECRET_KEY = "qhwemctiuo43ytoci34mogt87t3848tgn84wgnct3g4hm3w48g3cgh4c4w3yg3yuigwuof4yiovfio4hgiv34hiofh34
+    uiohofgq3io4ghio34gio43qiog34yioqgio34qgiuo43uio3iou4qguio34quioghq34uiohfuklerhklhfklhgfigviozyr8vog8o4vg368
+    ogv67gq8vogv8orh78oceh8o48ogc80qh8oi23g2qfg8qgf42yfg4893g8f9g437fgh34yuoghfyughefgioferguohgues4eLpU1P#kS^d8R5
+        z9bN7mV@xJ6c#W2tC5qO9zA9z4Y1sX0dF4hG8jL0kQ3wE7rY9iU2oP6mN0vB2vC9xD4sF6gH1jK3lL8zQ0wX2cE5rR9tT6yY1uU7iI0oO3
+            pP5aS9dD4fF8gG6hH9jJ4kK2lL7zZ0xX5cC9vV1bB8nN3mM0qQ6wW2eE9rR4tT7yY3uU1iI0oO8pP6aS5dD2fF9gG3hH0jJ7kK1lL6zZ4xX8c
+            C2vV0bB9nN6mM5qQ2wW9eE7rR3tT0yY8uU5iI1oO4pP2aS6dD9fF3gG0hH8jJ5kK1lL7zZ4xX9cC0vV6bB3nN8mM1qQ5wW0eE7rR2tT4yY9uU6
+                iI2oO1pP8aS5dD0fF7gG2hH9jJ6kK1lL8zZ4xX0cC5vV9bB1nN8mM2qQ7wW4eE6rR9tT5yY2uU7iI0oO3pP9aS1dD5fF8gG6hH2jJ0kK9l
+                    L7zZ4xX1cC5vV0bB9nN6mM4qQ3wW8eE7rR4tT0yY5uU1iI9oO2pP8aS6dD1fF9gG3hH0jJ7kK1lL6zZ4xX8cC2vV0bB9nN6mM5qQ2w
+                        W9eE7rR3tT0yY8uU5iI1oO4pP2aS6dD9fF
+                            3gG0hH8jJ5kK1lL7zZ4xX9cC0vV6bB3
+                                nN8mM1qQ5wW0eE7rR2tT4yY9uU6iI2
+                                    oO1pP8aS5dD0fF7gG2hH9jJ6kK1l
+                                        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";
+async function getKey() {
+    const enc = new TextEncoder();
+    return crypto.subtle.importKey(
+        "raw",
+        enc.encode(SECRET_KEY),
+        { name: "AES-GCM" },
+        false,
+        ["encrypt", "decrypt"]
+    );
+}
+
+async function encryptData(data) {
+    const key = await getKey();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const enc = new TextEncoder();
+
+    const encrypted = await crypto.subtle.encrypt(
+        { name: "AES-GCM", iv },
+        key,
+        enc.encode(JSON.stringify(data))
+    );
+
+    return btoa(JSON.stringify({
+        iv: Array.from(iv),
+        data: Array.from(new Uint8Array(encrypted))
+    }));
+}
+
+async function decryptData(str) {
+    try {
+        const key = await getKey();
+        const decoded = JSON.parse(atob(str));
+
+        const iv = new Uint8Array(decoded.iv);
+        const data = new Uint8Array(decoded.data);
+
+        const decrypted = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv },
+            key,
+            data
+        );
+
+        return JSON.parse(new TextDecoder().decode(decrypted));
+    } catch {
+        return null;
+    }
+}
         // --- GAME ECONOMY AND SAVES ---
-        let quackCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
-        let unlockedThemes = JSON.parse(localStorage.getItem('unlockedThemes')) || ['default'];
-        let activeTheme = localStorage.getItem('activeTheme') || 'default';
+        const SAVE_KEY = 'duckySecureSaveV1';
+        const SAVE_SALT = 'duck_quack_9f3a7b21_lock';
+        const DEFAULT_SAVE = {
+            quackCoins: 0,
+            unlockedThemes: ['default'],
+            activeTheme: 'default'
+        };
+
+        function makeSaveHash(data) {
+            const payload = JSON.stringify({
+                quackCoins: data.quackCoins,
+                unlockedThemes: [...new Set(data.unlockedThemes)].sort(),
+                activeTheme: data.activeTheme
+            }) + '|' + SAVE_SALT;
+
+            let hash = 2166136261;
+            for (let i = 0; i < payload.length; i++) {
+                hash ^= payload.charCodeAt(i);
+                hash = Math.imul(hash, 16777619);
+            }
+            return (hash >>> 0).toString(16);
+        }
+
+        function normalizeSave(raw) {
+            const safeThemes = ['default', 'theme-dark', 'theme-ocean', 'theme-neon'];
+            let coins = Number.isFinite(raw?.quackCoins) ? Math.floor(raw.quackCoins) : 0;
+            if (coins < 0) coins = 0;
+            if (coins > 999999) coins = 999999;
+
+            let themes = Array.isArray(raw?.unlockedThemes) ? raw.unlockedThemes.filter(t => safeThemes.includes(t)) : ['default'];
+            if (!themes.includes('default')) themes.unshift('default');
+            themes = [...new Set(themes)];
+
+            let theme = safeThemes.includes(raw?.activeTheme) ? raw.activeTheme : 'default';
+            if (!themes.includes(theme)) theme = 'default';
+
+            return {
+                quackCoins: coins,
+                unlockedThemes: themes,
+                activeTheme: theme
+            };
+        }
+
+        async function loadGame() {
+    const fallback = { ...DEFAULT_SAVE };
+
+    try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) return fallback;
+
+        const parsed = await decryptData(raw);
+        if (!parsed) return fallback;
+
+        const cleanData = normalizeSave(parsed.data || {});
+        const expectedHash = makeSaveHash(cleanData);
+
+        if (parsed.hash !== expectedHash) {
+            alert('Save tampering detected. Coins were reset.');
+            localStorage.removeItem(SAVE_KEY);
+            return fallback;
+        }
+
+        return cleanData;
+    } catch {
+        localStorage.removeItem(SAVE_KEY);
+        return fallback;
+    }
+}
+
+        let quackCoins = 0;
+let unlockedThemes = ['default'];
+let activeTheme = 'default';
+
+loadGame().then(save => {
+    quackCoins = save.quackCoins;
+    unlockedThemes = save.unlockedThemes;
+    activeTheme = save.activeTheme;
+    updateUI();
+});
 
         const themeData = {
             'default': { name: 'Daylight (Default)', class: '' },
@@ -333,12 +466,23 @@
             'theme-neon': { name: 'Neon Pink', class: 'theme-neon' }
         };
 
-        function saveGame() {
-            localStorage.setItem('quackCoins', quackCoins);
-            localStorage.setItem('unlockedThemes', JSON.stringify(unlockedThemes));
-            localStorage.setItem('activeTheme', activeTheme);
-            updateUI();
-        }
+        async function saveGame() {
+    const cleanData = normalizeSave({ quackCoins, unlockedThemes, activeTheme });
+
+    quackCoins = cleanData.quackCoins;
+    unlockedThemes = cleanData.unlockedThemes;
+    activeTheme = cleanData.activeTheme;
+
+    const payload = {
+        data: cleanData,
+        hash: makeSaveHash(cleanData)
+    };
+
+    const encrypted = await encryptData(payload);
+    localStorage.setItem(SAVE_KEY, encrypted);
+
+    updateUI();
+}
 
         function updateUI() {
             document.getElementById('coin-display-home').innerText = quackCoins;
@@ -482,54 +626,7 @@
         let loadTimer; 
         function playGame(gameUrl) {
             clearTimeout(loadTimer); 
-            openMenu('welcome-screen'); // Hide other menus
-            document.getElementById('welcome-screen').style.display = 'none';
-            
-            const sidebar = document.getElementById('sidebar');
-            sidebar.style.display = 'none';
-            setTimeout(() => { sidebar.style.display = ''; }, 100);
+    …</script>
 
-            const loader = document.getElementById('loader');
-            loader.style.display = 'flex';
 
-            loadTimer = setTimeout(() => {
-                loader.style.display = 'none';
-                const frame = document.getElementById('game-frame');
-                frame.style.display = 'block';
-                
-                // Cache buster to ensure the newest version always loads!
-                const cacheBuster = "?v=" + new Date().getTime();
-                frame.src = gameUrl + cacheBuster; 
-                
-                frame.focus(); // Give iframe focus for the AFK tracker
-            }, 2000); 
-        }
-
-        function goHome() {
-            clearTimeout(loadTimer);
-            document.getElementById('game-frame').src = ''; 
-            document.getElementById('loader').style.display = 'none';
-            openMenu('welcome-screen');
-        }
-
-        function toggleFullScreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
-        function showInfo(title, desc, controls) {
-            document.getElementById('info-title').innerText = title;
-            document.getElementById('info-desc').innerText = desc;
-            document.getElementById('info-controls').innerText = controls;
-            document.getElementById('info-panel').style.left = '320px'; 
-        }
-
-        function hideInfo() {
-            document.getElementById('info-panel').style.left = '-400px'; 
-        }
-    </script>
-</body>
-</html>
+</body></html>
