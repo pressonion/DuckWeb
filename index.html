@@ -925,7 +925,7 @@
 
         function randomGoofyAssFunction() {
             if (isSpinning) return;
-            if (absolutelyNothingThatisImportantlol < 3) { showAlert("You need 3 Quack Coins to spin!", "🎰"); return; }
+            if (absolutelyNothingThatisImportantlol < 3) { showAlert("You need 3 Quack Coins to spin!", "🎰", 2); return; }
             absolutelyNothingThatisImportantlol -= 3;
             hoihpohivpoweahovropagh4p9h8g4();
             isSpinning = true;
@@ -994,7 +994,7 @@
 
         // ===== CUSTOM ALERT =====
         let alertTimeout = null;
-        function showAlert(msg, title = '', autoDismiss = 0) {
+        function showAlert(msg, title = '', autoDismiss) {
             document.getElementById('custom-alert-title').innerText = title;
             document.getElementById('custom-alert-msg').innerText = msg;
             document.getElementById('custom-alert-overlay').classList.add('show');
@@ -1051,7 +1051,7 @@
         function casinoBet(id) {
             const bet = Math.max(1, parseInt(document.getElementById(id).value) || 1);
             if (bet > absolutelyNothingThatisImportantlol) {
-                showAlert(`Not enough coins! You have ${absolutelyNothingThatisImportantlol}.`, '❌ Broke');
+                showAlert(`Not enough coins! You have ${absolutelyNothingThatisImportantlol}.`, '❌ Broke', 2);
                 return null;
             }
             return bet;
@@ -1401,9 +1401,9 @@
 
         // ===== EXCHANGE =====
         function exchangeToDuck() {
-            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
+            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌", 2); return; }
             const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆", 3); return; }
             absolutelyNothingThatisImportantlol--;
             setDuckCoins(dc + 100);
             hoihpohivpoweahovropagh4p9h8g4();
@@ -1412,8 +1412,8 @@
         }
         function exchangeToQuack() {
             const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 100) { showAlert(`Need 100 Duck Coins! You have ${dc}.`, "🔃"); return; }
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆", 3); return; }
+            if (dc < 100) { showAlert(`Need 100 Duck Coins! You have ${dc}.`, "🔃", 3); return; }
             setDuckCoins(dc - 100);
             absolutelyNothingThatisImportantlol++;
             hoihpohivpoweahovropagh4p9h8g4();
@@ -1426,7 +1426,7 @@
         function doFlip(choice) {
             if (flipInProgress) return;
             const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
-            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌"); return; }
+            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌", 2); return; }
             flipInProgress = true;
             document.getElementById('flip-heads').disabled = true;
             document.getElementById('flip-tails').disabled = true;
@@ -1460,7 +1460,7 @@
         let scratchActive = false;
         let scratchPrize = null;
         function openScratch() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫", 2); return; }
             absolutelyNothingThatisImportantlol -= 2;
             hoihpohivpoweahovropagh4p9h8g4();
 
@@ -1533,7 +1533,7 @@
 
         // ===== THEME PEEK =====
         function peekTheme() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️", 2); return; }
             const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
             if (locked.length === 0) { alert("You've unlocked everything already! 👑"); return; }
             absolutelyNothingThatisImportantlol -= 2;
@@ -1544,16 +1544,16 @@
 
         // ===== NAME TAG =====
         function setNametag() {
-            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
+            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️", 2); return; }
             const name = document.getElementById('nametag-input').value.trim();
-            if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
-            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
+            if (!name) { showAlert("Enter a name first!", "🏷️", 2); return; }
+            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️", 2); return; }
             absolutelyNothingThatisImportantlol -= 5;
             localStorage.setItem('qw_nametag', btoa(name));
             document.getElementById('nametag-display').innerText = name;
             hoihpohivpoweahovropagh4p9h8g4();
             refreshHomeNametag();
-            showAlert(`✅ Name set to "${name}"!`, "🏷️");
+            showAlert(`✅ Name set to "${name}"!`, "🏷️", 2);
         }
         function loadNametag() {
             const stored = localStorage.getItem('qw_nametag');
@@ -1565,7 +1565,7 @@
         // ===== MEGA SPIN =====
         function megaSpin() {
             if (isSpinning) return;
-            if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡"); return; }
+            if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡", 3); return; }
             absolutelyNothingThatisImportantlol -= 9;
             hoihpohivpoweahovropagh4p9h8g4();
             let spinsLeft = 3;
@@ -1637,7 +1637,7 @@
             openMenu('welcome-screen');
         }
         function toggleFullScreen() {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(`Error: ${err.message}`, "❌"));
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(`Error: ${err.message}`, "❌", 5));
             else document.exitFullscreen();
         }
         function showInfo(title, desc, controls) {
