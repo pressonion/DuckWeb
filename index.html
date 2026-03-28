@@ -1011,6 +1011,15 @@
             } else {
                 prog.style.width = '0%';
             }
+            setTimeout(() => {
+    const box = document.getElementById('custom-alert-overlay');
+    box.style.opacity = '0';
+
+    setTimeout(() => {
+        closeCustomAlert();
+        box.style.opacity = '1';
+    }, 300);
+}, 3000);
         }
         function closeCustomAlert() {
             document.getElementById('custom-alert-overlay').classList.remove('show');
