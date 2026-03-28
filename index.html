@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ducky's website</title>
     <style>
-        /* Base Variables - Default Theme */
         :root {
             --bg-gradient: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
             --menu-bg: #2c3e50;
@@ -17,7 +16,6 @@
             --icon-color: #ffffff;
         }
 
-        /* Unlockable Themes */
         body.theme-dark {
             --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             --menu-bg: #111;
@@ -27,7 +25,6 @@
             --btn-hover: #e67e22;
             --btn-text: #fff;
         }
-
         body.theme-ocean {
             --bg-gradient: linear-gradient(135deg, #020024 0%, #090979 35%, #00d4ff 100%);
             --menu-bg: #010a26;
@@ -37,7 +34,6 @@
             --btn-hover: #00d4ff;
             --btn-text: #010a26;
         }
-
         body.theme-neon {
             --bg-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --menu-bg: #2a0845;
@@ -47,50 +43,119 @@
             --btn-hover: #f093fb;
             --btn-text: #111;
         }
+        body.theme-retro {
+            --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            --menu-bg: #001100;
+            --text-main: #00ff41;
+            --text-light: #00cc33;
+            --box-bg: rgba(0, 20, 0, 0.9);
+            --btn-hover: #00ff41;
+            --btn-text: #000;
+            --icon-color: #00ff41;
+        }
+        body.theme-sunset {
+            --bg-gradient: linear-gradient(135deg, #ff6b35 0%, #f7c59f 40%, #e84393 100%);
+            --menu-bg: #7b1e4b;
+            --text-main: #2d0020;
+            --text-light: #5a0035;
+            --box-bg: rgba(255, 220, 200, 0.88);
+            --btn-hover: #e84393;
+            --btn-text: #fff;
+        }
+        body.theme-forest {
+            --bg-gradient: linear-gradient(135deg, #1a2f1a 0%, #2d5a27 50%, #4a7c59 100%);
+            --menu-bg: #0f1f0f;
+            --text-main: #d4edda;
+            --text-light: #a8d5b5;
+            --box-bg: rgba(10, 30, 10, 0.82);
+            --btn-hover: #4a7c59;
+            --btn-text: #d4edda;
+        }
+        body.theme-galaxy {
+            --bg-gradient: linear-gradient(135deg, #0d0015 0%, #1a0030 40%, #2d0060 70%, #0d0015 100%);
+            --menu-bg: #0a0010;
+            --text-main: #e0c3fc;
+            --text-light: #b39ddb;
+            --box-bg: rgba(20, 0, 40, 0.85);
+            --btn-hover: #7c4dff;
+            --btn-text: #fff;
+        }
+        body.theme-bloodmoon {
+            --bg-gradient: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #2d0000 100%);
+            --menu-bg: #0f0000;
+            --text-main: #ff3333;
+            --text-light: #cc0000;
+            --box-bg: rgba(30, 0, 0, 0.88);
+            --btn-hover: #cc0000;
+            --btn-text: #fff;
+            --icon-color: #ff3333;
+        }
+        body.theme-rubberduck {
+            --bg-gradient: linear-gradient(135deg, #ffe600 0%, #ffd000 50%, #ffb700 100%);
+            --menu-bg: #cc9900;
+            --text-main: #3d2c00;
+            --text-light: #5a4000;
+            --box-bg: rgba(255, 230, 0, 0.75);
+            --btn-hover: #ff9900;
+            --btn-text: #fff;
+        }
+        body.theme-winter {
+            --bg-gradient: linear-gradient(135deg, #e8f4f8 0%, #b3d9ea 50%, #7ec8e3 100%);
+            --menu-bg: #1a3a4a;
+            --text-main: #0d2535;
+            --text-light: #2a5f7a;
+            --box-bg: rgba(255, 255, 255, 0.82);
+            --btn-hover: #7ec8e3;
+            --btn-text: #0d2535;
+        }
+        body.theme-vaporwave {
+            --bg-gradient: linear-gradient(135deg, #ff71ce 0%, #b967ff 50%, #05ffa1 100%);
+            --menu-bg: #1a0033;
+            --text-main: #fff;
+            --text-light: #ff71ce;
+            --box-bg: rgba(26, 0, 51, 0.82);
+            --btn-hover: #05ffa1;
+            --btn-text: #1a0033;
+        }
 
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-gradient);
             color: var(--text-main);
-            overflow: hidden; 
+            overflow: hidden;
             transition: background 0.5s ease;
         }
 
-        /* Icon Container */
         #icon-container {
-            position: fixed; top: 0; left: 0; width: 70px; z-index: 101; 
+            position: fixed; top: 0; left: 0; width: 70px; z-index: 101;
             background: var(--menu-bg); border-bottom-right-radius: 15px;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.5); transition: background 0.3s;
             display: flex; flex-direction: column; align-items: center;
         }
-
         .side-icon {
             width: 100%; padding: 15px 0; cursor: pointer; color: var(--icon-color);
             text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.2s; display: flex; justify-content: center;
         }
-
         .side-icon svg { width: 28px; height: 28px; }
         .side-icon:hover { transform: scale(1.2); }
         #menu-icon { border-top: none; }
 
-        /* Sidebar */
         #sidebar {
             position: absolute; top: 0; left: -320px; width: 320px; height: 100vh;
-            background-color: var(--menu-bg); color: white; transition: left 0.3s ease, background 0.3s;
-            padding-top: 180px; box-sizing: border-box; z-index: 100;
+            background-color: var(--menu-bg); color: white;
+            transition: left 0.3s ease, background 0.3s; padding-top: 180px;
+            box-sizing: border-box; z-index: 100;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5); overflow-y: auto;
         }
-
         #icon-container:hover ~ #sidebar, #sidebar:hover, #info-panel:hover { left: 0; }
 
         .game-btn {
             display: flex; align-items: center; width: 100%; background: none; color: white;
-            border: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 20px;
-            font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s;
+            border: none; border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 20px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s;
         }
-
         .btn-icon { width: 28px; height: 28px; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
         .game-btn:hover { background-color: var(--btn-hover); color: var(--btn-text); padding-left: 30px; }
 
@@ -98,51 +163,52 @@
             position: fixed; top: 50%; left: -400px; transform: translateY(-50%); width: 300px;
             background: var(--box-bg); color: var(--text-main); padding: 20px;
             border-radius: 0 15px 15px 0; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
-            transition: left 0.3s ease; z-index: 99; pointer-events: none; 
+            transition: left 0.3s ease; z-index: 99; pointer-events: none;
         }
-
         #info-panel h3 { margin-top: 0; color: var(--btn-hover); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
         .controls-text { font-family: monospace; background: rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; }
 
-        /* Main Content */
         #main-content {
             margin-left: 70px; height: 100vh; display: flex; flex-direction: column;
             align-items: center; justify-content: center; position: relative;
         }
-
         .menu-screen {
             text-align: center; background: var(--box-bg); padding: 50px;
             border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: background 0.5s; position: relative; width: 600px; max-width: 90%;
         }
-
         .menu-screen h1 { font-size: 40px; margin: 0 0 10px 0; }
         .menu-screen p { font-size: 18px; color: var(--text-light); margin-bottom: 20px; }
 
-        /* Quack Coin System */
         #main-menu-coins {
-            position: absolute; top: 20px; right: 20px; font-size: 28px; font-weight: bold; 
-            display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.1); 
-            padding: 5px 15px; border-radius: 20px;
+            position: absolute; top: 20px; right: 20px;
+            font-size: 28px; font-weight: bold; display: flex; align-items: center; gap: 8px;
+            background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 20px;
         }
-        
         .action-btn {
             background: var(--menu-bg); color: white; border: none; padding: 12px 20px;
             font-size: 18px; border-radius: 10px; cursor: pointer; margin: 10px;
             font-weight: bold; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .action-btn:hover:not(:disabled) { transform: scale(1.05); background: var(--btn-hover); color: var(--btn-text); }
-        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .action-btn:hover { transform: scale(1.05); background: var(--btn-hover); color: var(--btn-text); }
 
-        /* Slot Machine Area */
-        #slot-paytable { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; text-align: left; font-size: 14px; }
+        #slot-paytable {
+            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.1);
+            padding: 10px; border-radius: 10px; text-align: left; font-size: 13px;
+        }
         .reels { display: flex; justify-content: center; gap: 15px; margin: 30px 0; font-size: 50px; }
-        .reel { background: white; border: 4px solid var(--menu-bg); border-radius: 10px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
-        #slot-message { font-size: 20px; font-weight: bold; min-height: 30px; margin-bottom: 15px; color: #e74c3c;}
+        .reel {
+            background: white; border: 4px solid var(--menu-bg); border-radius: 10px;
+            width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+        #slot-message { font-size: 20px; font-weight: bold; min-height: 30px; margin-bottom: 15px; color: #e74c3c; }
 
-        /* Theme Menu */
-        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .theme-item-btn { padding: 15px; font-size: 16px; font-weight: bold; border: 2px solid var(--menu-bg); border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.5); transition: 0.2s; }
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-height: 340px; overflow-y: auto; padding-right: 4px; }
+        .theme-item-btn {
+            padding: 12px; font-size: 15px; font-weight: bold; border: 2px solid var(--menu-bg);
+            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.5); transition: 0.2s;
+        }
         .theme-item-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); }
         .theme-item-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #999; }
         .equipped-stamp { color: green; font-weight: bold; display: block; font-size: 12px; margin-top: 5px; }
@@ -151,45 +217,142 @@
         .duck-decoration { width: 50px; height: 50px; display: inline-block; margin: 0 10px; animation: bob 2s infinite ease-in-out; }
         .duck-decoration:nth-child(2) { animation-delay: 0.3s; }
         .duck-decoration:nth-child(3) { animation-delay: 0.6s; }
-        
-        #loader { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-gradient); z-index: 50; }
+
+        #loader {
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-gradient); z-index: 50;
+        }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
-        #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10;}
+        #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10; }
+
+        /* ===== SHOP / MINI GAMES ===== */
+        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .shop-item {
+            background: rgba(255,255,255,0.4); border: 2px solid var(--menu-bg);
+            border-radius: 12px; padding: 14px; text-align: center; cursor: pointer;
+            transition: 0.2s; font-weight: bold; color: var(--text-main);
+        }
+        .shop-item:hover { background: var(--btn-hover); color: var(--btn-text); transform: scale(1.03); }
+        .shop-item .shop-price { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+        .shop-item .shop-emoji { font-size: 28px; display: block; margin-bottom: 6px; }
+
+        /* Coin Flip */
+        #coinflip-coin {
+            font-size: 64px; display: block; margin: 20px auto;
+            transition: transform 0.1s; cursor: default;
+        }
+        @keyframes flipAnim {
+            0%   { transform: scaleX(1); }
+            25%  { transform: scaleX(0); }
+            50%  { transform: scaleX(1); }
+            75%  { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+        .flipping { animation: flipAnim 0.6s ease 3; }
+
+        /* Scratch Card */
+        #scratch-canvas-wrap { position: relative; display: inline-block; margin: 16px 0; }
+        #scratch-canvas { border-radius: 12px; cursor: crosshair; display: block; }
+        #scratch-reveal {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px; border-radius: 12px; pointer-events: none;
+            background: var(--box-bg);
+        }
+
+        /* Name Tag */
+        #nametag-display {
+            font-size: 22px; font-weight: bold; padding: 8px 20px;
+            background: rgba(0,0,0,0.1); border-radius: 20px; display: inline-block;
+            margin: 10px 0; min-width: 120px;
+        }
+        #nametag-input {
+            font-size: 18px; padding: 8px 14px; border-radius: 8px;
+            border: 2px solid var(--menu-bg); background: var(--box-bg);
+            color: var(--text-main); margin: 8px; width: 200px; text-align: center;
+        }
+
+        /* Mega Spin indicator */
+        #mega-spin-indicator {
+            font-size: 13px; font-weight: bold; color: #e67e22;
+            min-height: 18px; margin-bottom: 4px;
+        }
+        #glitter-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+        }
+
+        /* ===== UNLOCK POPUP ===== */
+        #unlock-popup {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: #fff; padding: 30px 50px; border-radius: 20px;
+            font-size: 28px; font-weight: bold; text-align: center;
+            box-shadow: 0 0 60px rgba(241,196,15,0.8); z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        #unlock-popup.show { transform: translate(-50%, -50%) scale(1); }
+        #unlock-popup .unlock-emoji { font-size: 50px; display: block; margin-bottom: 10px; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
+
+    <div id="custom-alert-overlay">
+        <div id="custom-alert-box">
+            <div class="alert-title" id="custom-alert-title"></div>
+            <div class="alert-msg" id="custom-alert-msg"></div>
+            <button id="custom-alert-ok" onclick="closeCustomAlert()">OK</button>
+            <div id="custom-alert-progress"></div>
+        </div>
+    </div>
+
+    <canvas id="glitter-canvas"></canvas>
+    <div id="unlock-popup"><span class="unlock-emoji" id="unlock-emoji">🎉</span><span id="unlock-text">Theme Unlocked!</span></div>
 
     <svg style="display: none;">
-        <symbol id="custom-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#fff"/> <rect x="5" y="2" width="6" height="2" fill="#c0392b"/> <rect x="8" y="4" width="1" height="1" fill="#000"/> <rect x="11" y="4" width="4" height="2" fill="#f1c40f"/> <rect x="4" y="7" width="7" height="6" fill="#fff"/> <rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/> <rect x="5" y="13" width="1" height="2" fill="#f1c40f"/> <rect x="8" y="13" width="1" height="2" fill="#f1c40f"/> </symbol>
-        <symbol id="main-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#f1c40f"/> <rect x="8" y="4" width="1" height="1" fill="#000"/> <rect x="11" y="4" width="4" height="2" fill="#e67e22"/> <rect x="4" y="7" width="7" height="6" fill="#f1c40f"/> <rect x="5" y="9" width="4" height="2" fill="#f39c12"/> <rect x="5" y="13" width="1" height="2" fill="#e67e22"/> <rect x="8" y="13" width="1" height="2" fill="#e67e22"/> </symbol>
-        <symbol id="quack-coin" viewBox="0 0 24 24"> <circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/> <text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text> </symbol>
+        <symbol id="custom-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#fff"/><rect x="5" y="2" width="6" height="2" fill="#c0392b"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#f1c40f"/><rect x="4" y="7" width="7" height="6" fill="#fff"/><rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/><rect x="5" y="13" width="1" height="2" fill="#f1c40f"/><rect x="8" y="13" width="1" height="2" fill="#f1c40f"/></symbol>
+        <symbol id="main-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#f1c40f"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#e67e22"/><rect x="4" y="7" width="7" height="6" fill="#f1c40f"/><rect x="5" y="9" width="4" height="2" fill="#f39c12"/><rect x="5" y="13" width="1" height="2" fill="#e67e22"/><rect x="8" y="13" width="1" height="2" fill="#e67e22"/></symbol>
+        <symbol id="quack-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text></symbol>
     </svg>
 
     <div id="icon-container">
-        <div id="menu-icon" class="side-icon" title="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-        <div class="side-icon" onclick="goHome()" title="Back to Main Menu"><svg><use href="#custom-duck"></use></svg></div>
-        <div class="side-icon" onclick="toggleFullScreen()" title="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></div>
+        <div id="menu-icon" class="side-icon" title="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </div>
+        <div class="side-icon" onclick="goHome()" title="Back to Main Menu">
+            <svg><use href="#custom-duck"></use></svg>
+        </div>
+        <div class="side-icon" onclick="toggleFullScreen()" title="Fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </div>
     </div>
 
     <div id="sidebar">
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue', 'Battle endless rooms as a brave duck!', 'Arrow Keys to move, Space to attack')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action', 'A fast-paced drawn action game.', 'WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="3"><circle cx="12" cy="12" r="8"></circle></svg></div> Doodle Action</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/')" onmouseover="showInfo('Shooting Fun', 'Test your aim and reflexes.', 'Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2" fill="#3498db"></circle></svg></div> Shooting Fun</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over', 'A frustratingly fun physics game.', 'Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="#9b59b6"><path d="M20.46 3.54l-3.54-3.54-4.24 4.24 3.54 3.54zM11.97 9.2L3.48 17.68l2.83 2.83 8.49-8.49z"></path></svg></div> Getting Over</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG', 'Test your luck! Roll for the rarest ducks.', 'Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8" cy="8" r="1.5" fill="#2ecc71"></circle><circle cx="16" cy="16" r="1.5" fill="#2ecc71"></circle><circle cx="12" cy="12" r="1.5" fill="#2ecc71"></circle></svg></div> Duck RNG</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker', 'Test your card skills.', 'Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M12 7c-2 0-3 2-3 4s3 5 3 5 3-3 3-5-1-4-3-4z" fill="#f1c40f"></path></svg></div> Poker</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game', 'Drive fast and drift around corners.', 'Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00ced1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5h11L19 11M3 11h18v6h-2v2h-2v-2H7v2H5v-2H3v-6z"/><circle cx="7.5" cy="15.5" r="1.5" fill="#00ced1"/><circle cx="16.5" cy="15.5" r="1.5" fill="#00ced1"/></svg></div> Car Game</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue','Battle endless rooms as a brave duck!','Arrow Keys to move, Space to attack')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action','A fast-paced drawn action game.','WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎨</div> Doodle Action</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/')" onmouseover="showInfo('Shooting Fun','Test your aim and reflexes.','Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎯</div> Shooting Fun</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over','A frustratingly fun physics game.','Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🔨</div> Getting Over</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG','Test your luck! Roll for the rarest ducks.','Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎲</div> Duck RNG</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker','Test your card skills.','Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🃏</div> Poker</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚗</div> Car Game</button>
     </div>
 
     <div id="info-panel">
-        <h3 id="info-title">Game Title</h3><p id="info-desc">Description goes here.</p>
-        <strong>Controls:</strong><p class="controls-text" id="info-controls">Controls go here.</p>
+        <h3 id="info-title">Game Title</h3>
+        <p id="info-desc">Description goes here.</p>
+        <strong>Controls:</strong>
+        <p class="controls-text" id="info-controls">Controls go here.</p>
     </div>
 
     <div id="main-content">
         <div id="welcome-screen" class="menu-screen">
-            <div id="main-menu-coins"><svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span></div>
+            <div id="main-menu-coins">
+                <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span>
+            </div>
+            <div id="home-nametag"></div>
             <h1>Welcome to Ducky's website</h1>
             <p>Hover your mouse over the <b>☰ menu</b> on the left to browse and play my games</p>
             <p style="font-weight: bold; color: var(--btn-hover); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px;">
@@ -198,6 +361,8 @@
             <div style="margin: 20px 0;">
                 <button class="action-btn" onclick="openMenu('slot-screen')">🎰 Slot Machine (3 Coins)</button>
                 <button class="action-btn" onclick="openMenu('themes-screen')">🎨 Equip Themes</button>
+                <button class="action-btn" onclick="openMenu('shop-screen')">🛒 Shop</button>
+                <button class="action-btn" onclick="openMenu('casino-screen')" style="background:#8e44ad">🎲 Casino</button>
             </div>
             <div>
                 <div class="duck-decoration"><svg width="100%" height="100%"><use href="#main-duck"></use></svg></div>
@@ -207,22 +372,242 @@
         </div>
 
         <div id="slot-screen" class="menu-screen" style="display: none;">
-            <div id="slot-paytable"><b>Prizes:</b><br>🍒🍒🍒 = 5 Coins<br>🦆🦆🦆 = Dark Mode<br>💎💎💎 = Ocean Blue Theme<br>🎰🎰🎰 = Neon Pink Theme<br><i>(Any 2 = 1 Coin back)</i></div>
+            <div id="slot-paytable">
+                <b>Prizes:</b><br>
+                🍒🍒🍒 = 5 Coins<br>
+                🦆🦆🦆 = Dark Mode<br>
+                💎💎💎 = Ocean Blue<br>
+                🎰🎰🎰 = Neon Pink<br>
+                🖥️🖥️🖥️ = Retro Terminal<br>
+                🌅🌅🌅 = Sunset<br>
+                🌲🌲🌲 = Forest<br>
+                ✨✨✨ = Galaxy<br>
+                🔴🔴🔴 = Blood Moon<br>
+                🐥🐥🐥 = Rubber Duck<br>
+                ❄️❄️❄️ = Winter<br>
+                🌊🌊🌊 = Vaporwave<br>
+                <i>(Any 2 matching = 1 Coin back)</i>
+            </div>
             <h2>🎰 Ducky Slots 🎰</h2>
             <p>Coins: <strong id="coin-display-slots">0</strong></p>
             <div class="reels">
-                <div class="reel" id="reel1">❓</div><div class="reel" id="reel2">❓</div><div class="reel" id="reel3">❓</div>
+                <div class="reel" id="reel1">❓</div>
+                <div class="reel" id="reel2">❓</div>
+                <div class="reel" id="reel3">❓</div>
             </div>
             <div id="slot-message">Match 3 to win!</div>
-            <button class="action-btn" id="spin-btn" onclick="spinSlots()">Spin (Cost: 3 Coins)</button><br>
+            <div id="mega-spin-indicator"></div>
+            <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction()">Spin (Cost: 3 Coins)</button>
+            <button class="action-btn" id="mega-btn" onclick="megaSpin()" style="background:#e67e22">⚡ Mega Spin (9 Coins)</button>
+            <br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
         </div>
 
         <div id="themes-screen" class="menu-screen" style="display: none;">
             <h2>🎨 Theme Locker 🎨</h2>
             <p>Win new themes in the Slot Machine!</p>
-            <div class="theme-grid" id="theme-grid-container"></div><br>
+            <div class="theme-grid" id="theme-grid-container"></div>
+            <br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
+        </div>
+
+        <!-- SHOP -->
+        <div id="shop-screen" class="menu-screen" style="display:none;">
+            <h2>🛒 Quack Shop</h2>
+            <p>Spend your hard-earned coins!</p>
+            <p style="font-size:15px;">Your coins: <strong id="coin-display-shop">0</strong> &nbsp;|&nbsp; Duck Coins: <strong id="duck-coin-display">?</strong></p>
+            <div class="shop-grid">
+                <div class="shop-item" onclick="openMenu('coinflip-screen')">
+                    <span class="shop-emoji">🪙</span>
+                    Coin Flip
+                    <div class="shop-price">Bet 1–10 coins, double or nothing</div>
+                </div>
+                <div class="shop-item" onclick="openScratch()">
+                    <span class="shop-emoji">🎫</span>
+                    Scratch Card
+                    <div class="shop-price">2 coins — mystery prize</div>
+                </div>
+                <div class="shop-item" onclick="openMenu('nametag-screen')">
+                    <span class="shop-emoji">🏷️</span>
+                    Name Tag
+                    <div class="shop-price">5 coins — set your username</div>
+                </div>
+                <div class="shop-item" onclick="peekTheme()">
+                    <span class="shop-emoji">👁️</span>
+                    Theme Peek
+                    <div class="shop-price">2 coins — reveal a locked theme name for 5s</div>
+                </div>
+                <div class="shop-item" onclick="exchangeToDuck()">
+                    <span class="shop-emoji">🔄</span>
+                    QC → Duck Coins
+                    <div class="shop-price">1 QC = 100 Duck Coins</div>
+                </div>
+                <div class="shop-item" onclick="exchangeToQuack()">
+                    <span class="shop-emoji">🔃</span>
+                    Duck Coins → QC
+                    <div class="shop-price">100 Duck Coins = 1 QC</div>
+                </div>
+            </div>
+            <br>
+            <button class="action-btn" style="background:gray" onclick="openMenu('welcome-screen')">⬅ Back</button>
+        </div>
+
+        <!-- COIN FLIP -->
+        <div id="coinflip-screen" class="menu-screen" style="display:none;">
+            <h2>🪙 Coin Flip</h2>
+            <p>Double or nothing. Pick a side.</p>
+            <p>Coins: <strong id="coin-display-flip">0</strong></p>
+            <div style="margin:10px 0;">
+                Bet: <input id="flip-bet" type="number" min="1" max="10" value="1"
+                    style="width:60px;font-size:18px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);text-align:center;">
+                coins
+            </div>
+            <span id="coinflip-coin">🪙</span>
+            <div id="flip-result" style="font-size:20px;font-weight:bold;min-height:30px;color:#e74c3c;"></div>
+            <div style="margin:10px 0;">
+                <button class="action-btn" onclick="doFlip('heads')" id="flip-heads">🦆 Heads</button>
+                <button class="action-btn" onclick="doFlip('tails')" id="flip-tails">🐟 Tails</button>
+            </div>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+        </div>
+
+        <!-- SCRATCH CARD -->
+        <div id="scratch-screen" class="menu-screen" style="display:none;">
+            <h2>🎫 Scratch Card</h2>
+            <p id="scratch-desc">Scratch to reveal your prize!</p>
+            <div id="scratch-canvas-wrap">
+                <div id="scratch-reveal"></div>
+                <canvas id="scratch-canvas" width="220" height="220"></canvas>
+            </div>
+            <div id="scratch-result" style="font-size:18px;font-weight:bold;min-height:24px;"></div>
+            <br>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+        </div>
+
+        <!-- NAME TAG -->
+        <div id="nametag-screen" class="menu-screen" style="display:none;">
+            <h2>🏷️ Name Tag</h2>
+            <p>Set your username on the site (5 coins)</p>
+            <div id="nametag-display">Guest</div>
+            <br>
+            <input id="nametag-input" type="text" maxlength="16" placeholder="Enter name...">
+            <br>
+            <button class="action-btn" onclick="setNametag()">✅ Set Name (5 coins)</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+        </div>
+
+        <!-- CASINO LOBBY -->
+        <div id="casino-screen" class="menu-screen" style="display:none;">
+            <h2>🎰 Quack Casino</h2>
+            <p class="casino-coins">Your coins: <strong id="casino-coin-display">0</strong></p>
+            <div class="casino-grid">
+                <div class="casino-item" onclick="openMenu('roulette-screen')">
+                    <span class="casino-emoji">🎡</span>Roulette
+                    <div class="casino-desc">Bet on red, black, or a number</div>
+                </div>
+                <div class="casino-item" onclick="startBlackjack()">
+                    <span class="casino-emoji">🃏</span>Blackjack
+                    <div class="casino-desc">Beat the dealer to 21</div>
+                </div>
+                <div class="casino-item" onclick="openMenu('dice-screen')">
+                    <span class="casino-emoji">🎲</span>Craps (Dice)
+                    <div class="casino-desc">Roll the dice, hit 7 or 11</div>
+                </div>
+                <div class="casino-item" onclick="openMenu('pushcards-screen')">
+                    <span class="casino-emoji">🫷</span>Push Cards
+                    <div class="casino-desc">Beat dealer or push for a tie</div>
+                </div>
+                <div class="casino-item" onclick="openMenu('baccarat-screen')">
+                    <span class="casino-emoji">🎴</span>Baccarat
+                    <div class="casino-desc">Bet on Player, Banker, or Tie</div>
+                </div>
+            </div>
+            <br>
+            <button class="action-btn" style="background:gray" onclick="openMenu('welcome-screen')">⬅ Back</button>
+        </div>
+
+        <!-- ROULETTE -->
+        <div id="roulette-screen" class="menu-screen" style="display:none;">
+            <h2>🎡 Roulette</h2>
+            <p class="casino-coins">Coins: <strong id="roulette-coins">0</strong></p>
+            <div class="casino-bet-row">
+                Bet: <input id="roulette-bet" type="number" min="1" value="1"> coins on
+                <select id="roulette-choice" style="font-size:16px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);">
+                    <option value="red">🔴 Red (2x)</option>
+                    <option value="black">⚫ Black (2x)</option>
+                    <option value="green">🟢 Green 0 (14x)</option>
+                    <option value="odd">🔢 Odd (2x)</option>
+                    <option value="even">🔣 Even (2x)</option>
+                </select>
+            </div>
+            <span id="roulette-wheel">🎡</span>
+            <div id="roulette-number" style="font-size:28px;font-weight:bold;min-height:36px;"></div>
+            <div class="casino-result" id="roulette-result"></div>
+            <button class="action-btn" id="roulette-btn" onclick="spinRoulette()" style="background:#8e44ad;color:white">Spin!</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
+        </div>
+
+        <!-- BLACKJACK -->
+        <div id="blackjack-screen" class="menu-screen" style="display:none;">
+            <h2>🃏 Blackjack</h2>
+            <p class="casino-coins">Coins: <strong id="bj-coins">0</strong></p>
+            <div class="casino-bet-row">Bet: <input id="bj-bet" type="number" min="1" value="1"> coins</div>
+            <div style="font-size:15px;margin:4px 0;">Dealer: <span id="bj-dealer-score">?</span></div>
+            <div class="bj-hand" id="bj-dealer-hand"></div>
+            <div style="font-size:15px;margin:4px 0;">You: <span id="bj-player-score">?</span></div>
+            <div class="bj-hand" id="bj-player-hand"></div>
+            <div class="casino-result" id="bj-result"></div>
+            <div id="bj-actions">
+                <button class="action-btn" id="bj-deal-btn" onclick="dealBlackjack()" style="background:#8e44ad;color:white">Deal</button>
+            </div>
+            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
+        </div>
+
+        <!-- DICE / CRAPS -->
+        <div id="dice-screen" class="menu-screen" style="display:none;">
+            <h2>🎲 Craps</h2>
+            <p class="casino-coins">Coins: <strong id="dice-coins">0</strong></p>
+            <div class="casino-bet-row">Bet: <input id="dice-bet" type="number" min="1" value="1"> coins</div>
+            <div class="dice-display" id="dice-display"><span>🎲</span><span>🎲</span></div>
+            <div style="font-size:15px;min-height:22px;" id="dice-point-display"></div>
+            <div class="casino-result" id="dice-result"></div>
+            <button class="action-btn" id="dice-btn" onclick="rollDice()" style="background:#8e44ad;color:white">Roll!</button>
+            <button class="action-btn" style="background:gray" onclick="resetDice();openMenu('casino-screen')">⬅ Back</button>
+        </div>
+
+        <!-- PUSH CARDS -->
+        <div id="pushcards-screen" class="menu-screen" style="display:none;">
+            <h2>🫷 Push Cards</h2>
+            <p class="casino-coins">Coins: <strong id="push-coins">0</strong></p>
+            <div class="casino-bet-row">Bet: <input id="push-bet" type="number" min="1" value="1"> coins</div>
+            <div style="font-size:15px;margin:4px 0;">Dealer:</div>
+            <div class="push-hand" id="push-dealer-hand"></div>
+            <div style="font-size:15px;margin:4px 0;">You:</div>
+            <div class="push-hand" id="push-player-hand"></div>
+            <div class="casino-result" id="push-result"></div>
+            <button class="action-btn" id="push-btn" onclick="playPushCards()" style="background:#8e44ad;color:white">Deal</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
+        </div>
+
+        <!-- BACCARAT -->
+        <div id="baccarat-screen" class="menu-screen" style="display:none;">
+            <h2>🎴 Baccarat</h2>
+            <p class="casino-coins">Coins: <strong id="bac-coins">0</strong></p>
+            <div class="casino-bet-row">
+                Bet: <input id="bac-bet" type="number" min="1" value="1"> coins on
+                <select id="bac-choice" style="font-size:16px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);">
+                    <option value="player">👤 Player (2x)</option>
+                    <option value="banker">🏦 Banker (1.95x)</option>
+                    <option value="tie">🤝 Tie (8x)</option>
+                </select>
+            </div>
+            <div style="font-size:15px;margin:4px 0;">Player: <span id="bac-player-score">?</span></div>
+            <div class="bac-hand" id="bac-player-hand"></div>
+            <div style="font-size:15px;margin:4px 0;">Banker: <span id="bac-banker-score">?</span></div>
+            <div class="bac-hand" id="bac-banker-hand"></div>
+            <div class="casino-result" id="bac-result"></div>
+            <button class="action-btn" id="bac-btn" onclick="playBaccarat()" style="background:#8e44ad;color:white">Deal</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
         </div>
 
         <div id="loader">
@@ -233,132 +618,259 @@
     </div>
 
     <script>
-        // --- BULLETPROOF SAVING & SECURE ECONOMY ---
-        // Ensure parsing doesn't crash if save data is somehow corrupted
-        let savedThemes = ['default'];
-        try {
-            const parsed = JSON.parse(localStorage.getItem('unlockedThemes'));
-            if (Array.isArray(parsed)) savedThemes = parsed;
-        } catch (e) {}
+    (function() {
+        let loadTimer;
+        let isSpinning = false;
 
-        let quackCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
-        let shadowBalance = quackCoins; 
-        let lastPlaytimeCoin = 0; 
-        
-        let unlockedThemes = savedThemes;
-        let activeTheme = localStorage.getItem('activeTheme') || 'default';
+        // ===== DEVTOOLS BLOCK =====
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode === 123) event.preventDefault();
+            if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
+                (event.ctrlKey && event.shiftKey && event.keyCode === 74) ||
+                (event.ctrlKey && event.shiftKey && event.keyCode === 67)) event.preventDefault();
+            if (event.ctrlKey && event.keyCode === 85) event.preventDefault();
+        });
 
+        // ===== THEME DATA =====
         const themeData = {
-            'default': { name: 'Daylight (Default)', class: '' },
-            'theme-dark': { name: 'Dark Mode', class: 'theme-dark' },
-            'theme-ocean': { name: 'Ocean Blue', class: 'theme-ocean' },
-            'theme-neon': { name: 'Neon Pink', class: 'theme-neon' }
+            'default':        { name: '☀️ Daylight (Default)', emoji: '☀️' },
+            'theme-dark':     { name: '🌙 Dark Mode',          emoji: '🌙' },
+            'theme-ocean':    { name: '🌊 Ocean Blue',         emoji: '🌊' },
+            'theme-neon':     { name: '💜 Neon Pink',          emoji: '💜' },
+            'theme-retro':    { name: '🖥️ Retro Terminal',     emoji: '🖥️' },
+            'theme-sunset':   { name: '🌅 Sunset',             emoji: '🌅' },
+            'theme-forest':   { name: '🌲 Forest',             emoji: '🌲' },
+            'theme-galaxy':   { name: '✨ Galaxy',             emoji: '✨' },
+            'theme-bloodmoon':{ name: '🔴 Blood Moon',         emoji: '🔴' },
+            'theme-rubberduck':{ name: '🐥 Rubber Duck',       emoji: '🐥' },
+            'theme-winter':   { name: '❄️ Winter',             emoji: '❄️' },
+            'theme-vaporwave':{ name: '🌸 Vaporwave',          emoji: '🌸' },
         };
 
-        function saveGame() {
-            localStorage.setItem('quackCoins', quackCoins);
-            localStorage.setItem('unlockedThemes', JSON.stringify(unlockedThemes));
-            localStorage.setItem('activeTheme', activeTheme);
-            updateUI();
+        // ===== GLITTER SYSTEM =====
+        const canvas = document.getElementById('glitter-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+        let particles = [];
+        let animating = false;
+
+        function spawnGlitter() {
+            const colors = ['#f1c40f','#e74c3c','#3498db','#2ecc71','#9b59b6','#e67e22','#ff71ce','#05ffa1','#fff'];
+            for (let i = 0; i < 180; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height * 0.5,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: Math.random() * 3 + 1,
+                    size: Math.random() * 10 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 8,
+                    life: 1,
+                    decay: Math.random() * 0.012 + 0.008,
+                    shape: Math.random() > 0.5 ? 'rect' : 'circle'
+                });
+            }
+            if (!animating) animateGlitter();
         }
 
-        // EMERGENCY SAVE: Fires right before the page closes or refreshes!
-        window.addEventListener('beforeunload', saveGame);
+        function animateGlitter() {
+            animating = true;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles = particles.filter(p => p.life > 0);
 
+            for (const p of particles) {
+                ctx.save();
+                ctx.globalAlpha = p.life;
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                if (p.shape === 'rect') {
+                    ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.05;
+                p.rotation += p.rotSpeed;
+                p.life -= p.decay;
+            }
+
+            if (particles.length > 0) {
+                requestAnimationFrame(animateGlitter);
+            } else {
+                animating = false;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        // ===== UNLOCK POPUP =====
+        function showUnlockPopup(themeName, emoji) {
+            const popup = document.getElementById('unlock-popup');
+            document.getElementById('unlock-emoji').innerText = emoji;
+            document.getElementById('unlock-text').innerText = themeName + ' Unlocked!';
+            popup.classList.add('show');
+            spawnGlitter();
+            setTimeout(() => popup.classList.remove('show'), 2800);
+        }
+
+        // ===== UI =====
         function updateUI() {
-            document.getElementById('coin-display-home').innerText = quackCoins;
-            document.getElementById('coin-display-slots').innerText = quackCoins;
-            document.body.className = themeData[activeTheme].class;
+            document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
+            document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
+            document.body.className = activeTheme || '';
 
             const grid = document.getElementById('theme-grid-container');
             grid.innerHTML = '';
+
             for (const [themeId, data] of Object.entries(themeData)) {
                 const btn = document.createElement('button');
                 btn.className = 'theme-item-btn';
+
                 if (unlockedThemes.includes(themeId)) {
                     btn.innerHTML = data.name;
                     if (activeTheme === themeId) {
                         btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
                         btn.style.borderColor = 'green';
                     } else {
-                        btn.onclick = () => { activeTheme = themeId; saveGame(); };
+                        btn.onclick = () => { activeTheme = themeId; hoihpohivpoweahovropagh4p9h8g4(); };
                     }
                 } else {
-                    btn.innerText = '🔒 Locked (' + data.name + ')';
+                    btn.innerText = '🔒 ???';
                     btn.disabled = true;
                 }
                 grid.appendChild(btn);
             }
         }
 
-        function addSecureCoins(amount, source) {
-            const now = Date.now();
-            if (source === 'playtime') {
-                if (lastPlaytimeCoin !== 0 && (now - lastPlaytimeCoin) < 58000) {
-                    quackCoins -= 2;
-                    shadowBalance = quackCoins;
-                    saveGame();
-                    alert("Anti-Cheat Triggered: You are earning coins too fast! Penalty: -2 Coins.");
-                    return;
-                }
-                lastPlaytimeCoin = now;
-            }
-
-            quackCoins += amount;
-            shadowBalance = quackCoins; 
-            saveGame();
+        // ===== CRYPTO =====
+        function generateKey(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~';
+            const randomValues = new Uint8Array(length);
+            window.crypto.getRandomValues(randomValues);
+            let result = '';
+            for (let i = 0; i < length; i++) result += characters.charAt(randomValues[i] % characters.length);
+            return result;
         }
 
-        // UPDATED HACKER TRAP: Only checks memory, so it doesn't break if you have two tabs open!
-        setInterval(() => {
-            if (quackCoins > shadowBalance) {
-                quackCoins = shadowBalance - 2;
-                shadowBalance = quackCoins;
-                saveGame();
-                alert("Anti-Cheat Triggered: Console manipulation detected! Penalty: -2 Coins.");
-            } else {
-                shadowBalance = quackCoins; // Keep it synced with normal spending
+        const SAVE_KEY = "ihg398g231f1g3ig1f13f";
+        let SECRET;
+        if (!localStorage.getItem('gf2378g8o32843g7p243f')) {
+            SECRET = generateKey(500);
+            localStorage.setItem('gf2378g8o32843g7p243f', SECRET);
+        } else {
+            SECRET = localStorage.getItem('gf2378g8o32843g7p243f');
+        }
+
+        function encode(data) {
+            return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
+        }
+        function decode(str) {
+            try {
+                let decoded = decodeURIComponent(escape(atob(str)));
+                if (!decoded.endsWith(SECRET)) return null;
+                decoded = decoded.slice(0, -SECRET.length);
+                return JSON.parse(decoded);
+            } catch { return null; }
+        }
+
+        // ===== SAVE/LOAD =====
+        function hugh43go278872() {
+            const encrypted = localStorage.getItem(SAVE_KEY);
+            if (encrypted) {
+                const data = decode(encrypted);
+                if (data) return data;
             }
-        }, 2000);
+            const oldCoins = localStorage.getItem('quackCoins');
+            const oldThemes = localStorage.getItem('unlockedThemes');
+            const oldActive = localStorage.getItem('activeTheme');
 
-        updateUI();
+            if ((oldCoins !== null || oldThemes !== null || oldActive !== null) &&
+                (!localStorage.getItem('gvg437v2g7937v9g329') || localStorage.getItem('gvg437v2g7937v9g329') != 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v')) {
 
-        // --- ANTI-AFK COIN MINER ---
+                let parsedThemes;
+                try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
+                if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
+                const validThemes = Object.keys(themeData);
+                parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
+
+                const oldCoinCount = parseInt(oldCoins) || 0;
+                const newSave = {
+                    absolutelyNothingThatisImportantlol: oldCoinCount <= 50 ? oldCoinCount : 50,
+                    unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
+                    activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
+                };
+                localStorage.setItem(SAVE_KEY, encode(newSave));
+                localStorage.removeItem('quackCoins');
+                localStorage.removeItem('unlockedThemes');
+                localStorage.removeItem('activeTheme');
+                localStorage.setItem('gvg437v2g7937v9g329', 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v');
+                return newSave;
+            }
+            return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
+        }
+
+        function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
+            const data = dataOverride ? dataOverride : {
+                absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
+                unlockedThemes: unlockedThemes || ['default'],
+                activeTheme: activeTheme || 'default'
+            };
+            localStorage.setItem(SAVE_KEY, encode(data));
+            updateUI();
+        }
+
+        let save = hugh43go278872();
+        if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
+
+        let absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
+        let unlockedThemes = save.unlockedThemes || ['default'];
+        let activeTheme = save.activeTheme || 'default';
+
+        setTimeout(updateUI, 0);
+
+        // ===== COIN TIMER =====
         let activeSeconds = 0;
         let lastInteraction = Date.now();
-
         window.addEventListener('mousemove', () => lastInteraction = Date.now());
         window.addEventListener('keydown', () => lastInteraction = Date.now());
         window.addEventListener('click', () => lastInteraction = Date.now());
 
         setInterval(() => {
+            let _45230X4xc = absolutelyNothingThatisImportantlol;
             let isIframeActive = document.activeElement === document.getElementById('game-frame');
-            let isWindowActive = (Date.now() - lastInteraction) < 10000; 
+            let isWindowActive = (Date.now() - lastInteraction) < 10000;
 
+            if (_45230X4xc != absolutelyNothingThatisImportantlol) {
+                absolutelyNothingThatisImportantlol = 0; _45230X4xc = 0; showAlert("CHEATER", "🚨");
+            }
             if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !== 'none')) {
                 activeSeconds++;
-                if (activeSeconds >= 60) {
-                    addSecureCoins(1, 'playtime'); 
+                if (activeSeconds >= 6000) {
+                    absolutelyNothingThatisImportantlol++;
+                    _45230X4xc = absolutelyNothingThatisImportantlol;
+                    hoihpohivpoweahovropagh4p9h8g4();
                     activeSeconds = 0;
                 }
             }
-        }, 1000);
+        }, 10);
 
-        // --- SLOT MACHINE LOGIC ---
-        const symbols = ['🍒', '🦆', '💎', '🎰'];
-        let isSpinning = false;
+        // ===== SLOTS =====
+        const symbols = ['🍒','🦆','💎','🎰','🖥️','🌅','🌲','✨','🔴','🐥','❄️','🌊'];
 
-        function spinSlots() {
+        function randomGoofyAssFunction() {
             if (isSpinning) return;
-            if (quackCoins < 3) {
-                alert("You don't have enough Quack Coins!");
-                return;
-            }
-
-            quackCoins -= 3;
-            shadowBalance = quackCoins;
-            saveGame();
-            
+            if (absolutelyNothingThatisImportantlol < 3) { showAlert("You need 3 Quack Coins to spin!", "🎰"); return; }
+            absolutelyNothingThatisImportantlol -= 3;
+            hoihpohivpoweahovropagh4p9h8g4();
             isSpinning = true;
             document.getElementById('spin-btn').disabled = true;
             document.getElementById('slot-message').innerText = "Spinning...";
@@ -369,11 +881,7 @@
                 document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                 document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                 ticks++;
-
-                if (ticks > 20) {
-                    clearInterval(spinInterval);
-                    finishSpin();
-                }
+                if (ticks > 20) { clearInterval(spinInterval); finishSpin(); }
             }, 50);
         }
 
@@ -384,94 +892,721 @@
             const msg = document.getElementById('slot-message');
 
             if (r1 === r2 && r2 === r3) {
-                if (r1 === '🍒') grantReward('coins', 5, "Jackpot! 5 Coins!");
-                else if (r1 === '🦆') grantReward('theme-dark', 10, "You unlocked DARK MODE!");
-                else if (r1 === '💎') grantReward('theme-ocean', 15, "You unlocked OCEAN BLUE Theme!");
-                else if (r1 === '🎰') grantReward('theme-neon', 25, "You unlocked NEON PINK Theme!");
+                if      (r1 === '🍒') grantReward('coins',           5,  "Jackpot! +5 Coins!");
+                else if (r1 === '🦆') grantReward('theme-dark',      10, "You unlocked DARK MODE!");
+                else if (r1 === '💎') grantReward('theme-ocean',     15, "You unlocked OCEAN BLUE!");
+                else if (r1 === '🎰') grantReward('theme-neon',      25, "You unlocked NEON PINK!");
+                else if (r1 === '🖥️') grantReward('theme-retro',     20, "You unlocked RETRO TERMINAL!");
+                else if (r1 === '🌅') grantReward('theme-sunset',    20, "You unlocked SUNSET!");
+                else if (r1 === '🌲') grantReward('theme-forest',    20, "You unlocked FOREST!");
+                else if (r1 === '✨') grantReward('theme-galaxy',    30, "You unlocked GALAXY!");
+                else if (r1 === '🔴') grantReward('theme-bloodmoon', 35, "You unlocked BLOOD MOON!");
+                else if (r1 === '🐥') grantReward('theme-rubberduck',15, "You unlocked RUBBER DUCK!");
+                else if (r1 === '❄️') grantReward('theme-winter',    20, "You unlocked WINTER!");
+                else if (r1 === '🌊') grantReward('theme-vaporwave', 25, "You unlocked VAPORWAVE!");
             } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                grantReward('coins', 1, "Two matched! You get 1 Coin back.");
+                grantReward('coins', 1, "Two matched! +1 Coin back.");
             } else {
                 msg.innerText = "No luck this time. Try again!";
             }
-
             isSpinning = false;
             document.getElementById('spin-btn').disabled = false;
         }
 
         function grantReward(type, coinFallback, successMsg) {
+            let isNewUnlock = false;
             if (type === 'coins') {
-                addSecureCoins(coinFallback, 'slots');
+                absolutelyNothingThatisImportantlol += coinFallback;
             } else {
                 if (unlockedThemes.includes(type)) {
-                    addSecureCoins(coinFallback, 'slots'); 
-                    successMsg = `You already own that theme! Here are ${coinFallback} Coins instead.`;
+                    absolutelyNothingThatisImportantlol += coinFallback;
+                    successMsg = `Already owned! Here are ${coinFallback} Coins instead.`;
                 } else {
                     unlockedThemes.push(type);
-                    saveGame(); 
+                    isNewUnlock = true;
                 }
             }
             document.getElementById('slot-message').innerText = successMsg;
+            hoihpohivpoweahovropagh4p9h8g4();
+            if (isNewUnlock) {
+                const data = themeData[type];
+                showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
+            }
         }
 
-        // --- MENU NAVIGATION & GAME LOADING ---
+
+        // ===== CUSTOM ALERT =====
+        let alertTimeout = null;
+        function showAlert(msg, title = '', autoDismiss = 0) {
+            document.getElementById('custom-alert-title').innerText = title;
+            document.getElementById('custom-alert-msg').innerText = msg;
+            document.getElementById('custom-alert-overlay').classList.add('show');
+            const prog = document.getElementById('custom-alert-progress');
+            prog.style.transition = 'none';
+            prog.style.width = '100%';
+            if (alertTimeout) clearTimeout(alertTimeout);
+            if (autoDismiss > 0) {
+                setTimeout(() => {
+                    prog.style.transition = `width ${autoDismiss}ms linear`;
+                    prog.style.width = '0%';
+                }, 50);
+                alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
+            } else {
+                prog.style.width = '0%';
+            }
+        }
+        function closeCustomAlert() {
+            document.getElementById('custom-alert-overlay').classList.remove('show');
+            if (alertTimeout) { clearTimeout(alertTimeout); alertTimeout = null; }
+        }
+
+        // ===== NAMETAG HOME DISPLAY =====
+        function refreshHomeNametag() {
+            const stored = localStorage.getItem('qw_nametag');
+            const el = document.getElementById('home-nametag');
+            if (stored) {
+                try {
+                    el.innerText = '🏷️ ' + atob(stored);
+                    el.style.display = 'block';
+                } catch { el.style.display = 'none'; }
+            } else {
+                el.style.display = 'none';
+            }
+        }
+        refreshHomeNametag();
+
+        // ===== CASINO COIN SYNC =====
+        function syncCasinoCoins() {
+            ['casino-coin-display','roulette-coins','bj-coins','dice-coins','push-coins','bac-coins'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = absolutelyNothingThatisImportantlol;
+            });
+        }
+        function casinoBet(id) {
+            const bet = Math.max(1, parseInt(document.getElementById(id).value) || 1);
+            if (bet > absolutelyNothingThatisImportantlol) {
+                showAlert(`Not enough coins! You have ${absolutelyNothingThatisImportantlol}.`, '❌ Broke');
+                return null;
+            }
+            return bet;
+        }
+
+        // ===== ROULETTE =====
+        const rouletteRed = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+        function spinRoulette() {
+            const bet = casinoBet('roulette-bet');
+            if (bet === null) return;
+            const choice = document.getElementById('roulette-choice').value;
+            absolutelyNothingThatisImportantlol -= bet;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+            const btn = document.getElementById('roulette-btn');
+            btn.disabled = true;
+            document.getElementById('roulette-result').innerText = '';
+            document.getElementById('roulette-number').innerText = '';
+            const wheel = document.getElementById('roulette-wheel');
+            wheel.classList.add('roulette-spinning');
+            setTimeout(() => {
+                wheel.classList.remove('roulette-spinning');
+                const num = Math.floor(Math.random() * 37); // 0-36
+                const isRed = rouletteRed.includes(num);
+                const isGreen = num === 0;
+                const isBlack = !isRed && !isGreen;
+                const color = isGreen ? '🟢' : isRed ? '🔴' : '⚫';
+                document.getElementById('roulette-number').innerText = `${color} ${num}`;
+                let won = 0;
+                if (choice === 'green' && isGreen) won = bet * 14;
+                else if (choice === 'red' && isRed) won = bet * 2;
+                else if (choice === 'black' && isBlack) won = bet * 2;
+                else if (choice === 'odd' && !isGreen && num % 2 !== 0) won = bet * 2;
+                else if (choice === 'even' && !isGreen && num % 2 === 0) won = bet * 2;
+                if (won > 0) {
+                    absolutelyNothingThatisImportantlol += won;
+                    document.getElementById('roulette-result').innerText = `🎉 Win! +${won} coins`;
+                    spawnGlitter();
+                } else {
+                    document.getElementById('roulette-result').innerText = `😬 Lost ${bet} coins`;
+                }
+                hoihpohivpoweahovropagh4p9h8g4();
+                syncCasinoCoins();
+                btn.disabled = false;
+            }, 2100);
+        }
+
+        // ===== BLACKJACK =====
+        const suits = ['♠','♥','♦','♣'];
+        const ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+        let bjDeck = [], bjPlayer = [], bjDealer = [], bjBet = 0, bjActive = false;
+
+        function makeDeck() {
+            let d = [];
+            for (const s of suits) for (const r of ranks) d.push({r,s});
+            return d.sort(() => Math.random() - 0.5);
+        }
+        function cardVal(card) {
+            if (['J','Q','K'].includes(card.r)) return 10;
+            if (card.r === 'A') return 11;
+            return parseInt(card.r);
+        }
+        function handVal(hand) {
+            let total = hand.reduce((s,c) => s + cardVal(c), 0);
+            let aces = hand.filter(c => c.r === 'A').length;
+            while (total > 21 && aces > 0) { total -= 10; aces--; }
+            return total;
+        }
+        function isRed(card) { return card.s === '♥' || card.s === '♦'; }
+        function renderCard(card, hidden = false) {
+            const div = document.createElement('div');
+            div.className = 'bj-card' + (hidden ? ' back' : (isRed(card) ? '' : ' black'));
+            div.innerText = hidden ? '🂠' : `${card.r}${card.s}`;
+            return div;
+        }
+        function renderHand(containerId, hand, hideSecond = false) {
+            const el = document.getElementById(containerId);
+            el.innerHTML = '';
+            hand.forEach((c, i) => el.appendChild(renderCard(c, hideSecond && i === 1)));
+        }
+
+        function startBlackjack() {
+            openMenu('blackjack-screen');
+            bjActive = false;
+            document.getElementById('bj-dealer-hand').innerHTML = '';
+            document.getElementById('bj-player-hand').innerHTML = '';
+            document.getElementById('bj-result').innerText = '';
+            document.getElementById('bj-dealer-score').innerText = '?';
+            document.getElementById('bj-player-score').innerText = '?';
+            document.getElementById('bj-actions').innerHTML = '<button class="action-btn" id="bj-deal-btn" onclick="dealBlackjack()" style="background:#8e44ad;color:white">Deal</button>';
+            syncCasinoCoins();
+        }
+
+        function dealBlackjack() {
+            const bet = casinoBet('bj-bet');
+            if (bet === null) return;
+            bjBet = bet;
+            absolutelyNothingThatisImportantlol -= bet;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+            bjDeck = makeDeck();
+            bjPlayer = [bjDeck.pop(), bjDeck.pop()];
+            bjDealer = [bjDeck.pop(), bjDeck.pop()];
+            bjActive = true;
+            renderHand('bj-player-hand', bjPlayer);
+            renderHand('bj-dealer-hand', bjDealer, true);
+            document.getElementById('bj-player-score').innerText = handVal(bjPlayer);
+            document.getElementById('bj-dealer-score').innerText = cardVal(bjDealer[0]) + '?';
+            document.getElementById('bj-result').innerText = '';
+            document.getElementById('bj-actions').innerHTML = `
+                <button class="action-btn" onclick="bjHit()" style="background:#27ae60;color:white">Hit</button>
+                <button class="action-btn" onclick="bjStand()" style="background:#c0392b;color:white">Stand</button>
+            `;
+            if (handVal(bjPlayer) === 21) bjStand();
+        }
+
+        function bjHit() {
+            if (!bjActive) return;
+            bjPlayer.push(bjDeck.pop());
+            renderHand('bj-player-hand', bjPlayer);
+            const val = handVal(bjPlayer);
+            document.getElementById('bj-player-score').innerText = val;
+            if (val >= 21) bjStand();
+        }
+
+        function bjStand() {
+            bjActive = false;
+            while (handVal(bjDealer) < 17) bjDealer.push(bjDeck.pop());
+            renderHand('bj-dealer-hand', bjDealer);
+            const ps = handVal(bjPlayer), ds = handVal(bjDealer);
+            document.getElementById('bj-player-score').innerText = ps;
+            document.getElementById('bj-dealer-score').innerText = ds;
+            let msg = '';
+            if (ps > 21) { msg = `😬 Bust! Lost ${bjBet} coins`; }
+            else if (ds > 21 || ps > ds) {
+                const win = bjBet * 2;
+                absolutelyNothingThatisImportantlol += win;
+                msg = `🎉 Win! +${win} coins`;
+                spawnGlitter();
+            } else if (ps === ds) {
+                absolutelyNothingThatisImportantlol += bjBet;
+                msg = `🤝 Push! Bet returned`;
+            } else { msg = `😬 Dealer wins. Lost ${bjBet} coins`; }
+            document.getElementById('bj-result').innerText = msg;
+            document.getElementById('bj-actions').innerHTML = '<button class="action-btn" onclick="dealBlackjack()" style="background:#8e44ad;color:white">Deal Again</button>';
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+        }
+
+        // ===== DICE / CRAPS =====
+        const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+        let dicePoint = null, dicePhase = 'comeout';
+
+        function resetDice() { dicePoint = null; dicePhase = 'comeout'; document.getElementById('dice-point-display').innerText = ''; document.getElementById('dice-result').innerText = ''; }
+
+        function rollDice() {
+            const bet = casinoBet('dice-bet');
+            if (bet === null) return;
+            const btn = document.getElementById('dice-btn');
+            btn.disabled = true;
+
+            const d1 = Math.ceil(Math.random()*6), d2 = Math.ceil(Math.random()*6);
+            const total = d1 + d2;
+            document.getElementById('dice-display').innerHTML = `<span>${diceFaces[d1-1]}</span><span>${diceFaces[d2-1]}</span>`;
+
+            let msg = '';
+            if (dicePhase === 'comeout') {
+                absolutelyNothingThatisImportantlol -= bet;
+                hoihpohivpoweahovropagh4p9h8g4();
+                syncCasinoCoins();
+                if (total === 7 || total === 11) {
+                    absolutelyNothingThatisImportantlol += bet * 2;
+                    msg = `🎉 ${total}! Natural! +${bet*2} coins`;
+                    spawnGlitter();
+                    resetDice();
+                } else if (total === 2 || total === 3 || total === 12) {
+                    msg = `😬 Craps (${total})! Lost ${bet} coins`;
+                    resetDice();
+                } else {
+                    dicePoint = total; dicePhase = 'point';
+                    msg = `Point is ${total}! Roll again to match it (avoid 7)`;
+                    document.getElementById('dice-point-display').innerText = `🎯 Point: ${total}`;
+                    btn.disabled = false;
+                    document.getElementById('dice-result').innerText = msg;
+                    hoihpohivpoweahovropagh4p9h8g4();
+                    syncCasinoCoins();
+                    return;
+                }
+            } else {
+                absolutelyNothingThatisImportantlol -= bet;
+                hoihpohivpoweahovropagh4p9h8g4();
+                syncCasinoCoins();
+                if (total === dicePoint) {
+                    absolutelyNothingThatisImportantlol += bet * 2;
+                    msg = `🎉 Hit the point (${total})! +${bet*2} coins`;
+                    spawnGlitter();
+                    resetDice();
+                } else if (total === 7) {
+                    msg = `😬 Seven out! Lost ${bet} coins`;
+                    resetDice();
+                } else {
+                    msg = `Rolled ${total}, not ${dicePoint} or 7. Roll again!`;
+                    btn.disabled = false;
+                    document.getElementById('dice-result').innerText = msg;
+                    hoihpohivpoweahovropagh4p9h8g4();
+                    syncCasinoCoins();
+                    return;
+                }
+            }
+            document.getElementById('dice-result').innerText = msg;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+            btn.disabled = false;
+        }
+
+        // ===== PUSH CARDS =====
+        function pushCardVal(r) {
+            if (['J','Q','K'].includes(r)) return 10;
+            if (r === 'A') return 11;
+            return parseInt(r);
+        }
+        function playPushCards() {
+            const bet = casinoBet('push-bet');
+            if (bet === null) return;
+            absolutelyNothingThatisImportantlol -= bet;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+            const deck = makeDeck();
+            const pCard = deck.pop(), dCard = deck.pop();
+            const pVal = pushCardVal(pCard.r), dVal = pushCardVal(dCard.r);
+
+            function renderPushHand(id, card) {
+                const el = document.getElementById(id);
+                el.innerHTML = '';
+                const div = document.createElement('div');
+                div.className = 'bj-card' + (isRed(card) ? '' : ' black');
+                div.innerText = `${card.r}${card.s}`;
+                div.style.width = '60px'; div.style.height = '80px'; div.style.fontSize = '20px';
+                el.appendChild(div);
+            }
+            renderPushHand('push-player-hand', pCard);
+            renderPushHand('push-dealer-hand', dCard);
+
+            let msg = '';
+            if (pVal > dVal) {
+                absolutelyNothingThatisImportantlol += bet * 2;
+                msg = `🎉 You win! ${pCard.r} vs ${dCard.r}. +${bet*2} coins`;
+                spawnGlitter();
+            } else if (pVal === dVal) {
+                absolutelyNothingThatisImportantlol += bet;
+                msg = `🤝 Push! Tied at ${pVal}. Bet returned.`;
+            } else {
+                msg = `😬 Dealer wins. ${dCard.r} beats ${pCard.r}. Lost ${bet}.`;
+            }
+            document.getElementById('push-result').innerText = msg;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+        }
+
+        // ===== BACCARAT =====
+        function bacCardVal(r) {
+            if (['10','J','Q','K'].includes(r)) return 0;
+            if (r === 'A') return 1;
+            return parseInt(r);
+        }
+        function bacHandVal(hand) { return hand.reduce((s,c) => (s + bacCardVal(c.r)) % 10, 0); }
+
+        function playBaccarat() {
+            const bet = casinoBet('bac-bet');
+            if (bet === null) return;
+            const choice = document.getElementById('bac-choice').value;
+            absolutelyNothingThatisImportantlol -= bet;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+
+            const deck = makeDeck();
+            const player = [deck.pop(), deck.pop()];
+            const banker = [deck.pop(), deck.pop()];
+
+            let ps = bacHandVal(player), bs = bacHandVal(banker);
+            if (ps <= 5) { player.push(deck.pop()); ps = bacHandVal(player); }
+            if (bs <= 5) { banker.push(deck.pop()); bs = bacHandVal(banker); }
+
+            function renderBacHand(id, hand) {
+                const el = document.getElementById(id);
+                el.innerHTML = '';
+                hand.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'bj-card' + (isRed(c) ? '' : ' black');
+                    div.innerText = `${c.r}${c.s}`;
+                    el.appendChild(div);
+                });
+            }
+            renderBacHand('bac-player-hand', player);
+            renderBacHand('bac-banker-hand', banker);
+            document.getElementById('bac-player-score').innerText = ps;
+            document.getElementById('bac-banker-score').innerText = bs;
+
+            const winner = ps > bs ? 'player' : bs > ps ? 'banker' : 'tie';
+            let msg = '', won = 0;
+            if (choice === winner) {
+                if (choice === 'tie') won = Math.floor(bet * 8);
+                else if (choice === 'banker') won = Math.floor(bet * 1.95);
+                else won = bet * 2;
+                absolutelyNothingThatisImportantlol += won;
+                msg = `🎉 ${winner.toUpperCase()} wins! +${won} coins`;
+                spawnGlitter();
+            } else {
+                msg = `😬 ${winner.toUpperCase()} wins. Lost ${bet} coins.`;
+            }
+            document.getElementById('bac-result').innerText = msg;
+            hoihpohivpoweahovropagh4p9h8g4();
+            syncCasinoCoins();
+        }
+
+        // ===== DUCK COIN HELPER =====
+        function getDuckSave() {
+            try {
+                const raw = localStorage.getItem('duckV13Accounts');
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                const key = Object.keys(parsed)[0];
+                return { key, data: parsed[key] };
+            } catch { return null; }
+        }
+        function getDuckCoins() {
+            const s = getDuckSave();
+            return s ? (s.data.saveData?.coins || 0) : null;
+        }
+        function setDuckCoins(amount) {
+            try {
+                const raw = localStorage.getItem('duckV13Accounts');
+                const parsed = JSON.parse(raw);
+                const key = Object.keys(parsed)[0];
+                parsed[key].saveData.coins = amount;
+                localStorage.setItem('duckV13Accounts', JSON.stringify(parsed));
+                return true;
+            } catch { return false; }
+        }
+        function refreshDuckDisplay() {
+            const dc = getDuckCoins();
+            const el = document.getElementById('duck-coin-display');
+            if (el) el.innerText = dc !== null ? dc : 'N/A (play Duck RNG first)';
+            const elShop = document.getElementById('coin-display-shop');
+            if (elShop) elShop.innerText = absolutelyNothingThatisImportantlol;
+        }
+
+        // ===== EXCHANGE =====
+        function exchangeToDuck() {
+            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
+            const dc = getDuckCoins();
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+            absolutelyNothingThatisImportantlol--;
+            setDuckCoins(dc + 100);
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshDuckDisplay();
+            alert("✅ -1 QC → +100 Duck Coins!");
+        }
+        function exchangeToQuack() {
+            const dc = getDuckCoins();
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+            if (dc < 100) { showAlert(`Need 100 Duck Coins! You have ${dc}.`, "🔃"); return; }
+            setDuckCoins(dc - 100);
+            absolutelyNothingThatisImportantlol++;
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshDuckDisplay();
+            alert("✅ -100 Duck Coins → +1 QC!");
+        }
+
+        // ===== COIN FLIP =====
+        let flipInProgress = false;
+        function doFlip(choice) {
+            if (flipInProgress) return;
+            const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
+            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌"); return; }
+            flipInProgress = true;
+            document.getElementById('flip-heads').disabled = true;
+            document.getElementById('flip-tails').disabled = true;
+            document.getElementById('flip-result').innerText = '';
+            const coin = document.getElementById('coinflip-coin');
+            coin.classList.add('flipping');
+            setTimeout(() => {
+                coin.classList.remove('flipping');
+                const result = Math.random() < 0.5 ? 'heads' : 'tails';
+                const won = result === choice;
+                if (won) {
+                    absolutelyNothingThatisImportantlol += bet;
+                    document.getElementById('flip-result').style.color = '#2ecc71';
+                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
+                    spawnGlitter();
+                } else {
+                    absolutelyNothingThatisImportantlol -= bet;
+                    document.getElementById('flip-result').style.color = '#e74c3c';
+                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
+                }
+                coin.innerText = result === 'heads' ? '🦆' : '🐟';
+                document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
+                hoihpohivpoweahovropagh4p9h8g4();
+                flipInProgress = false;
+                document.getElementById('flip-heads').disabled = false;
+                document.getElementById('flip-tails').disabled = false;
+            }, 1900);
+        }
+
+        // ===== SCRATCH CARD =====
+        let scratchActive = false;
+        let scratchPrize = null;
+        function openScratch() {
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
+            absolutelyNothingThatisImportantlol -= 2;
+            hoihpohivpoweahovropagh4p9h8g4();
+
+            const prizes = [
+                { emoji: '💰', label: '+5 Coins', action: () => { absolutelyNothingThatisImportantlol += 5; hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '💰', label: '+5 Coins', action: () => { absolutelyNothingThatisImportantlol += 5; hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '🪙', label: '+1 Coin',  action: () => { absolutelyNothingThatisImportantlol += 1; hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '🪙', label: '+1 Coin',  action: () => { absolutelyNothingThatisImportantlol += 1; hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '🪙', label: '+1 Coin',  action: () => { absolutelyNothingThatisImportantlol += 1; hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '💎', label: '+10 Coins', action: () => { absolutelyNothingThatisImportantlol += 10; hoihpohivpoweahovropagh4p9h8g4(); spawnGlitter(); } },
+                { emoji: '🦆', label: '+3 Coins', action: () => { absolutelyNothingThatisImportantlol += 3; hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '💸', label: 'Nothing',  action: () => {} },
+                { emoji: '💸', label: 'Nothing',  action: () => {} },
+                { emoji: '💸', label: 'Nothing',  action: () => {} },
+            ];
+            scratchPrize = prizes[Math.floor(Math.random() * prizes.length)];
+
+            document.getElementById('scratch-reveal').innerText = scratchPrize.emoji;
+            document.getElementById('scratch-result').innerText = '';
+            document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
+            scratchActive = true;
+
+            openMenu('scratch-screen');
+
+            setTimeout(() => {
+                const canvas = document.getElementById('scratch-canvas');
+                const ctx2 = canvas.getContext('2d');
+                ctx2.clearRect(0, 0, canvas.width, canvas.height);
+                ctx2.fillStyle = '#aaa';
+                ctx2.fillRect(0, 0, canvas.width, canvas.height);
+                ctx2.fillStyle = '#888';
+                ctx2.font = 'bold 18px sans-serif';
+                ctx2.textAlign = 'center';
+                ctx2.fillText('SCRATCH HERE', canvas.width / 2, canvas.height / 2);
+
+                let scratched = false;
+                let totalScratched = 0;
+                const totalPixels = canvas.width * canvas.height;
+
+                function scratch(e) {
+                    if (!scratchActive) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+                    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+                    ctx2.globalCompositeOperation = 'destination-out';
+                    ctx2.beginPath();
+                    ctx2.arc(x, y, 22, 0, Math.PI * 2);
+                    ctx2.fill();
+
+                    if (!scratched) {
+                        const imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                        let cleared = 0;
+                        for (let i = 3; i < imageData.data.length; i += 4) {
+                            if (imageData.data[i] === 0) cleared++;
+                        }
+                        if (cleared / totalPixels > 0.45) {
+                            scratched = true;
+                            scratchActive = false;
+                            ctx2.clearRect(0, 0, canvas.width, canvas.height);
+                            scratchPrize.action();
+                            document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
+                            hoihpohivpoweahovropagh4p9h8g4();
+                        }
+                    }
+                }
+                canvas.addEventListener('mousemove', e => { if (e.buttons === 1) scratch(e); });
+                canvas.addEventListener('touchmove', e => { e.preventDefault(); scratch(e); }, { passive: false });
+            }, 50);
+        }
+
+        // ===== THEME PEEK =====
+        function peekTheme() {
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
+            const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
+            if (locked.length === 0) { alert("You've unlocked everything already! 👑"); return; }
+            absolutelyNothingThatisImportantlol -= 2;
+            hoihpohivpoweahovropagh4p9h8g4();
+            const [id, data] = locked[Math.floor(Math.random() * locked.length)];
+            showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
+        }
+
+        // ===== NAME TAG =====
+        function setNametag() {
+            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
+            const name = document.getElementById('nametag-input').value.trim();
+            if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
+            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
+            absolutelyNothingThatisImportantlol -= 5;
+            localStorage.setItem('qw_nametag', btoa(name));
+            document.getElementById('nametag-display').innerText = name;
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshHomeNametag();
+            showAlert(`✅ Name set to "${name}"!`, "🏷️");
+        }
+        function loadNametag() {
+            const stored = localStorage.getItem('qw_nametag');
+            if (stored) {
+                try { document.getElementById('nametag-display').innerText = atob(stored); } catch {}
+            }
+        }
+
+        // ===== MEGA SPIN =====
+        function megaSpin() {
+            if (isSpinning) return;
+            if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡"); return; }
+            absolutelyNothingThatisImportantlol -= 9;
+            hoihpohivpoweahovropagh4p9h8g4();
+            let spinsLeft = 3;
+            document.getElementById('mega-spin-indicator').innerText = `⚡ Mega Spin: ${spinsLeft} spins left`;
+            document.getElementById('spin-btn').disabled = true;
+            document.getElementById('mega-btn').disabled = true;
+            isSpinning = true;
+
+            function runOneSpin() {
+                document.getElementById('slot-message').innerText = "Spinning...";
+                let ticks = 0;
+                const spinInterval = setInterval(() => {
+                    document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                    document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                    document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                    ticks++;
+                    if (ticks > 20) {
+                        clearInterval(spinInterval);
+                        finishSpin();
+                        spinsLeft--;
+                        document.getElementById('mega-spin-indicator').innerText = spinsLeft > 0 ? `⚡ Mega Spin: ${spinsLeft} spins left` : '';
+                        if (spinsLeft > 0) setTimeout(runOneSpin, 800);
+                        else {
+                            isSpinning = false;
+                            document.getElementById('spin-btn').disabled = false;
+                            document.getElementById('mega-btn').disabled = false;
+                        }
+                    }
+                }, 50);
+            }
+            runOneSpin();
+        }
+
+        // ===== NAV OVERRIDE (add new screens) =====
         function openMenu(menuId) {
-            document.getElementById('welcome-screen').style.display = 'none';
-            document.getElementById('slot-screen').style.display = 'none';
-            document.getElementById('themes-screen').style.display = 'none';
+            ['welcome-screen','slot-screen','themes-screen','shop-screen','coinflip-screen','scratch-screen','nametag-screen','casino-screen','roulette-screen','blackjack-screen','dice-screen','pushcards-screen','baccarat-screen'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
             document.getElementById('game-frame').style.display = 'none';
             document.getElementById(menuId).style.display = 'block';
+            if (menuId === 'shop-screen') { refreshDuckDisplay(); }
+            if (menuId === 'welcome-screen') { refreshHomeNametag(); }
+            if (menuId === 'casino-screen' || menuId === 'roulette-screen' || menuId === 'blackjack-screen' || menuId === 'dice-screen' || menuId === 'pushcards-screen' || menuId === 'baccarat-screen') syncCasinoCoins();
+            if (menuId === 'coinflip-screen') document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
+            if (menuId === 'nametag-screen') loadNametag();
         }
-
-        let loadTimer; 
         function playGame(gameUrl) {
-            clearTimeout(loadTimer); 
-            openMenu('welcome-screen'); 
+            clearTimeout(loadTimer);
+            openMenu('welcome-screen');
             document.getElementById('welcome-screen').style.display = 'none';
-            
             const sidebar = document.getElementById('sidebar');
             sidebar.style.display = 'none';
             setTimeout(() => { sidebar.style.display = ''; }, 100);
-
             const loader = document.getElementById('loader');
             loader.style.display = 'flex';
-
             loadTimer = setTimeout(() => {
                 loader.style.display = 'none';
                 const frame = document.getElementById('game-frame');
                 frame.style.display = 'block';
-                
-                const cacheBusterChar = gameUrl.includes('?') ? '&v=' : '?v=';
-                frame.src = gameUrl + cacheBusterChar + new Date().getTime(); 
-                
-                frame.focus(); 
-            }, 2000); 
+                frame.src = gameUrl + "?v=" + new Date().getTime();
+                frame.focus();
+            }, 2000);
         }
-
         function goHome() {
             clearTimeout(loadTimer);
-            document.getElementById('game-frame').src = ''; 
+            document.getElementById('game-frame').src = '';
             document.getElementById('loader').style.display = 'none';
             openMenu('welcome-screen');
         }
-
         function toggleFullScreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
-            } else {
-                document.exitFullscreen();
-            }
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(`Error: ${err.message}`, "❌"));
+            else document.exitFullscreen();
         }
-
         function showInfo(title, desc, controls) {
             document.getElementById('info-title').innerText = title;
             document.getElementById('info-desc').innerText = desc;
             document.getElementById('info-controls').innerText = controls;
-            document.getElementById('info-panel').style.left = '320px'; 
+            document.getElementById('info-panel').style.left = '320px';
         }
+        function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
 
-        function hideInfo() {
-            document.getElementById('info-panel').style.left = '-400px'; 
-        }
+        window.randomGoofyAssFunction = randomGoofyAssFunction;
+        window.megaSpin = megaSpin;
+        window.openMenu = openMenu;
+        window.playGame = playGame;
+        window.goHome = goHome;
+        window.toggleFullScreen = toggleFullScreen;
+        window.showInfo = showInfo;
+        window.hideInfo = hideInfo;
+        window.doFlip = doFlip;
+        window.openScratch = openScratch;
+        window.setNametag = setNametag;
+        window.peekTheme = peekTheme;
+        window.exchangeToDuck = exchangeToDuck;
+        window.exchangeToQuack = exchangeToQuack;
+        window.spinRoulette = spinRoulette;
+        window.startBlackjack = startBlackjack;
+        window.dealBlackjack = dealBlackjack;
+        window.bjHit = bjHit;
+        window.bjStand = bjStand;
+        window.rollDice = rollDice;
+        window.resetDice = resetDice;
+        window.playPushCards = playPushCards;
+        window.playBaccarat = playBaccarat;
+        window.closeCustomAlert = closeCustomAlert;
+    })();
     </script>
 </body>
 </html>
