@@ -1375,11 +1375,11 @@
         }
         function setDuckCoins(amount) {
             try {
-                const raw = localStorage.getItem('duckV13Accounts');
+                const raw = localStorage.getItem('duckV12Accounts');
                 const parsed = JSON.parse(raw);
                 const key = Object.keys(parsed)[0];
                 parsed[key].saveData.coins = amount;
-                localStorage.setItem('duckV13Accounts', JSON.stringify(parsed));
+                localStorage.setItem('duckV12Accounts', JSON.stringify(parsed));
                 return true;
             } catch { return false; }
         }
