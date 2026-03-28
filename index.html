@@ -366,9 +366,26 @@
         grid.appendChild(btn);
     }
 }
-
-const SAVE_KEY = "duckSecureV2";
-const SECRET = "duck_key_v2_secure";
+function generateKey(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`';
+  const characterCount = characters.length;
+  const randomValues = new Uint8Array(length); 
+  window.crypto.getRandomValues(randomValues);
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(randomValues[i] % characterCount);
+  }
+  return result;
+}
+    const SAVE_KEY = "ihg398g231f1g3ig1f13";
+            let SECRET;
+    if (!localStorage.getItem('gf2378g8o32843g7p243')) {
+        SECRET = generateKey(500);
+        localStorage.setItem('gf2378g8o32843g7p243', SECRET');
+    }
+            else {
+                SECRET = localStorage.getItem('gf2378g8o32843g7p243');
+            }
 
 function encode(data) {
     return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
@@ -397,7 +414,7 @@ function hugh43go278872() {
     const oldThemes = localStorage.getItem('unlockedThemes');
     const oldActive = localStorage.getItem('activeTheme');
 
-    if (oldCoins !== null || oldThemes !== null || oldActive !== null) {
+    if ((oldCoins !== null || oldThemes !== null || oldActive !== null) && (!localStorage.getItem('gvg437v2g7937v9g329') || localStorage.getItem('gvg437v2g7937v9g329') != 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v')) {
         console.log("Old save detected → migrating");
 
         const newSave = {
@@ -412,7 +429,7 @@ function hugh43go278872() {
         localStorage.removeItem('absolutelyNothingThatisImportantlol');
         localStorage.removeItem('unlockedThemes');
         localStorage.removeItem('activeTheme');
-
+        localStorage.setItem('gvg437v2g7937v9g329', 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v');
         return newSave;
     }
 
