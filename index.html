@@ -525,13 +525,18 @@
                 (!localStorage.getItem('gvg437v2g7937v9g329') || localStorage.getItem('gvg437v2g7937v9g329') != 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v')) {
 
                 let parsedThemes;
+                let newCoins;
                 try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
                 if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
                 const validThemes = Object.keys(themeData);
                 parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
+                if(localStorage.getItem('quackCoins') <= 50) newCoins = localStorage.getItem('quackCoins');
+                else {
+                    newCoins = 50;
+                }
 
                 const newSave = {
-                    absolutelyNothingThatisImportantlol: 50,
+                    absolutelyNothingThatisImportantlol: newCoins,
                     unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
                     activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
                 };
