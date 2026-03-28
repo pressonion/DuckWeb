@@ -782,7 +782,74 @@
             } catch { return null; }
         }
 
+        
         // ===== SAVE/LOAD =====
+
+        // ===== OLD SAVE MIGRATION (encrypted) =====
+(function migrateOldEncryptedSave() {
+    const OLD_KEY = "duckSecureV2";
+    const OLD_SECRET = "duck_key_v2_secure";
+
+    function oldDecode(str) {
+        try {
+            let decoded = decodeURIComponent(escape(atob(str)));
+            if (!decoded.endsWith(OLD_SECRET)) return null;
+            decoded = decoded.slice(0, -OLD_SECRET.length);
+            return JSON.parse(decoded);
+        } catch {
+            return null;
+        }
+    }
+
+    const oldEncrypted = localStorage.getItem(OLD_KEY);
+
+    // already migrated or no old save → exit
+    if (!oldEncrypted || localStorage.getItem("gvg437v2g7937v9g329")) return;
+
+    const oldData = oldDecode(oldEncrypted);
+    if (!oldData) return;
+
+    console.log("🧠 Migrating old encrypted save:", oldData);
+
+    // ===== CONVERT DATA =====
+    const validThemes = Object.keys({
+        'default':1,'theme-dark':1,'theme-ocean':1,'theme-neon':1,
+        'theme-retro':1,'theme-sunset':1,'theme-forest':1,
+        'theme-galaxy':1,'theme-bloodmoon':1,'theme-rubberduck':1,
+        'theme-winter':1,'theme-vaporwave':1
+    });
+
+    let coins = parseInt(oldData.coins || oldData.quackCoins || 0);
+    let themes = oldData.unlockedThemes || ['default'];
+    let active = oldData.activeTheme || 'default';
+
+    if (!Array.isArray(themes)) themes = ['default'];
+    themes = themes.filter(t => validThemes.includes(t));
+
+    const newSave = {
+        absolutelyNothingThatisImportantlol: Math.min(coins, 50),
+        unlockedThemes: themes.length ? themes : ['default'],
+        activeTheme: validThemes.includes(active) ? active : 'default'
+    };
+
+    // ===== SAVE USING NEW SYSTEM =====
+    try {
+        localStorage.setItem("ihg398g231f1g3ig1f13f", encode(newSave));
+
+        // cleanup
+        localStorage.removeItem(OLD_KEY);
+
+        // mark migrated
+        localStorage.setItem(
+            "gvg437v2g7937v9g329",
+            "f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v"
+        );
+
+        console.log("✅ Migration complete:", newSave);
+    } catch (e) {
+        console.log("💀 Migration failed:", e);
+    }
+})();
         function hugh43go278872() {
             const encrypted = localStorage.getItem(SAVE_KEY);
             if (encrypted) {
