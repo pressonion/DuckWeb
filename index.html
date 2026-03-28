@@ -8,7 +8,7 @@
         :root {
             --bg-gradient: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
             --menu-bg: #2c3e50;
-            --text-main: #2c3e50;
+            --text-main: #2c3e50
             --text-light: #555;
             --box-bg: rgba(255, 255, 255, 0.85);
             --btn-hover: #f1c40f;
@@ -743,37 +743,89 @@
             }
         }
 
-        // ===== CRYPTO =====
-        function generateKey(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~';
-            const randomValues = new Uint8Array(length);
-            window.crypto.getRandomValues(randomValues);
-            let result = '';
-            for (let i = 0; i < length; i++) result += characters.charAt(randomValues[i] % characters.length);
-            return result;
-        }
+        // ===== REAL CRYPTO (AES) =====
 
-        const SAVE_KEY = "ihg398g231f1g3ig1f13f";
-        let SECRET;
-        if (!localStorage.getItem('gf2378g8o32843g7p243f')) {
-            SECRET = generateKey(500);
-            localStorage.setItem('gf2378g8o32843g7p243f', SECRET);
-        } else {
-            SECRET = localStorage.getItem('gf2378g8o32843g7p243f');
-        }
+// generate strong random secret (per user)
+function generateKey(length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+';
+    const arr = new Uint8Array(length);
+    crypto.getRandomValues(arr);
+    return Array.from(arr).map(x => chars[x % chars.length]).join('');
+}
+const keyName = "h93h9vh78q4h8ch8h832h8qfh328q8hm78gf8q9g89fhg78hgf2839gf7892q3g78f2g78fg28793gfghzvovownvoawovaowevohwaohe*&%&*^$^##%#@%^@^#^$%^$%^&oae";
+let SECRET;
 
-        function encode(data) {
-            return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
-        }
-        function decode(str) {
-            try {
-                let decoded = decodeURIComponent(escape(atob(str)));
-                if (!decoded.endsWith(SECRET)) return null;
-                decoded = decoded.slice(0, -SECRET.length);
-                return JSON.parse(decoded);
-            } catch { return null; }
-        }
+if (!localStorage.getItem(keyName)) {
+    SECRET = generateKey(400);
+    localStorage.setItem(keyName, SECRET);
+} else {
+    SECRET = localStorage.getItem(keyName);
+}
+async function getKey(password, salt) {
+    const enc = new TextEncoder();
 
+    const keyMaterial = await crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        { name: "PBKDF2" },
+        false,
+        ["deriveKey"]
+    );
+
+    return crypto.subtle.deriveKey(
+        {
+            name: "PBKDF2",
+            salt,
+            iterations: 100000,
+            hash: "SHA-256",
+        },
+        keyMaterial,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["encrypt", "decrypt"]
+    );
+}
+async function encode(data) {
+    const enc = new TextEncoder();
+
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+
+    const key = await getKey(SECRET, salt);
+
+    const encrypted = await crypto.subtle.encrypt(
+        { name: "AES-GCM", iv },
+        key,
+        enc.encode(JSON.stringify(data))
+    );
+
+    return btoa(JSON.stringify({
+        salt: Array.from(salt),
+        iv: Array.from(iv),
+        data: Array.from(new Uint8Array(encrypted))
+    }));
+}
+async function decode(str) {
+    try {
+        const parsed = JSON.parse(atob(str));
+
+        const salt = new Uint8Array(parsed.salt);
+        const iv = new Uint8Array(parsed.iv);
+        const data = new Uint8Array(parsed.data);
+
+        const key = await getKey(SECRET, salt);
+
+        const decrypted = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv },
+            key,
+            data
+        );
+
+        return JSON.parse(new TextDecoder().decode(decrypted));
+    } catch {
+        return null;
+    }
+}
         
         // ===== SAVE/LOAD =====
 
@@ -832,7 +884,7 @@
         console.log("💀 Migration failed:", e);
     }
 })();
-        function hugh43go278872() {
+        async function hugh43go278872() {
             const encrypted = localStorage.getItem(SAVE_KEY);
             if (encrypted) {
                 const data = decode(encrypted);
@@ -867,17 +919,40 @@
             return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
         }
 
-        function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
-            const data = dataOverride ? dataOverride : {
-                absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
-                unlockedThemes: unlockedThemes || ['default'],
-                activeTheme: activeTheme || 'default'
-            };
-            localStorage.setItem(SAVE_KEY, encode(data));
-            updateUI();
-        }
+        async function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
+    const data = dataOverride ? dataOverride : {
+        absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
+        unlockedThemes: unlockedThemes || ['default'],
+        activeTheme: activeTheme || 'default'
+    };
 
-        let save = hugh43go278872();
+    const encrypted = await encode(data);
+    localStorage.setItem(SAVE_KEY, encrypted);
+
+    updateUI();
+}
+
+        let absolutelyNothingThatisImportantlol = 0;
+let unlockedThemes = ['default'];
+let activeTheme = 'default';
+
+(async () => {
+    let save = await hugh43go278872();
+
+    if (!save || typeof save !== 'object') {
+        save = {
+            absolutelyNothingThatisImportantlol: 0,
+            unlockedThemes: ['default'],
+            activeTheme: 'default'
+        };
+    }
+
+    absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
+    unlockedThemes = save.unlockedThemes || ['default'];
+    activeTheme = save.activeTheme || 'default';
+
+    updateUI();
+})();
         if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
 
         let absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
