@@ -367,7 +367,7 @@
     }
 }
 function generateKey(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~`';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~';
   const characterCount = characters.length;
   const randomValues = new Uint8Array(length); 
   window.crypto.getRandomValues(randomValues);
@@ -377,14 +377,14 @@ function generateKey(length) {
   }
   return result;
 }
-    const SAVE_KEY = "ihg398g231f1g3ig1f13";
+    const SAVE_KEY = "ihg398g231f1g3ig1f13f";
             let SECRET;
-    if (!localStorage.getItem('gf2378g8o32843g7p243')) {
+    if (!localStorage.getItem('gf2378g8o32843g7p243f')) {
         SECRET = generateKey(500);
-        localStorage.setItem('gf2378g8o32843g7p243', SECRET);
+        localStorage.setItem('gf2378g8o32843g7p243f', SECRET);
     }
             else {
-                SECRET = localStorage.getItem('gf2378g8o32843g7p243');
+                SECRET = localStorage.getItem('gf2378g8o32843g7p243f');
             }
 
 function encode(data) {
