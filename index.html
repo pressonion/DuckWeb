@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ducky's website</title>
     <style>
+        /* Base Variables - Default Theme */
         :root {
             --bg-gradient: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
             --menu-bg: #2c3e50;
@@ -16,6 +17,7 @@
             --icon-color: #ffffff;
         }
 
+        /* Unlockable Themes */
         body.theme-dark {
             --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             --menu-bg: #111;
@@ -25,6 +27,7 @@
             --btn-hover: #e67e22;
             --btn-text: #fff;
         }
+
         body.theme-ocean {
             --bg-gradient: linear-gradient(135deg, #020024 0%, #090979 35%, #00d4ff 100%);
             --menu-bg: #010a26;
@@ -34,6 +37,7 @@
             --btn-hover: #00d4ff;
             --btn-text: #010a26;
         }
+
         body.theme-neon {
             --bg-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --menu-bg: #2a0845;
@@ -43,119 +47,50 @@
             --btn-hover: #f093fb;
             --btn-text: #111;
         }
-        body.theme-retro {
-            --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
-            --menu-bg: #001100;
-            --text-main: #00ff41;
-            --text-light: #00cc33;
-            --box-bg: rgba(0, 20, 0, 0.9);
-            --btn-hover: #00ff41;
-            --btn-text: #000;
-            --icon-color: #00ff41;
-        }
-        body.theme-sunset {
-            --bg-gradient: linear-gradient(135deg, #ff6b35 0%, #f7c59f 40%, #e84393 100%);
-            --menu-bg: #7b1e4b;
-            --text-main: #2d0020;
-            --text-light: #5a0035;
-            --box-bg: rgba(255, 220, 200, 0.88);
-            --btn-hover: #e84393;
-            --btn-text: #fff;
-        }
-        body.theme-forest {
-            --bg-gradient: linear-gradient(135deg, #1a2f1a 0%, #2d5a27 50%, #4a7c59 100%);
-            --menu-bg: #0f1f0f;
-            --text-main: #d4edda;
-            --text-light: #a8d5b5;
-            --box-bg: rgba(10, 30, 10, 0.82);
-            --btn-hover: #4a7c59;
-            --btn-text: #d4edda;
-        }
-        body.theme-galaxy {
-            --bg-gradient: linear-gradient(135deg, #0d0015 0%, #1a0030 40%, #2d0060 70%, #0d0015 100%);
-            --menu-bg: #0a0010;
-            --text-main: #e0c3fc;
-            --text-light: #b39ddb;
-            --box-bg: rgba(20, 0, 40, 0.85);
-            --btn-hover: #7c4dff;
-            --btn-text: #fff;
-        }
-        body.theme-bloodmoon {
-            --bg-gradient: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #2d0000 100%);
-            --menu-bg: #0f0000;
-            --text-main: #ff3333;
-            --text-light: #cc0000;
-            --box-bg: rgba(30, 0, 0, 0.88);
-            --btn-hover: #cc0000;
-            --btn-text: #fff;
-            --icon-color: #ff3333;
-        }
-        body.theme-rubberduck {
-            --bg-gradient: linear-gradient(135deg, #ffe600 0%, #ffd000 50%, #ffb700 100%);
-            --menu-bg: #cc9900;
-            --text-main: #3d2c00;
-            --text-light: #5a4000;
-            --box-bg: rgba(255, 230, 0, 0.75);
-            --btn-hover: #ff9900;
-            --btn-text: #fff;
-        }
-        body.theme-winter {
-            --bg-gradient: linear-gradient(135deg, #e8f4f8 0%, #b3d9ea 50%, #7ec8e3 100%);
-            --menu-bg: #1a3a4a;
-            --text-main: #0d2535;
-            --text-light: #2a5f7a;
-            --box-bg: rgba(255, 255, 255, 0.82);
-            --btn-hover: #7ec8e3;
-            --btn-text: #0d2535;
-        }
-        body.theme-vaporwave {
-            --bg-gradient: linear-gradient(135deg, #ff71ce 0%, #b967ff 50%, #05ffa1 100%);
-            --menu-bg: #1a0033;
-            --text-main: #fff;
-            --text-light: #ff71ce;
-            --box-bg: rgba(26, 0, 51, 0.82);
-            --btn-hover: #05ffa1;
-            --btn-text: #1a0033;
-        }
 
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-gradient);
             color: var(--text-main);
-            overflow: hidden;
+            overflow: hidden; 
             transition: background 0.5s ease;
         }
 
+        /* Icon Container */
         #icon-container {
-            position: fixed; top: 0; left: 0; width: 70px; z-index: 101;
+            position: fixed; top: 0; left: 0; width: 70px; z-index: 101; 
             background: var(--menu-bg); border-bottom-right-radius: 15px;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.5); transition: background 0.3s;
             display: flex; flex-direction: column; align-items: center;
         }
+
         .side-icon {
             width: 100%; padding: 15px 0; cursor: pointer; color: var(--icon-color);
             text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.2s; display: flex; justify-content: center;
         }
+
         .side-icon svg { width: 28px; height: 28px; }
         .side-icon:hover { transform: scale(1.2); }
         #menu-icon { border-top: none; }
 
+        /* Sidebar */
         #sidebar {
             position: absolute; top: 0; left: -320px; width: 320px; height: 100vh;
-            background-color: var(--menu-bg); color: white;
-            transition: left 0.3s ease, background 0.3s; padding-top: 180px;
-            box-sizing: border-box; z-index: 100;
+            background-color: var(--menu-bg); color: white; transition: left 0.3s ease, background 0.3s;
+            padding-top: 180px; box-sizing: border-box; z-index: 100;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5); overflow-y: auto;
         }
+
         #icon-container:hover ~ #sidebar, #sidebar:hover, #info-panel:hover { left: 0; }
 
         .game-btn {
             display: flex; align-items: center; width: 100%; background: none; color: white;
-            border: none; border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 20px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s;
+            border: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 20px;
+            font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s;
         }
+
         .btn-icon { width: 28px; height: 28px; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
         .game-btn:hover { background-color: var(--btn-hover); color: var(--btn-text); padding-left: 30px; }
 
@@ -163,52 +98,51 @@
             position: fixed; top: 50%; left: -400px; transform: translateY(-50%); width: 300px;
             background: var(--box-bg); color: var(--text-main); padding: 20px;
             border-radius: 0 15px 15px 0; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
-            transition: left 0.3s ease; z-index: 99; pointer-events: none;
+            transition: left 0.3s ease; z-index: 99; pointer-events: none; 
         }
+
         #info-panel h3 { margin-top: 0; color: var(--btn-hover); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
         .controls-text { font-family: monospace; background: rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; }
 
+        /* Main Content */
         #main-content {
             margin-left: 70px; height: 100vh; display: flex; flex-direction: column;
             align-items: center; justify-content: center; position: relative;
         }
+
         .menu-screen {
             text-align: center; background: var(--box-bg); padding: 50px;
             border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: background 0.5s; position: relative; width: 600px; max-width: 90%;
         }
+
         .menu-screen h1 { font-size: 40px; margin: 0 0 10px 0; }
         .menu-screen p { font-size: 18px; color: var(--text-light); margin-bottom: 20px; }
 
+        /* Quack Coin System */
         #main-menu-coins {
-            position: absolute; top: 20px; right: 20px;
-            font-size: 28px; font-weight: bold; display: flex; align-items: center; gap: 8px;
-            background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 20px;
+            position: absolute; top: 20px; right: 20px; font-size: 28px; font-weight: bold; 
+            display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.1); 
+            padding: 5px 15px; border-radius: 20px;
         }
+        
         .action-btn {
             background: var(--menu-bg); color: white; border: none; padding: 12px 20px;
             font-size: 18px; border-radius: 10px; cursor: pointer; margin: 10px;
             font-weight: bold; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .action-btn:hover { transform: scale(1.05); background: var(--btn-hover); color: var(--btn-text); }
+        .action-btn:hover:not(:disabled) { transform: scale(1.05); background: var(--btn-hover); color: var(--btn-text); }
+        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        #slot-paytable {
-            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.1);
-            padding: 10px; border-radius: 10px; text-align: left; font-size: 13px;
-        }
+        /* Slot Machine Area */
+        #slot-paytable { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; text-align: left; font-size: 14px; }
         .reels { display: flex; justify-content: center; gap: 15px; margin: 30px 0; font-size: 50px; }
-        .reel {
-            background: white; border: 4px solid var(--menu-bg); border-radius: 10px;
-            width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-        }
-        #slot-message { font-size: 20px; font-weight: bold; min-height: 30px; margin-bottom: 15px; color: #e74c3c; }
+        .reel { background: white; border: 4px solid var(--menu-bg); border-radius: 10px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+        #slot-message { font-size: 20px; font-weight: bold; min-height: 30px; margin-bottom: 15px; color: #e74c3c;}
 
-        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-height: 340px; overflow-y: auto; padding-right: 4px; }
-        .theme-item-btn {
-            padding: 12px; font-size: 15px; font-weight: bold; border: 2px solid var(--menu-bg);
-            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.5); transition: 0.2s;
-        }
+        /* Theme Menu */
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .theme-item-btn { padding: 15px; font-size: 16px; font-weight: bold; border: 2px solid var(--menu-bg); border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.5); transition: 0.2s; }
         .theme-item-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); }
         .theme-item-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #999; }
         .equipped-stamp { color: green; font-weight: bold; display: block; font-size: 12px; margin-top: 5px; }
@@ -217,81 +151,47 @@
         .duck-decoration { width: 50px; height: 50px; display: inline-block; margin: 0 10px; animation: bob 2s infinite ease-in-out; }
         .duck-decoration:nth-child(2) { animation-delay: 0.3s; }
         .duck-decoration:nth-child(3) { animation-delay: 0.6s; }
-
-        #loader {
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-gradient); z-index: 50;
-        }
+        
+        #loader { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-gradient); z-index: 50; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
-        #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10; }
-
-        /* ===== GLITTER CANVAS ===== */
-        #glitter-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
-        }
-
-        /* ===== UNLOCK POPUP ===== */
-        #unlock-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
-            background: linear-gradient(135deg, #f1c40f, #e67e22);
-            color: #fff; padding: 30px 50px; border-radius: 20px;
-            font-size: 28px; font-weight: bold; text-align: center;
-            box-shadow: 0 0 60px rgba(241,196,15,0.8); z-index: 10000;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-        }
-        #unlock-popup.show { transform: translate(-50%, -50%) scale(1); }
-        #unlock-popup .unlock-emoji { font-size: 50px; display: block; margin-bottom: 10px; }
+        #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10;}
     </style>
 </head>
-<body oncontextmenu="return false;">
-
-    <canvas id="glitter-canvas"></canvas>
-    <div id="unlock-popup"><span class="unlock-emoji" id="unlock-emoji">🎉</span><span id="unlock-text">Theme Unlocked!</span></div>
+<body>
 
     <svg style="display: none;">
-        <symbol id="custom-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#fff"/><rect x="5" y="2" width="6" height="2" fill="#c0392b"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#f1c40f"/><rect x="4" y="7" width="7" height="6" fill="#fff"/><rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/><rect x="5" y="13" width="1" height="2" fill="#f1c40f"/><rect x="8" y="13" width="1" height="2" fill="#f1c40f"/></symbol>
-        <symbol id="main-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#f1c40f"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#e67e22"/><rect x="4" y="7" width="7" height="6" fill="#f1c40f"/><rect x="5" y="9" width="4" height="2" fill="#f39c12"/><rect x="5" y="13" width="1" height="2" fill="#e67e22"/><rect x="8" y="13" width="1" height="2" fill="#e67e22"/></symbol>
-        <symbol id="quack-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text></symbol>
+        <symbol id="custom-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#fff"/> <rect x="5" y="2" width="6" height="2" fill="#c0392b"/> <rect x="8" y="4" width="1" height="1" fill="#000"/> <rect x="11" y="4" width="4" height="2" fill="#f1c40f"/> <rect x="4" y="7" width="7" height="6" fill="#fff"/> <rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/> <rect x="5" y="13" width="1" height="2" fill="#f1c40f"/> <rect x="8" y="13" width="1" height="2" fill="#f1c40f"/> </symbol>
+        <symbol id="main-duck" viewBox="0 0 16 16"> <rect x="5" y="2" width="6" height="5" fill="#f1c40f"/> <rect x="8" y="4" width="1" height="1" fill="#000"/> <rect x="11" y="4" width="4" height="2" fill="#e67e22"/> <rect x="4" y="7" width="7" height="6" fill="#f1c40f"/> <rect x="5" y="9" width="4" height="2" fill="#f39c12"/> <rect x="5" y="13" width="1" height="2" fill="#e67e22"/> <rect x="8" y="13" width="1" height="2" fill="#e67e22"/> </symbol>
+        <symbol id="quack-coin" viewBox="0 0 24 24"> <circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/> <text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text> </symbol>
     </svg>
 
     <div id="icon-container">
-        <div id="menu-icon" class="side-icon" title="Menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </div>
-        <div class="side-icon" onclick="goHome()" title="Back to Main Menu">
-            <svg><use href="#custom-duck"></use></svg>
-        </div>
-        <div class="side-icon" onclick="toggleFullScreen()" title="Fullscreen">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-        </div>
+        <div id="menu-icon" class="side-icon" title="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+        <div class="side-icon" onclick="goHome()" title="Back to Main Menu"><svg><use href="#custom-duck"></use></svg></div>
+        <div class="side-icon" onclick="toggleFullScreen()" title="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></div>
     </div>
 
     <div id="sidebar">
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue','Battle endless rooms as a brave duck!','Arrow Keys to move, Space to attack')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action','A fast-paced drawn action game.','WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎨</div> Doodle Action</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/')" onmouseover="showInfo('Shooting Fun','Test your aim and reflexes.','Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎯</div> Shooting Fun</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over','A frustratingly fun physics game.','Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🔨</div> Getting Over</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG','Test your luck! Roll for the rarest ducks.','Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎲</div> Duck RNG</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker','Test your card skills.','Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🃏</div> Poker</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚗</div> Car Game</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue', 'Battle endless rooms as a brave duck!', 'Arrow Keys to move, Space to attack')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action', 'A fast-paced drawn action game.', 'WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="3"><circle cx="12" cy="12" r="8"></circle></svg></div> Doodle Action</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/')" onmouseover="showInfo('Shooting Fun', 'Test your aim and reflexes.', 'Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2" fill="#3498db"></circle></svg></div> Shooting Fun</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over', 'A frustratingly fun physics game.', 'Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="#9b59b6"><path d="M20.46 3.54l-3.54-3.54-4.24 4.24 3.54 3.54zM11.97 9.2L3.48 17.68l2.83 2.83 8.49-8.49z"></path></svg></div> Getting Over</button>
+        
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG', 'Test your luck! Roll for the rarest ducks.', 'Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8" cy="8" r="1.5" fill="#2ecc71"></circle><circle cx="16" cy="16" r="1.5" fill="#2ecc71"></circle><circle cx="12" cy="12" r="1.5" fill="#2ecc71"></circle></svg></div> Duck RNG</button>
+        
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker', 'Test your card skills.', 'Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#f1c40f" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M12 7c-2 0-3 2-3 4s3 5 3 5 3-3 3-5-1-4-3-4z" fill="#f1c40f"></path></svg></div> Poker</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game', 'Drive fast and drift around corners.', 'Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#00ced1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5h11L19 11M3 11h18v6h-2v2h-2v-2H7v2H5v-2H3v-6z"/><circle cx="7.5" cy="15.5" r="1.5" fill="#00ced1"/><circle cx="16.5" cy="15.5" r="1.5" fill="#00ced1"/></svg></div> Car Game</button>
     </div>
 
     <div id="info-panel">
-        <h3 id="info-title">Game Title</h3>
-        <p id="info-desc">Description goes here.</p>
-        <strong>Controls:</strong>
-        <p class="controls-text" id="info-controls">Controls go here.</p>
+        <h3 id="info-title">Game Title</h3><p id="info-desc">Description goes here.</p>
+        <strong>Controls:</strong><p class="controls-text" id="info-controls">Controls go here.</p>
     </div>
 
     <div id="main-content">
         <div id="welcome-screen" class="menu-screen">
-            <div id="main-menu-coins">
-                <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span>
-            </div>
+            <div id="main-menu-coins"><svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span></div>
             <h1>Welcome to Ducky's website</h1>
             <p>Hover your mouse over the <b>☰ menu</b> on the left to browse and play my games</p>
             <p style="font-weight: bold; color: var(--btn-hover); background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px;">
@@ -309,32 +209,21 @@
         </div>
 
         <div id="slot-screen" class="menu-screen" style="display: none;">
-            <div id="slot-paytable">
-                <b>Prizes:</b><br>
-                🍒🍒🍒 = 5 Coins<br>
-                🦆🦆🦆 = Dark Mode<br>
-                💎💎💎 = Ocean Blue<br>
-                🎰🎰🎰 = Neon Pink<br>
-                <i>(Any 2 matching = 1 Coin back)</i>
-            </div>
+            <div id="slot-paytable"><b>Prizes:</b><br>🍒🍒🍒 = 5 Coins<br>🦆🦆🦆 = Dark Mode<br>💎💎💎 = Ocean Blue Theme<br>🎰🎰🎰 = Neon Pink Theme<br><i>(Any 2 = 1 Coin back)</i></div>
             <h2>🎰 Ducky Slots 🎰</h2>
             <p>Coins: <strong id="coin-display-slots">0</strong></p>
             <div class="reels">
-                <div class="reel" id="reel1">❓</div>
-                <div class="reel" id="reel2">❓</div>
-                <div class="reel" id="reel3">❓</div>
+                <div class="reel" id="reel1">❓</div><div class="reel" id="reel2">❓</div><div class="reel" id="reel3">❓</div>
             </div>
             <div id="slot-message">Match 3 to win!</div>
-            <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction()">Spin (Cost: 3 Coins)</button>
-            <br>
+            <button class="action-btn" id="spin-btn" onclick="spinSlots()">Spin (Cost: 3 Coins)</button><br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
         </div>
 
         <div id="themes-screen" class="menu-screen" style="display: none;">
             <h2>🎨 Theme Locker 🎨</h2>
             <p>Win new themes in the Slot Machine!</p>
-            <div class="theme-grid" id="theme-grid-container"></div>
-            <br>
+            <div class="theme-grid" id="theme-grid-container"></div><br>
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
         </div>
 
@@ -346,263 +235,130 @@
     </div>
 
     <script>
-    (function() {
-        let loadTimer;
-        let isSpinning = false;
+        // --- SECURE ECONOMY & ANTI-CHEAT ---
+        let quackCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
+        let shadowBalance = quackCoins; // Hidden balance to catch console hackers
+        let lastPlaytimeCoin = 0; // Tracks when they last earned a time-based coin
+        
+        let unlockedThemes = JSON.parse(localStorage.getItem('unlockedThemes')) || ['default'];
+        let activeTheme = localStorage.getItem('activeTheme') || 'default';
 
-        // ===== DEVTOOLS BLOCK =====
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode === 123) event.preventDefault();
-            if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
-                (event.ctrlKey && event.shiftKey && event.keyCode === 74) ||
-                (event.ctrlKey && event.shiftKey && event.keyCode === 67)) event.preventDefault();
-            if (event.ctrlKey && event.keyCode === 85) event.preventDefault();
-        });
-
-        // ===== THEME DATA =====
         const themeData = {
-            'default':        { name: '☀️ Daylight (Default)', emoji: '☀️' },
-            'theme-dark':     { name: '🌙 Dark Mode',          emoji: '🌙' },
-            'theme-ocean':    { name: '🌊 Ocean Blue',         emoji: '🌊' },
-            'theme-neon':     { name: '💜 Neon Pink',          emoji: '💜' },
-            'theme-retro':    { name: '🖥️ Retro Terminal',     emoji: '🖥️' },
-            'theme-sunset':   { name: '🌅 Sunset',             emoji: '🌅' },
-            'theme-forest':   { name: '🌲 Forest',             emoji: '🌲' },
-            'theme-galaxy':   { name: '✨ Galaxy',             emoji: '✨' },
-            'theme-bloodmoon':{ name: '🔴 Blood Moon',         emoji: '🔴' },
-            'theme-rubberduck':{ name: '🐥 Rubber Duck',       emoji: '🐥' },
-            'theme-winter':   { name: '❄️ Winter',             emoji: '❄️' },
-            'theme-vaporwave':{ name: '🌸 Vaporwave',          emoji: '🌸' },
+            'default': { name: 'Daylight (Default)', class: '' },
+            'theme-dark': { name: 'Dark Mode', class: 'theme-dark' },
+            'theme-ocean': { name: 'Ocean Blue', class: 'theme-ocean' },
+            'theme-neon': { name: 'Neon Pink', class: 'theme-neon' }
         };
 
-        // ===== GLITTER SYSTEM =====
-        const canvas = document.getElementById('glitter-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
-        let particles = [];
-        let animating = false;
-
-        function spawnGlitter() {
-            const colors = ['#f1c40f','#e74c3c','#3498db','#2ecc71','#9b59b6','#e67e22','#ff71ce','#05ffa1','#fff'];
-            for (let i = 0; i < 180; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height * 0.5,
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: Math.random() * 3 + 1,
-                    size: Math.random() * 10 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    rotation: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 8,
-                    life: 1,
-                    decay: Math.random() * 0.012 + 0.008,
-                    shape: Math.random() > 0.5 ? 'rect' : 'circle'
-                });
-            }
-            if (!animating) animateGlitter();
+        function saveGame() {
+            localStorage.setItem('quackCoins', quackCoins);
+            localStorage.setItem('unlockedThemes', JSON.stringify(unlockedThemes));
+            localStorage.setItem('activeTheme', activeTheme);
+            updateUI();
         }
 
-        function animateGlitter() {
-            animating = true;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles = particles.filter(p => p.life > 0);
-
-            for (const p of particles) {
-                ctx.save();
-                ctx.globalAlpha = p.life;
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                if (p.shape === 'rect') {
-                    ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.05;
-                p.rotation += p.rotSpeed;
-                p.life -= p.decay;
-            }
-
-            if (particles.length > 0) {
-                requestAnimationFrame(animateGlitter);
-            } else {
-                animating = false;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-
-        // ===== UNLOCK POPUP =====
-        function showUnlockPopup(themeName, emoji) {
-            const popup = document.getElementById('unlock-popup');
-            document.getElementById('unlock-emoji').innerText = emoji;
-            document.getElementById('unlock-text').innerText = themeName + ' Unlocked!';
-            popup.classList.add('show');
-            spawnGlitter();
-            setTimeout(() => popup.classList.remove('show'), 2800);
-        }
-
-        // ===== UI =====
         function updateUI() {
-            document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
-            document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
-            document.body.className = activeTheme || '';
+            document.getElementById('coin-display-home').innerText = quackCoins;
+            document.getElementById('coin-display-slots').innerText = quackCoins;
+            document.body.className = themeData[activeTheme].class;
 
             const grid = document.getElementById('theme-grid-container');
             grid.innerHTML = '';
-
             for (const [themeId, data] of Object.entries(themeData)) {
                 const btn = document.createElement('button');
                 btn.className = 'theme-item-btn';
-
                 if (unlockedThemes.includes(themeId)) {
                     btn.innerHTML = data.name;
                     if (activeTheme === themeId) {
                         btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
                         btn.style.borderColor = 'green';
                     } else {
-                        btn.onclick = () => { activeTheme = themeId; hoihpohivpoweahovropagh4p9h8g4(); };
+                        btn.onclick = () => { activeTheme = themeId; saveGame(); };
                     }
                 } else {
-                    btn.innerText = '🔒 ???';
+                    btn.innerText = '🔒 Locked (' + data.name + ')';
                     btn.disabled = true;
                 }
                 grid.appendChild(btn);
             }
         }
 
-        // ===== CRYPTO =====
-        function generateKey(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~';
-            const randomValues = new Uint8Array(length);
-            window.crypto.getRandomValues(randomValues);
-            let result = '';
-            for (let i = 0; i < length; i++) result += characters.charAt(randomValues[i] % characters.length);
-            return result;
-        }
-
-        const SAVE_KEY = "ihg398g231f1g3ig1f13f";
-        let SECRET;
-        if (!localStorage.getItem('gf2378g8o32843g7p243f')) {
-            SECRET = generateKey(500);
-            localStorage.setItem('gf2378g8o32843g7p243f', SECRET);
-        } else {
-            SECRET = localStorage.getItem('gf2378g8o32843g7p243f');
-        }
-
-        function encode(data) {
-            return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
-        }
-        function decode(str) {
-            try {
-                let decoded = decodeURIComponent(escape(atob(str)));
-                if (!decoded.endsWith(SECRET)) return null;
-                decoded = decoded.slice(0, -SECRET.length);
-                return JSON.parse(decoded);
-            } catch { return null; }
-        }
-
-        // ===== SAVE/LOAD =====
-        function hugh43go278872() {
-            const encrypted = localStorage.getItem(SAVE_KEY);
-            if (encrypted) {
-                const data = decode(encrypted);
-                if (data) return data;
-            }
-            const oldCoins = localStorage.getItem('quackCoins');
-            const oldThemes = localStorage.getItem('unlockedThemes');
-            const oldActive = localStorage.getItem('activeTheme');
-
-            if ((oldCoins !== null || oldThemes !== null || oldActive !== null) &&
-                (!localStorage.getItem('gvg437v2g7937v9g329') || localStorage.getItem('gvg437v2g7937v9g329') != 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v')) {
-
-                let parsedThemes;
-                let newCoins;
-                try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
-                if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
-                const validThemes = Object.keys(themeData);
-                parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
-                if(localStorage.getItem('quackCoins') <= 50) newCoins = localStorage.getItem('quackCoins');
-                else {
-                    newCoins = 50;
+        // ANTI CHEAT FUNCTION
+        function addSecureCoins(amount, source) {
+            const now = Date.now();
+            
+            // Speed Trap: If it's a playtime coin, make sure at least 58 seconds have passed
+            if (source === 'playtime') {
+                if (lastPlaytimeCoin !== 0 && (now - lastPlaytimeCoin) < 58000) {
+                    quackCoins -= 2;
+                    shadowBalance = quackCoins;
+                    saveGame();
+                    alert("Anti-Cheat Triggered: You are earning coins too fast! Penalty: -2 Coins.");
+                    return;
                 }
-
-                const newSave = {
-                    absolutelyNothingThatisImportantlol: newCoins,
-                    unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
-                    activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
-                };
-                localStorage.setItem(SAVE_KEY, encode(newSave));
-                localStorage.removeItem('quackCoins');
-                localStorage.removeItem('unlockedThemes');
-                localStorage.removeItem('activeTheme');
-                localStorage.setItem('gvg437v2g7937v9g329', 'f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v');
-                return newSave;
+                lastPlaytimeCoin = now;
             }
-            return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
+
+            quackCoins += amount;
+            shadowBalance = quackCoins; // Sync shadow balance
+            saveGame();
         }
 
-        function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
-            const data = dataOverride ? dataOverride : {
-                absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
-                unlockedThemes: unlockedThemes || ['default'],
-                activeTheme: activeTheme || 'default'
-            };
-            localStorage.setItem(SAVE_KEY, encode(data));
-            updateUI();
-        }
+        // Hacker Trap: Constantly checks if the player edited variables using the console
+        setInterval(() => {
+            let storedCoins = parseInt(localStorage.getItem('quackCoins')) || 0;
+            if (quackCoins > shadowBalance || storedCoins > shadowBalance) {
+                // They hacked the variable! Punish them.
+                quackCoins = shadowBalance - 2;
+                shadowBalance = quackCoins;
+                saveGame();
+                alert("Anti-Cheat Triggered: Console or Save File manipulation detected! Penalty: -2 Coins.");
+            } else if (quackCoins < shadowBalance) {
+                // They spent money legitimately (like on slots), just sync it
+                shadowBalance = quackCoins;
+            }
+        }, 2000);
 
-        let save = hugh43go278872();
-        if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
+        updateUI();
 
-        let absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
-        let unlockedThemes = save.unlockedThemes || ['default'];
-        let activeTheme = save.activeTheme || 'default';
-
-        setTimeout(updateUI, 0);
-
-        // ===== COIN TIMER =====
+        // --- ANTI-AFK COIN MINER ---
         let activeSeconds = 0;
         let lastInteraction = Date.now();
+
         window.addEventListener('mousemove', () => lastInteraction = Date.now());
         window.addEventListener('keydown', () => lastInteraction = Date.now());
         window.addEventListener('click', () => lastInteraction = Date.now());
 
         setInterval(() => {
-            let _45230X4xc = absolutelyNothingThatisImportantlol;
             let isIframeActive = document.activeElement === document.getElementById('game-frame');
-            let isWindowActive = (Date.now() - lastInteraction) < 10000;
+            let isWindowActive = (Date.now() - lastInteraction) < 10000; 
 
-            if (_45230X4xc != absolutelyNothingThatisImportantlol) {
-                absolutelyNothingThatisImportantlol = 0; _45230X4xc = 0; alert("CHEATER");
-            }
             if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !== 'none')) {
                 activeSeconds++;
-                if (activeSeconds >= 6000) {
-                    absolutelyNothingThatisImportantlol++;
-                    _45230X4xc = absolutelyNothingThatisImportantlol;
-                    hoihpohivpoweahovropagh4p9h8g4();
+                if (activeSeconds >= 60) {
+                    addSecureCoins(1, 'playtime'); // Send to secure function!
                     activeSeconds = 0;
                 }
             }
-        }, 10);
+        }, 1000);
 
-        // ===== SLOTS =====
-        const symbols = ['🍒','🦆','💎','🎰','🖥️','🌅','🌲','✨','🔴','🐥','❄️','🌊'];
 
-        function randomGoofyAssFunction() {
+        // --- SLOT MACHINE LOGIC ---
+        const symbols = ['🍒', '🦆', '💎', '🎰'];
+        let isSpinning = false;
+
+        function spinSlots() {
             if (isSpinning) return;
-            if (absolutelyNothingThatisImportantlol < 3) { alert("You need 3 Quack Coins to spin!"); return; }
-            absolutelyNothingThatisImportantlol -= 3;
-            hoihpohivpoweahovropagh4p9h8g4();
+            if (quackCoins < 3) {
+                alert("You don't have enough Quack Coins!");
+                return;
+            }
+
+            // Spend coins securely
+            quackCoins -= 3;
+            shadowBalance = quackCoins;
+            saveGame();
+            
             isSpinning = true;
             document.getElementById('spin-btn').disabled = true;
             document.getElementById('slot-message').innerText = "Spinning...";
@@ -613,7 +369,11 @@
                 document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                 document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                 ticks++;
-                if (ticks > 20) { clearInterval(spinInterval); finishSpin(); }
+
+                if (ticks > 20) {
+                    clearInterval(spinInterval);
+                    finishSpin();
+                }
             }, 50);
         }
 
@@ -624,97 +384,95 @@
             const msg = document.getElementById('slot-message');
 
             if (r1 === r2 && r2 === r3) {
-                if      (r1 === '🍒') grantReward('coins',           5,  "Jackpot! +5 Coins!");
-                else if (r1 === '🦆') grantReward('theme-dark',      10, "You unlocked DARK MODE!");
-                else if (r1 === '💎') grantReward('theme-ocean',     15, "You unlocked OCEAN BLUE!");
-                else if (r1 === '🎰') grantReward('theme-neon',      25, "You unlocked NEON PINK!");
-                else if (r1 === '🖥️') grantReward('theme-retro',     20, "You unlocked RETRO TERMINAL!");
-                else if (r1 === '🌅') grantReward('theme-sunset',    20, "You unlocked SUNSET!");
-                else if (r1 === '🌲') grantReward('theme-forest',    20, "You unlocked FOREST!");
-                else if (r1 === '✨') grantReward('theme-galaxy',    30, "You unlocked GALAXY!");
-                else if (r1 === '🔴') grantReward('theme-bloodmoon', 35, "You unlocked BLOOD MOON!");
-                else if (r1 === '🐥') grantReward('theme-rubberduck',15, "You unlocked RUBBER DUCK!");
-                else if (r1 === '❄️') grantReward('theme-winter',    20, "You unlocked WINTER!");
-                else if (r1 === '🌊') grantReward('theme-vaporwave', 25, "You unlocked VAPORWAVE!");
+                if (r1 === '🍒') grantReward('coins', 5, "Jackpot! 5 Coins!");
+                else if (r1 === '🦆') grantReward('theme-dark', 10, "You unlocked DARK MODE!");
+                else if (r1 === '💎') grantReward('theme-ocean', 15, "You unlocked OCEAN BLUE Theme!");
+                else if (r1 === '🎰') grantReward('theme-neon', 25, "You unlocked NEON PINK Theme!");
             } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                grantReward('coins', 1, "Two matched! +1 Coin back.");
+                grantReward('coins', 1, "Two matched! You get 1 Coin back.");
             } else {
                 msg.innerText = "No luck this time. Try again!";
             }
+
             isSpinning = false;
             document.getElementById('spin-btn').disabled = false;
         }
 
         function grantReward(type, coinFallback, successMsg) {
-            let isNewUnlock = false;
             if (type === 'coins') {
-                absolutelyNothingThatisImportantlol += coinFallback;
+                addSecureCoins(coinFallback, 'slots');
             } else {
                 if (unlockedThemes.includes(type)) {
-                    absolutelyNothingThatisImportantlol += coinFallback;
-                    successMsg = `Already owned! Here are ${coinFallback} Coins instead.`;
+                    addSecureCoins(coinFallback, 'slots'); 
+                    successMsg = `You already own that theme! Here are ${coinFallback} Coins instead.`;
                 } else {
                     unlockedThemes.push(type);
-                    isNewUnlock = true;
+                    saveGame(); // Save newly unlocked theme
                 }
             }
             document.getElementById('slot-message').innerText = successMsg;
-            hoihpohivpoweahovropagh4p9h8g4();
-            if (isNewUnlock) {
-                const data = themeData[type];
-                showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
-            }
         }
 
-        // ===== NAV =====
+        // --- MENU NAVIGATION & GAME LOADING ---
         function openMenu(menuId) {
-            ['welcome-screen','slot-screen','themes-screen'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('slot-screen').style.display = 'none';
+            document.getElementById('themes-screen').style.display = 'none';
             document.getElementById('game-frame').style.display = 'none';
             document.getElementById(menuId).style.display = 'block';
         }
+
+        let loadTimer; 
         function playGame(gameUrl) {
-            clearTimeout(loadTimer);
-            openMenu('welcome-screen');
+            clearTimeout(loadTimer); 
+            openMenu('welcome-screen'); 
             document.getElementById('welcome-screen').style.display = 'none';
+            
             const sidebar = document.getElementById('sidebar');
             sidebar.style.display = 'none';
             setTimeout(() => { sidebar.style.display = ''; }, 100);
+
             const loader = document.getElementById('loader');
             loader.style.display = 'flex';
+
             loadTimer = setTimeout(() => {
                 loader.style.display = 'none';
                 const frame = document.getElementById('game-frame');
                 frame.style.display = 'block';
-                frame.src = gameUrl + "?v=" + new Date().getTime();
-                frame.focus();
-            }, 2000);
+                
+                // Smarter Cache Buster: checks if the URL already has a '?' to prevent breaking things
+                const cacheBusterChar = gameUrl.includes('?') ? '&v=' : '?v=';
+                frame.src = gameUrl + cacheBusterChar + new Date().getTime(); 
+                
+                frame.focus(); 
+            }, 2000); 
         }
+
         function goHome() {
             clearTimeout(loadTimer);
-            document.getElementById('game-frame').src = '';
+            document.getElementById('game-frame').src = ''; 
             document.getElementById('loader').style.display = 'none';
             openMenu('welcome-screen');
         }
+
         function toggleFullScreen() {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
-            else document.exitFullscreen();
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
+            } else {
+                document.exitFullscreen();
+            }
         }
+
         function showInfo(title, desc, controls) {
             document.getElementById('info-title').innerText = title;
             document.getElementById('info-desc').innerText = desc;
             document.getElementById('info-controls').innerText = controls;
-            document.getElementById('info-panel').style.left = '320px';
+            document.getElementById('info-panel').style.left = '320px'; 
         }
-        function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
 
-        window.randomGoofyAssFunction = randomGoofyAssFunction;
-        window.openMenu = openMenu;
-        window.playGame = playGame;
-        window.goHome = goHome;
-        window.toggleFullScreen = toggleFullScreen;
-        window.showInfo = showInfo;
-        window.hideInfo = hideInfo;
-    })();
+        function hideInfo() {
+            document.getElementById('info-panel').style.left = '-400px'; 
+        }
     </script>
 </body>
 </html>
