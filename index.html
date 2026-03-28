@@ -378,14 +378,6 @@
                 🦆🦆🦆 = Dark Mode<br>
                 💎💎💎 = Ocean Blue<br>
                 🎰🎰🎰 = Neon Pink<br>
-                🖥️🖥️🖥️ = Retro Terminal<br>
-                🌅🌅🌅 = Sunset<br>
-                🌲🌲🌲 = Forest<br>
-                ✨✨✨ = Galaxy<br>
-                🔴🔴🔴 = Blood Moon<br>
-                🐥🐥🐥 = Rubber Duck<br>
-                ❄️❄️❄️ = Winter<br>
-                🌊🌊🌊 = Vaporwave<br>
                 <i>(Any 2 matching = 1 Coin back)</i>
             </div>
             <h2>🎰 Ducky Slots 🎰</h2>
@@ -439,13 +431,13 @@
                 </div>
                 <div class="shop-item" onclick="exchangeToDuck()">
                     <span class="shop-emoji">🔄</span>
-                    QC → Duck Coins
-                    <div class="shop-price">1 QC = 100 Duck Coins</div>
+                    Quack Coins → Duck Coins
+                    <div class="shop-price">1 Quack Coins = 100 Duck Coins</div>
                 </div>
                 <div class="shop-item" onclick="exchangeToQuack()">
                     <span class="shop-emoji">🔃</span>
-                    Duck Coins → QC
-                    <div class="shop-price">100 Duck Coins = 1 QC</div>
+                    Duck Coins → Quack Coins
+                    <div class="shop-price">100 Duck Coins = 1 Quack Coins</div>
                 </div>
             </div>
             <br>
@@ -1370,7 +1362,7 @@
         // ===== DUCK COIN HELPER =====
         function getDuckSave() {
             try {
-                const raw = localStorage.getItem('duckV13Accounts');
+                const raw = localStorage.getItem('duckV12Accounts');
                 if (!raw) return null;
                 const parsed = JSON.parse(raw);
                 const key = Object.keys(parsed)[0];
@@ -1408,7 +1400,7 @@
             setDuckCoins(dc + 100);
             hoihpohivpoweahovropagh4p9h8g4();
             refreshDuckDisplay();
-            alert("✅ -1 QC → +100 Duck Coins!");
+            alert("✅ -1 Quack Coins → +100 Duck Coins!");
         }
         function exchangeToQuack() {
             const dc = getDuckCoins();
@@ -1418,7 +1410,7 @@
             absolutelyNothingThatisImportantlol++;
             hoihpohivpoweahovropagh4p9h8g4();
             refreshDuckDisplay();
-            alert("✅ -100 Duck Coins → +1 QC!");
+            alert("✅ -100 Duck Coins → +1 Quack Coins!");
         }
 
         // ===== COIN FLIP =====
