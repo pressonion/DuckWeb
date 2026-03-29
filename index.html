@@ -606,7 +606,7 @@
     </div>
 
     <script>
-    (function() {
+    (async function() {
         let loadTimer;
         let isSpinning = false;
 
@@ -739,125 +739,180 @@
             }
         }
 
-        // ===== CRYPTO =====
-        function generateKey(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=~';
-            const randomValues = new Uint8Array(length);
-            window.crypto.getRandomValues(randomValues);
-            let result = '';
-            for (let i = 0; i < length; i++) result += characters.charAt(randomValues[i] % characters.length);
-            return result;
-        }
-
         const SAVE_KEY = "ihg398g231f1g3ig1f13f";
-        let SECRET;
-        if (!localStorage.getItem('gf2378g8o32843g7p243f')) {
-            SECRET = generateKey(500);
-            localStorage.setItem('gf2378g8o32843g7p243f', SECRET);
-        } else {
-            SECRET = localStorage.getItem('gf2378g8o32843g7p243f');
+        const _skr = "gf2378g8o32843g7p243f";
+        const _mfk = "gvg437v2g7937v9g329";
+        const _mfv = "f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v";
+        const _v3k = "v3_aes_gcm_key_92hf83hf";
+        const _v3s = "v3_aes_gcm_salt_7g3h9f2";
+
+        function _b64ToArr(b64) {
+            const bin = atob(b64);
+            const arr = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+            return arr;
+        }
+        function _arrToB64(arr) {
+            let bin = '';
+            arr.forEach(b => bin += String.fromCharCode(b));
+            return btoa(bin);
         }
 
-        function encode(data) {
-            return btoa(unescape(encodeURIComponent(JSON.stringify(data) + SECRET)));
+        async function _deriveKey(rawKeyB64, saltArr) {
+            const rawBytes = _b64ToArr(rawKeyB64);
+            const baseKey = await crypto.subtle.importKey('raw', rawBytes, 'PBKDF2', false, ['deriveKey']);
+            return crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt: saltArr, iterations: 310000, hash: 'SHA-512' },
+                baseKey,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt', 'decrypt']
+            );
         }
-        function decode(str) {
+
+        async function _getOrCreateMaterial() {
+            let rawB64 = localStorage.getItem(_v3k);
+            let saltB64 = localStorage.getItem(_v3s);
+            if (!rawB64 || !saltB64) {
+                const raw = crypto.getRandomValues(new Uint8Array(64));
+                const salt = crypto.getRandomValues(new Uint8Array(32));
+                rawB64 = _arrToB64(raw);
+                saltB64 = _arrToB64(salt);
+                localStorage.setItem(_v3k, rawB64);
+                localStorage.setItem(_v3s, saltB64);
+            }
+            const saltArr = _b64ToArr(saltB64);
+            const key = await _deriveKey(rawB64, saltArr);
+            return key;
+        }
+
+        async function encode(data) {
+            const key = await _getOrCreateMaterial();
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const plain = new TextEncoder().encode(JSON.stringify(data));
+            const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain);
+            const combined = new Uint8Array(iv.byteLength + cipher.byteLength);
+            combined.set(iv, 0);
+            combined.set(new Uint8Array(cipher), iv.byteLength);
+            return _arrToB64(combined);
+        }
+
+        async function decode(str) {
             try {
-                let decoded = decodeURIComponent(escape(atob(str)));
-                if (!decoded.endsWith(SECRET)) return null;
-                decoded = decoded.slice(0, -SECRET.length);
-                return JSON.parse(decoded);
+                const key = await _getOrCreateMaterial();
+                const combined = _b64ToArr(str);
+                const iv = combined.slice(0, 12);
+                const cipher = combined.slice(12);
+                const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher);
+                return JSON.parse(new TextDecoder().decode(plain));
             } catch { return null; }
         }
 
-        // ===== SAVE/LOAD =====
-        const MIGRATED_FLAG_KEY = "gvg437v2g7937v9g329";
-        const MIGRATED_FLAG_VAL = "f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v";
+        function _legacyDecodeV2(str, secret) {
+            try {
+                let dec = decodeURIComponent(escape(atob(str)));
+                if (!dec.endsWith(secret)) return null;
+                return JSON.parse(dec.slice(0, -secret.length));
+            } catch { return null; }
+        }
 
-        function hugh43go278872() {
-            // 1. try current encrypted save
+        async function hugh43go278872() {
+            const validThemes = Object.keys(themeData);
+            const alreadyMigrated = localStorage.getItem(_mfk) === _mfv;
+
             const encrypted = localStorage.getItem(SAVE_KEY);
             if (encrypted) {
-                const data = decode(encrypted);
+                const data = await decode(encrypted);
                 if (data && typeof data === 'object') return data;
+
+                if (!alreadyMigrated) {
+                    const legacySecret = localStorage.getItem(_skr);
+                    if (legacySecret) {
+                        const legacyData = _legacyDecodeV2(encrypted, legacySecret);
+                        if (legacyData && typeof legacyData === 'object') {
+                            let themes = Array.isArray(legacyData.unlockedThemes) ? legacyData.unlockedThemes : ['default'];
+                            themes = themes.filter(t => validThemes.includes(t));
+                            const coins = Math.min(parseInt(legacyData.absolutelyNothingThatisImportantlol || legacyData.coins || 0), 50);
+                            const active = validThemes.includes(legacyData.activeTheme) ? legacyData.activeTheme : 'default';
+                            const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
+                            localStorage.setItem(SAVE_KEY, await encode(newSave));
+                            localStorage.removeItem(_skr);
+                            localStorage.setItem(_mfk, _mfv);
+                            return newSave;
+                        }
+                    }
+                }
             }
 
-            const validThemes = Object.keys(themeData);
-            const alreadyMigrated = localStorage.getItem(MIGRATED_FLAG_KEY) === MIGRATED_FLAG_VAL;
-
-            // 2. try migrating old btoa-encoded save (duckSecureV2 / ihg398... with old secret)
             if (!alreadyMigrated) {
                 const OLD_KEY = "duckSecureV2";
                 const OLD_SECRET = "duck_key_v2_secure";
                 const oldRaw = localStorage.getItem(OLD_KEY);
                 if (oldRaw) {
                     try {
-                        let dec = decodeURIComponent(escape(atob(oldRaw)));
-                        if (dec.endsWith(OLD_SECRET)) {
-                            dec = dec.slice(0, -OLD_SECRET.length);
-                            const oldData = JSON.parse(dec);
-                            let themes = oldData.unlockedThemes || ['default'];
-                            if (!Array.isArray(themes)) themes = ['default'];
+                        const oldData = _legacyDecodeV2(oldRaw, OLD_SECRET);
+                        if (oldData) {
+                            let themes = Array.isArray(oldData.unlockedThemes) ? oldData.unlockedThemes : ['default'];
                             themes = themes.filter(t => validThemes.includes(t));
                             const coins = Math.min(parseInt(oldData.coins || oldData.absolutelyNothingThatisImportantlol || 0), 50);
                             const active = validThemes.includes(oldData.activeTheme) ? oldData.activeTheme : 'default';
                             const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
-                            localStorage.setItem(SAVE_KEY, encode(newSave));
+                            localStorage.setItem(SAVE_KEY, await encode(newSave));
                             localStorage.removeItem(OLD_KEY);
-                            localStorage.setItem(MIGRATED_FLAG_KEY, MIGRATED_FLAG_VAL);
-                            console.log('✅ Migrated old encrypted save');
+                            localStorage.setItem(_mfk, _mfv);
                             return newSave;
                         }
                     } catch(e) { localStorage.removeItem(OLD_KEY); }
                 }
+
+                const oldCoins = localStorage.getItem('quackCoins');
+                const oldThemes = localStorage.getItem('unlockedThemes');
+                const oldActive = localStorage.getItem('activeTheme');
+                if (oldCoins !== null || oldThemes !== null || oldActive !== null) {
+                    let parsedThemes;
+                    try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
+                    if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
+                    parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
+                    const oldCoinCount = parseInt(oldCoins) || 0;
+                    const newSave = {
+                        absolutelyNothingThatisImportantlol: oldCoinCount <= 50 ? oldCoinCount : 50,
+                        unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
+                        activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
+                    };
+                    localStorage.setItem(SAVE_KEY, await encode(newSave));
+                    localStorage.removeItem('quackCoins');
+                    localStorage.removeItem('unlockedThemes');
+                    localStorage.removeItem('activeTheme');
+                    localStorage.setItem(_mfk, _mfv);
+                    return newSave;
+                }
             }
 
-            // 3. try migrating plaintext keys (quackCoins / unlockedThemes / activeTheme)
-            const oldCoins = localStorage.getItem('quackCoins');
-            const oldThemes = localStorage.getItem('unlockedThemes');
-            const oldActive = localStorage.getItem('activeTheme');
-            if (!alreadyMigrated && (oldCoins !== null || oldThemes !== null || oldActive !== null)) {
-                let parsedThemes;
-                try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
-                if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
-                parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
-                const oldCoinCount = parseInt(oldCoins) || 0;
-                const newSave = {
-                    absolutelyNothingThatisImportantlol: oldCoinCount <= 50 ? oldCoinCount : 50,
-                    unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
-                    activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
-                };
-                localStorage.setItem(SAVE_KEY, encode(newSave));
-                localStorage.removeItem('quackCoins');
-                localStorage.removeItem('unlockedThemes');
-                localStorage.removeItem('activeTheme');
-                localStorage.setItem(MIGRATED_FLAG_KEY, MIGRATED_FLAG_VAL);
-                console.log('✅ Migrated plaintext save');
-                return newSave;
-            }
-
-            // 4. fresh save
             return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
         }
 
-        function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
+        async function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
             const data = dataOverride ? dataOverride : {
                 absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
                 unlockedThemes: unlockedThemes || ['default'],
                 activeTheme: activeTheme || 'default'
             };
-            localStorage.setItem(SAVE_KEY, encode(data));
+            localStorage.setItem(SAVE_KEY, await encode(data));
             updateUI();
         }
 
-        let save = hugh43go278872();
+        let absolutelyNothingThatisImportantlol = 0;
+        let unlockedThemes = ['default'];
+        let activeTheme = 'default';
+
+        let save = await hugh43go278872();
         if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
 
-        let absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
-        let unlockedThemes = save.unlockedThemes || ['default'];
-        let activeTheme = save.activeTheme || 'default';
+        absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
+        unlockedThemes = save.unlockedThemes || ['default'];
+        activeTheme = save.activeTheme || 'default';
 
-        setTimeout(updateUI, 0);
+        updateUI();
 
         // ===== COIN TIMER =====
         let activeSeconds = 0;
