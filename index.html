@@ -608,7 +608,7 @@
             <div id="loader-duck"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div>
             <div id="loader-text">Loading Game...</div>
         </div>
-        <iframe id="game-frame" src=""></iframe>
+        <iframe id="game-frame" src="" oncontextmenu="return false;"></iframe>
     </div>
 
     <script>
@@ -875,8 +875,6 @@
         unlockedThemes = save.unlockedThemes || ['default'];
         activeTheme = save.activeTheme || 'default';
         updateUI();
-
-        // ===== COIN TIMER =====
         let activeSeconds = 0;
         let lastInteraction = Date.now();
         window.addEventListener('mousemove', () => lastInteraction = Date.now());
@@ -900,8 +898,6 @@
                 }
             }
         }, 10);
-
-        // ===== SLOTS =====
         const symbols = ['🍒','🦆','💎','🎰','🖥️','🌅','🌲','✨','🔴','🐥','❄️','🌊'];
         let freeSpins = 0;
 
@@ -928,7 +924,6 @@
                 if (ticks > 20) { clearInterval(spinInterval); finishSpin(); }
             }, 50);
         }
-
         function finishSpin() {
             const r1 = document.getElementById('reel1').innerText;
             const r2 = document.getElementById('reel2').innerText;
@@ -954,7 +949,6 @@
             isSpinning = false;
             document.getElementById('spin-btn').disabled = false;
         }
-
         function grantReward(type, coinFallback, successMsg) {
             let isNewUnlock = false;
             if (type === 'coins') {
@@ -975,7 +969,6 @@
                 showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
             }
         }
-
         function megaSpin() {
             if (isSpinning) return;
             if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡"); return; }
@@ -1011,8 +1004,6 @@
             }
             runOneSpin();
         }
-
-        // ===== ALERT =====
         let alertTimeout = null;
         function showAlert(msg, title = '', autoDismiss = 0) {
             document.getElementById('custom-alert-title').innerText = title;
@@ -1040,10 +1031,6 @@
             } else { el.style.display = 'none'; }
         }
         refreshHomeNametag();
-
-        // ===== DUCK RNG INTEGRATION =====
-        // Duck RNG encodes with: btoa(encodeURIComponent(JSON.stringify(data)))
-        // So we decode with:     JSON.parse(decodeURIComponent(atob(str)))
         function getDuckSave() {
             try {
                 const raw = localStorage.getItem('duckV12Accounts');
@@ -1067,7 +1054,6 @@
                 const parsed = JSON.parse(decodeURIComponent(atob(raw)));
                 const key    = Object.keys(parsed)[0];
                 parsed[key].saveData[field] = value;
-                // Re-encode to match Duck RNG's e82jf93k
                 localStorage.setItem('duckV12Accounts', btoa(encodeURIComponent(JSON.stringify(parsed))));
                 return true;
             } catch { return false; }
@@ -1119,8 +1105,6 @@
             spawnGlitter();
             showAlert("✅ Duck RNG account unbanned! Strikes reset. Don't get caught again.", "🕊️ Unbanned", 4000);
         }
-
-        // ===== COIN FLIP =====
         let flipInProgress = false;
         function doFlip(choice) {
             if (flipInProgress) return;
@@ -1154,8 +1138,6 @@
                 document.getElementById('flip-tails').disabled = false;
             }, 1900);
         }
-
-        // ===== SCRATCH CARD =====
         let scratchActive = false, scratchPrize = null;
         function openScratch() {
             if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
@@ -1211,8 +1193,6 @@
                 c.addEventListener('touchmove', e => { e.preventDefault(); scratch(e); }, { passive: false });
             }, 50);
         }
-
-        // ===== NAMETAG =====
         function peekTheme() {
             if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
             const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
@@ -1238,8 +1218,6 @@
             const stored = localStorage.getItem('qw_nametag');
             if (stored) { try { document.getElementById('nametag-display').innerText = atob(stored); } catch {} }
         }
-
-        // ===== LUCKY ROLL =====
         const dieFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
         let luckyRolling = false;
         function doLuckyRoll() {
@@ -1259,7 +1237,7 @@
                 if (ticks > 18) {
                     clearInterval(iv);
                     die.classList.remove('rolling');
-                    const result = Math.floor(Math.random() * 6) + 1; // 1–6
+                    const result = Math.floor(Math.random() * 6) + 1;
                     die.innerText = dieFaces[result - 1];
                     absolutelyNothingThatisImportantlol += result;
                     if (result >= 5) spawnGlitter();
@@ -1271,8 +1249,6 @@
                 }
             }, 60);
         }
-
-        // ===== MYSTERY BOX =====
         function openMysteryBox() {
             if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 coins for a Mystery Box!", "🎁"); return; }
             absolutelyNothingThatisImportantlol -= 5;
@@ -1295,8 +1271,6 @@
             hoihpohivpoweahovropagh4p9h8g4();
             showAlert(pick.msg, "🎁 Mystery Box", 4000);
         }
-
-        // ===== BULLSEYE =====
         let bullseyeActive = true;
         function doBullseye(pick) {
             if (!bullseyeActive) return;
@@ -1332,8 +1306,6 @@
                 document.getElementById('bullseye-result').innerText = '';
             }, 2200);
         }
-
-        // ===== DAILY BONUS =====
         function claimDailyBonus() {
             const today = new Date().toDateString();
             const lastClaim = localStorage.getItem('qw_daily');
@@ -1347,8 +1319,6 @@
             spawnGlitter();
             showAlert("🎉 +3 Coins! See you tomorrow!", "📅 Daily Bonus", 3000);
         }
-
-        // ===== FREE SPIN TOKEN =====
         function buyFreeSpin() {
             if (absolutelyNothingThatisImportantlol < 8) { showAlert("Need 8 coins for a Free Spin Token!", "⚡"); return; }
             absolutelyNothingThatisImportantlol -= 8;
@@ -1357,8 +1327,6 @@
             document.getElementById('mega-spin-indicator').innerText = `⚡ Free Spins banked: ${freeSpins}`;
             showAlert(`⚡ Free Spin banked! You now have ${freeSpins}. Use it at the slot machine!`, "⚡", 3000);
         }
-
-        // ===== NAV =====
         const ALL_SCREENS = [
             'welcome-screen','slot-screen','themes-screen','shop-screen',
             'coinflip-screen','scratch-screen','nametag-screen',
@@ -1419,8 +1387,6 @@
             document.getElementById('info-panel').style.left = '320px';
         }
         function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
-
-        // ===== EXPORTS =====
         window.randomGoofyAssFunction = randomGoofyAssFunction;
         window.megaSpin = megaSpin;
         window.openMenu = openMenu;
