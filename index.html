@@ -388,15 +388,14 @@
         </div>
     </div>
 
-   <div id="sidebar">
+    <div id="sidebar">
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue','Battle endless rooms as a brave duck!','Arrow Keys to move, Space to attack')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action','A fast-paced drawn action game.','WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎨</div> Doodle Action</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/')" onmouseover="showInfo('Shooting Fun','Test your aim and reflexes.','Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎯</div> Shooting Fun</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over','A frustratingly fun physics game.','Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🔨</div> Getting Over</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG','Test your luck! Roll for the rarest ducks.','Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎲</div> Duck RNG</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker','Test your card skills.','Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🃏</div> Poker</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚗</div> Car Game</button>        
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Geometry-dash/')" onmouseover="showInfo('Geometry Dash','Jump and fly your way through danger.','Click or Space to jump')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚀</div> Geometry Dash</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚗</div> Car Game</button>
     </div>
 
     <div id="info-panel">
@@ -513,13 +512,18 @@
                 </div>
                 <div class="shop-item" onclick="exchangeToDuck()">
                     <span class="shop-emoji">🔄</span>
-                    Quack → Duck Coins
-                    <div class="shop-price">1 Quack Coin = 100 Duck Coins</div>
+                    Quack Coins → Duck Coins
+                    <div class="shop-price">1 Quack Coin = 10,000 Duck Coins</div>
                 </div>
                 <div class="shop-item" onclick="exchangeToQuack()">
                     <span class="shop-emoji">🔃</span>
-                    Duck → Quack Coins
-                    <div class="shop-price">100 Duck Coins = 1 Quack Coin</div>
+                    Duck Coins → Quack Coins
+                    <div class="shop-price">10,000 Duck Coins = 1 Quack Coin (blocked if banned)</div>
+                </div>
+                <div class="shop-item" onclick="unbanDuck()">
+                    <span class="shop-emoji">🕊️</span>
+                    Unban Duck RNG
+                    <div class="shop-price">100 Quack Coins — clears ban + resets strikes</div>
                 </div>
             </div>
             <br>
@@ -1038,13 +1042,13 @@
         refreshHomeNametag();
 
         // ===== DUCK RNG INTEGRATION =====
-        // getDuckSave: base64-decode the raw value first, then parse as JSON
+        // Duck RNG encodes with: btoa(encodeURIComponent(JSON.stringify(data)))
+        // So we decode with:     JSON.parse(decodeURIComponent(atob(str)))
         function getDuckSave() {
             try {
                 const raw = localStorage.getItem('duckV12Accounts');
                 if (!raw) return null;
-                const decoded = atob(raw);          // 1. Base64 decode
-                const parsed  = JSON.parse(decoded); // 2. Parse JSON
+                const parsed = JSON.parse(decodeURIComponent(atob(raw))); // match Duck RNG's d102mc84
                 const key = Object.keys(parsed)[0];
                 return { key, data: parsed[key] };
             } catch { return null; }
@@ -1053,18 +1057,22 @@
             const s = getDuckSave();
             return s ? (s.data.saveData?.coins || 0) : null;
         }
-        function setDuckCoins(amount) {
+        function isDuckBanned() {
+            const s = getDuckSave();
+            return s ? !!(s.data.saveData?.banned) : false;
+        }
+        function setDuckField(field, value) {
             try {
-                const raw     = localStorage.getItem('duckV12Accounts');
-                const decoded = atob(raw);
-                const parsed  = JSON.parse(decoded);
-                const key = Object.keys(parsed)[0];
-                parsed[key].saveData.coins = amount;
-                // Re-encode: stringify then base64
-                localStorage.setItem('duckV12Accounts', btoa(JSON.stringify(parsed)));
+                const raw    = localStorage.getItem('duckV12Accounts');
+                const parsed = JSON.parse(decodeURIComponent(atob(raw)));
+                const key    = Object.keys(parsed)[0];
+                parsed[key].saveData[field] = value;
+                // Re-encode to match Duck RNG's e82jf93k
+                localStorage.setItem('duckV12Accounts', btoa(encodeURIComponent(JSON.stringify(parsed))));
                 return true;
             } catch { return false; }
         }
+        function setDuckCoins(amount) { return setDuckField('coins', amount); }
         function refreshDuckDisplay() {
             const dc = getDuckCoins();
             const el = document.getElementById('duck-coin-display');
@@ -1078,20 +1086,38 @@
             const dc = getDuckCoins();
             if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
             absolutelyNothingThatisImportantlol--;
-            setDuckCoins(dc + 100);
+            setDuckCoins(dc + 10000);
             hoihpohivpoweahovropagh4p9h8g4();
             refreshDuckDisplay();
-            showAlert("✅ -1 Quack Coin → +100 Duck Coins!", "🔄", 3000);
+            showAlert("✅ -1 Quack Coin → +10,000 Duck Coins!", "🔄", 3000);
         }
         function exchangeToQuack() {
+            if (isDuckBanned()) {
+                showAlert("Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.", "🔨 Banned");
+                return;
+            }
             const dc = getDuckCoins();
             if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 100) { showAlert(`Need 100 Duck Coins! You have ${dc}.`, "🔃"); return; }
-            setDuckCoins(dc - 100);
+            if (dc < 10000) { showAlert("Need 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
+            setDuckCoins(dc - 10000);
             absolutelyNothingThatisImportantlol++;
             hoihpohivpoweahovropagh4p9h8g4();
             refreshDuckDisplay();
-            showAlert("✅ -100 Duck Coins → +1 Quack Coin!", "🔃", 3000);
+            showAlert("✅ -10,000 Duck Coins → +1 Quack Coin!", "🔃", 3000);
+        }
+        function unbanDuck() {
+            if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000); return; }
+            if (absolutelyNothingThatisImportantlol < 100) {
+                showAlert("Need 100 Quack Coins to unban. You have " + absolutelyNothingThatisImportantlol + ".", "🔨");
+                return;
+            }
+            absolutelyNothingThatisImportantlol -= 100;
+            setDuckField('banned', false);
+            setDuckField('strikes', 0);
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshDuckDisplay();
+            spawnGlitter();
+            showAlert("✅ Duck RNG account unbanned! Strikes reset. Don't get caught again.", "🕊️ Unbanned", 4000);
         }
 
         // ===== COIN FLIP =====
@@ -1409,6 +1435,7 @@
         window.peekTheme = peekTheme;
         window.exchangeToDuck = exchangeToDuck;
         window.exchangeToQuack = exchangeToQuack;
+        window.unbanDuck = unbanDuck;
         window.doLuckyRoll = doLuckyRoll;
         window.openMysteryBox = openMysteryBox;
         window.doBullseye = doBullseye;
