@@ -227,8 +227,8 @@
         #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
         #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10; }
 
-        /* ===== SHOP / MINI GAMES ===== */
-        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        /* ===== SHOP ===== */
+        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
         .shop-item {
             background: rgba(255,255,255,0.4); border: 2px solid var(--menu-bg);
             border-radius: 12px; padding: 14px; text-align: center; cursor: pointer;
@@ -284,6 +284,40 @@
             pointer-events: none; z-index: 9999;
         }
 
+        /* Lucky Roll screen */
+        #lucky-roll-die { font-size: 72px; display: block; margin: 16px auto; min-height: 80px; }
+        @keyframes dieRoll {
+            0%,100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            75% { transform: rotate(15deg) scale(1.1); }
+        }
+        .rolling { animation: dieRoll 0.15s ease infinite; }
+
+        /* Mystery Box */
+        @keyframes boxShake {
+            0%,100% { transform: translateX(0); }
+            20% { transform: translateX(-8px) rotate(-4deg); }
+            40% { transform: translateX(8px) rotate(4deg); }
+            60% { transform: translateX(-5px) rotate(-2deg); }
+            80% { transform: translateX(5px) rotate(2deg); }
+        }
+        .shaking { animation: boxShake 0.5s ease 3; }
+
+        /* Bullseye */
+        .bullseye-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+            margin: 16px auto; max-width: 260px;
+        }
+        .bullseye-btn {
+            padding: 14px; font-size: 22px; border: 2px solid var(--menu-bg);
+            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.4);
+            font-weight: bold; color: var(--text-main); transition: 0.2s;
+        }
+        .bullseye-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); transform: scale(1.05); }
+        .bullseye-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .bullseye-btn.hit  { background: #2ecc71 !important; color: #fff !important; }
+        .bullseye-btn.miss { background: #e74c3c !important; color: #fff !important; }
+
         /* ===== UNLOCK POPUP ===== */
         #unlock-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
@@ -296,6 +330,30 @@
         }
         #unlock-popup.show { transform: translate(-50%, -50%) scale(1); }
         #unlock-popup .unlock-emoji { font-size: 50px; display: block; margin-bottom: 10px; }
+
+        /* Custom alert */
+        #custom-alert-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.55); z-index: 20000;
+            align-items: center; justify-content: center;
+        }
+        #custom-alert-overlay.show { display: flex; }
+        #custom-alert-box {
+            background: var(--box-bg); color: var(--text-main);
+            padding: 32px 40px; border-radius: 16px; min-width: 280px; max-width: 420px;
+            text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.4); position: relative;
+        }
+        .alert-title { font-size: 26px; font-weight: bold; margin-bottom: 10px; }
+        .alert-msg { font-size: 17px; margin-bottom: 20px; white-space: pre-line; }
+        #custom-alert-ok {
+            background: var(--menu-bg); color: white; border: none; padding: 10px 30px;
+            font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+        #custom-alert-ok:hover { background: var(--btn-hover); color: var(--btn-text); }
+        #custom-alert-progress {
+            position: absolute; bottom: 0; left: 0; height: 4px;
+            background: var(--btn-hover); border-radius: 0 0 16px 16px; width: 0;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -348,6 +406,7 @@
     </div>
 
     <div id="main-content">
+        <!-- WELCOME -->
         <div id="welcome-screen" class="menu-screen">
             <div id="main-menu-coins">
                 <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span>
@@ -362,7 +421,6 @@
                 <button class="action-btn" onclick="openMenu('slot-screen')">🎰 Slot Machine (3 Coins)</button>
                 <button class="action-btn" onclick="openMenu('themes-screen')">🎨 Equip Themes</button>
                 <button class="action-btn" onclick="openMenu('shop-screen')">🛒 Shop</button>
-                <button class="action-btn" onclick="openMenu('casino-screen')" style="background:#8e44ad">🎲 Casino</button>
             </div>
             <div>
                 <div class="duck-decoration"><svg width="100%" height="100%"><use href="#main-duck"></use></svg></div>
@@ -371,6 +429,7 @@
             </div>
         </div>
 
+        <!-- SLOTS -->
         <div id="slot-screen" class="menu-screen" style="display: none;">
             <div id="slot-paytable">
                 🎁 Match 3 to win!<br>
@@ -391,6 +450,7 @@
             <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
         </div>
 
+        <!-- THEMES -->
         <div id="themes-screen" class="menu-screen" style="display: none;">
             <h2>🎨Owned Themes🎨</h2>
             <p>Win themes at the slot machine!</p>
@@ -425,15 +485,40 @@
                     Theme Peek
                     <div class="shop-price">2 coins — reveal a locked theme name for 5s</div>
                 </div>
+                <div class="shop-item" onclick="openMenu('luckyroll-screen')">
+                    <span class="shop-emoji">🎲</span>
+                    Lucky Roll
+                    <div class="shop-price">3 coins — roll a d6, win that many coins</div>
+                </div>
+                <div class="shop-item" onclick="openMysteryBox()">
+                    <span class="shop-emoji">🎁</span>
+                    Mystery Box
+                    <div class="shop-price">5 coins — could be amazing, could be trash</div>
+                </div>
+                <div class="shop-item" onclick="openMenu('bullseye-screen')">
+                    <span class="shop-emoji">🎯</span>
+                    Bullseye
+                    <div class="shop-price">2 coins — pick 1–6, hit it for 8× payout</div>
+                </div>
+                <div class="shop-item" onclick="claimDailyBonus()">
+                    <span class="shop-emoji">📅</span>
+                    Daily Bonus
+                    <div class="shop-price">Free! Claim 3 coins once per day</div>
+                </div>
+                <div class="shop-item" onclick="buyFreeSpin()">
+                    <span class="shop-emoji">⚡</span>
+                    Free Spin Token
+                    <div class="shop-price">8 coins — bank a free slot spin for later</div>
+                </div>
                 <div class="shop-item" onclick="exchangeToDuck()">
                     <span class="shop-emoji">🔄</span>
-                    Quack Coins → Duck Coins
-                    <div class="shop-price">1 Quack Coins = 100 Duck Coins</div>
+                    Quack → Duck Coins
+                    <div class="shop-price">1 Quack Coin = 100 Duck Coins</div>
                 </div>
                 <div class="shop-item" onclick="exchangeToQuack()">
                     <span class="shop-emoji">🔃</span>
-                    Duck Coins → Quack Coins
-                    <div class="shop-price">100 Duck Coins = 1 Quack Coins</div>
+                    Duck → Quack Coins
+                    <div class="shop-price">100 Duck Coins = 1 Quack Coin</div>
                 </div>
             </div>
             <br>
@@ -484,118 +569,34 @@
             <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
         </div>
 
-        <!-- CASINO LOBBY -->
-        <div id="casino-screen" class="menu-screen" style="display:none;">
-            <h2>🎰 Quack Casino</h2>
-            <p class="casino-coins">Your coins: <strong id="casino-coin-display">0</strong></p>
-            <div class="casino-grid">
-                <div class="casino-item" onclick="openMenu('roulette-screen')">
-                    <span class="casino-emoji">🎡</span>Roulette
-                    <div class="casino-desc">Bet on red, black, or a number</div>
-                </div>
-                <div class="casino-item" onclick="startBlackjack()">
-                    <span class="casino-emoji">🃏</span>Blackjack
-                    <div class="casino-desc">Beat the dealer to 21</div>
-                </div>
-                <div class="casino-item" onclick="openMenu('dice-screen')">
-                    <span class="casino-emoji">🎲</span>Craps (Dice)
-                    <div class="casino-desc">Roll the dice, hit 7 or 11</div>
-                </div>
-                <div class="casino-item" onclick="openMenu('pushcards-screen')">
-                    <span class="casino-emoji">🫷</span>Push Cards
-                    <div class="casino-desc">Beat dealer or push for a tie</div>
-                </div>
-                <div class="casino-item" onclick="openMenu('baccarat-screen')">
-                    <span class="casino-emoji">🎴</span>Baccarat
-                    <div class="casino-desc">Bet on Player, Banker, or Tie</div>
-                </div>
-            </div>
+        <!-- LUCKY ROLL -->
+        <div id="luckyroll-screen" class="menu-screen" style="display:none;">
+            <h2>🎲 Lucky Roll</h2>
+            <p>Pay 3 coins, roll a d6 — win that many coins back!</p>
+            <p>Coins: <strong id="luckyroll-coins">0</strong></p>
+            <span id="lucky-roll-die">🎲</span>
+            <div id="lucky-roll-result" style="font-size:20px;font-weight:bold;min-height:28px;"></div>
+            <button class="action-btn" id="lucky-roll-btn" onclick="doLuckyRoll()" style="background:#27ae60;color:white">Roll! (3 coins)</button>
             <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('welcome-screen')">⬅ Back</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
         </div>
 
-        <!-- ROULETTE -->
-        <div id="roulette-screen" class="menu-screen" style="display:none;">
-            <h2>🎡 Roulette</h2>
-            <p class="casino-coins">Coins: <strong id="roulette-coins">0</strong></p>
-            <div class="casino-bet-row">
-                Bet: <input id="roulette-bet" type="number" min="1" value="1"> coins on
-                <select id="roulette-choice" style="font-size:16px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);">
-                    <option value="red">🔴 Red (2x)</option>
-                    <option value="black">⚫ Black (2x)</option>
-                    <option value="green">🟢 Green 0 (14x)</option>
-                    <option value="odd">🔢 Odd (2x)</option>
-                    <option value="even">🔣 Even (2x)</option>
-                </select>
+        <!-- BULLSEYE -->
+        <div id="bullseye-screen" class="menu-screen" style="display:none;">
+            <h2>🎯 Bullseye</h2>
+            <p>Pay 2 coins, pick a number 1–6. Hit it for <strong>8×</strong> your bet back!</p>
+            <p>Coins: <strong id="bullseye-coins">0</strong></p>
+            <div class="bullseye-grid" id="bullseye-grid">
+                <button class="bullseye-btn" onclick="doBullseye(1)">1</button>
+                <button class="bullseye-btn" onclick="doBullseye(2)">2</button>
+                <button class="bullseye-btn" onclick="doBullseye(3)">3</button>
+                <button class="bullseye-btn" onclick="doBullseye(4)">4</button>
+                <button class="bullseye-btn" onclick="doBullseye(5)">5</button>
+                <button class="bullseye-btn" onclick="doBullseye(6)">6</button>
             </div>
-            <span id="roulette-wheel">🎡</span>
-            <div id="roulette-number" style="font-size:28px;font-weight:bold;min-height:36px;"></div>
-            <div class="casino-result" id="roulette-result"></div>
-            <button class="action-btn" id="roulette-btn" onclick="spinRoulette()" style="background:#8e44ad;color:white">Spin!</button>
-            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
-        </div>
-
-        <!-- BLACKJACK -->
-        <div id="blackjack-screen" class="menu-screen" style="display:none;">
-            <h2>🃏 Blackjack</h2>
-            <p class="casino-coins">Coins: <strong id="bj-coins">0</strong></p>
-            <div class="casino-bet-row">Bet: <input id="bj-bet" type="number" min="1" value="1"> coins</div>
-            <div style="font-size:15px;margin:4px 0;">Dealer: <span id="bj-dealer-score">?</span></div>
-            <div class="bj-hand" id="bj-dealer-hand"></div>
-            <div style="font-size:15px;margin:4px 0;">You: <span id="bj-player-score">?</span></div>
-            <div class="bj-hand" id="bj-player-hand"></div>
-            <div class="casino-result" id="bj-result"></div>
-            <div id="bj-actions">
-                <button class="action-btn" id="bj-deal-btn" onclick="dealBlackjack()" style="background:#8e44ad;color:white">Deal</button>
-            </div>
-            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
-        </div>
-
-        <!-- DICE / CRAPS -->
-        <div id="dice-screen" class="menu-screen" style="display:none;">
-            <h2>🎲 Craps</h2>
-            <p class="casino-coins">Coins: <strong id="dice-coins">0</strong></p>
-            <div class="casino-bet-row">Bet: <input id="dice-bet" type="number" min="1" value="1"> coins</div>
-            <div class="dice-display" id="dice-display"><span>🎲</span><span>🎲</span></div>
-            <div style="font-size:15px;min-height:22px;" id="dice-point-display"></div>
-            <div class="casino-result" id="dice-result"></div>
-            <button class="action-btn" id="dice-btn" onclick="rollDice()" style="background:#8e44ad;color:white">Roll!</button>
-            <button class="action-btn" style="background:gray" onclick="resetDice();openMenu('casino-screen')">⬅ Back</button>
-        </div>
-
-        <!-- PUSH CARDS -->
-        <div id="pushcards-screen" class="menu-screen" style="display:none;">
-            <h2>🫷 Push Cards</h2>
-            <p class="casino-coins">Coins: <strong id="push-coins">0</strong></p>
-            <div class="casino-bet-row">Bet: <input id="push-bet" type="number" min="1" value="1"> coins</div>
-            <div style="font-size:15px;margin:4px 0;">Dealer:</div>
-            <div class="push-hand" id="push-dealer-hand"></div>
-            <div style="font-size:15px;margin:4px 0;">You:</div>
-            <div class="push-hand" id="push-player-hand"></div>
-            <div class="casino-result" id="push-result"></div>
-            <button class="action-btn" id="push-btn" onclick="playPushCards()" style="background:#8e44ad;color:white">Deal</button>
-            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
-        </div>
-
-        <!-- BACCARAT -->
-        <div id="baccarat-screen" class="menu-screen" style="display:none;">
-            <h2>🎴 Baccarat</h2>
-            <p class="casino-coins">Coins: <strong id="bac-coins">0</strong></p>
-            <div class="casino-bet-row">
-                Bet: <input id="bac-bet" type="number" min="1" value="1"> coins on
-                <select id="bac-choice" style="font-size:16px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);">
-                    <option value="player">👤 Player (2x)</option>
-                    <option value="banker">🏦 Banker (1.95x)</option>
-                    <option value="tie">🤝 Tie (8x)</option>
-                </select>
-            </div>
-            <div style="font-size:15px;margin:4px 0;">Player: <span id="bac-player-score">?</span></div>
-            <div class="bac-hand" id="bac-player-hand"></div>
-            <div style="font-size:15px;margin:4px 0;">Banker: <span id="bac-banker-score">?</span></div>
-            <div class="bac-hand" id="bac-banker-hand"></div>
-            <div class="casino-result" id="bac-result"></div>
-            <button class="action-btn" id="bac-btn" onclick="playBaccarat()" style="background:#8e44ad;color:white">Deal</button>
-            <button class="action-btn" style="background:gray" onclick="openMenu('casino-screen')">⬅ Back</button>
+            <div id="bullseye-roll" style="font-size:26px;min-height:36px;"></div>
+            <div id="bullseye-result" style="font-size:18px;font-weight:bold;min-height:26px;"></div>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
         </div>
 
         <div id="loader">
@@ -616,6 +617,7 @@
                 (event.ctrlKey && event.shiftKey && event.keyCode === 67)) event.preventDefault();
             if (event.ctrlKey && event.keyCode === 85) event.preventDefault();
         });
+
         const themeData = {
             'default':        { name: '☀️ Daylight (Default)', emoji: '☀️' },
             'theme-dark':     { name: '🌙 Dark Mode',          emoji: '🌙' },
@@ -630,6 +632,7 @@
             'theme-winter':   { name: '❄️ Winter',             emoji: '❄️' },
             'theme-vaporwave':{ name: '🌸 Vaporwave',          emoji: '🌸' },
         };
+
         const canvas = document.getElementById('glitter-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -663,7 +666,6 @@
             animating = true;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles = particles.filter(p => p.life > 0);
-
             for (const p of particles) {
                 ctx.save();
                 ctx.globalAlpha = p.life;
@@ -678,21 +680,13 @@
                     ctx.fill();
                 }
                 ctx.restore();
-
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.05;
-                p.rotation += p.rotSpeed;
-                p.life -= p.decay;
+                p.x += p.vx; p.y += p.vy; p.vy += 0.05;
+                p.rotation += p.rotSpeed; p.life -= p.decay;
             }
-
-            if (particles.length > 0) {
-                requestAnimationFrame(animateGlitter);
-            } else {
-                animating = false;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
+            if (particles.length > 0) requestAnimationFrame(animateGlitter);
+            else { animating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }
         }
+
         function showUnlockPopup(themeName, emoji) {
             const popup = document.getElementById('unlock-popup');
             document.getElementById('unlock-emoji').innerText = emoji;
@@ -701,6 +695,7 @@
             spawnGlitter();
             setTimeout(() => popup.classList.remove('show'), 2800);
         }
+
         function updateUI() {
             document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
             document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
@@ -708,11 +703,9 @@
 
             const grid = document.getElementById('theme-grid-container');
             grid.innerHTML = '';
-
             for (const [themeId, data] of Object.entries(themeData)) {
                 const btn = document.createElement('button');
                 btn.className = 'theme-item-btn';
-
                 if (unlockedThemes.includes(themeId)) {
                     btn.innerHTML = data.name;
                     if (activeTheme === themeId) {
@@ -729,6 +722,7 @@
             }
         }
 
+        // ===== SAVE SYSTEM =====
         const SAVE_KEY = "ihg398g231f1g3ig1f13f";
         const _skr = "gf2378g8o32843g7p243f";
         const _mfk = "gvg437v2g7937v9g329";
@@ -747,57 +741,43 @@
             arr.forEach(b => bin += String.fromCharCode(b));
             return btoa(bin);
         }
-
         async function _deriveKey(rawKeyB64, saltArr) {
             const rawBytes = _b64ToArr(rawKeyB64);
             const baseKey = await crypto.subtle.importKey('raw', rawBytes, 'PBKDF2', false, ['deriveKey']);
             return crypto.subtle.deriveKey(
                 { name: 'PBKDF2', salt: saltArr, iterations: 310000, hash: 'SHA-512' },
-                baseKey,
-                { name: 'AES-GCM', length: 256 },
-                false,
-                ['encrypt', 'decrypt']
+                baseKey, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
             );
         }
-
         async function _getOrCreateMaterial() {
             let rawB64 = localStorage.getItem(_v3k);
             let saltB64 = localStorage.getItem(_v3s);
             if (!rawB64 || !saltB64) {
                 const raw = crypto.getRandomValues(new Uint8Array(64));
                 const salt = crypto.getRandomValues(new Uint8Array(32));
-                rawB64 = _arrToB64(raw);
-                saltB64 = _arrToB64(salt);
-                localStorage.setItem(_v3k, rawB64);
-                localStorage.setItem(_v3s, saltB64);
+                rawB64 = _arrToB64(raw); saltB64 = _arrToB64(salt);
+                localStorage.setItem(_v3k, rawB64); localStorage.setItem(_v3s, saltB64);
             }
-            const saltArr = _b64ToArr(saltB64);
-            const key = await _deriveKey(rawB64, saltArr);
-            return key;
+            return _deriveKey(rawB64, _b64ToArr(saltB64));
         }
-
         async function encode(data) {
             const key = await _getOrCreateMaterial();
             const iv = crypto.getRandomValues(new Uint8Array(12));
             const plain = new TextEncoder().encode(JSON.stringify(data));
             const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain);
             const combined = new Uint8Array(iv.byteLength + cipher.byteLength);
-            combined.set(iv, 0);
-            combined.set(new Uint8Array(cipher), iv.byteLength);
+            combined.set(iv, 0); combined.set(new Uint8Array(cipher), iv.byteLength);
             return _arrToB64(combined);
         }
-
         async function decode(str) {
             try {
                 const key = await _getOrCreateMaterial();
                 const combined = _b64ToArr(str);
-                const iv = combined.slice(0, 12);
-                const cipher = combined.slice(12);
+                const iv = combined.slice(0, 12), cipher = combined.slice(12);
                 const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher);
                 return JSON.parse(new TextDecoder().decode(plain));
             } catch { return null; }
         }
-
         function _legacyDecodeV2(str, secret) {
             try {
                 let dec = decodeURIComponent(escape(atob(str)));
@@ -809,12 +789,10 @@
         async function hugh43go278872() {
             const validThemes = Object.keys(themeData);
             const alreadyMigrated = localStorage.getItem(_mfk) === _mfv;
-
             const encrypted = localStorage.getItem(SAVE_KEY);
             if (encrypted) {
                 const data = await decode(encrypted);
                 if (data && typeof data === 'object') return data;
-
                 if (!alreadyMigrated) {
                     const legacySecret = localStorage.getItem(_skr);
                     if (legacySecret) {
@@ -826,17 +804,14 @@
                             const active = validThemes.includes(legacyData.activeTheme) ? legacyData.activeTheme : 'default';
                             const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
                             localStorage.setItem(SAVE_KEY, await encode(newSave));
-                            localStorage.removeItem(_skr);
-                            localStorage.setItem(_mfk, _mfv);
+                            localStorage.removeItem(_skr); localStorage.setItem(_mfk, _mfv);
                             return newSave;
                         }
                     }
                 }
             }
-
             if (!alreadyMigrated) {
-                const OLD_KEY = "duckSecureV2";
-                const OLD_SECRET = "duck_key_v2_secure";
+                const OLD_KEY = "duckSecureV2", OLD_SECRET = "duck_key_v2_secure";
                 const oldRaw = localStorage.getItem(OLD_KEY);
                 if (oldRaw) {
                     try {
@@ -848,13 +823,11 @@
                             const active = validThemes.includes(oldData.activeTheme) ? oldData.activeTheme : 'default';
                             const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
                             localStorage.setItem(SAVE_KEY, await encode(newSave));
-                            localStorage.removeItem(OLD_KEY);
-                            localStorage.setItem(_mfk, _mfv);
+                            localStorage.removeItem(OLD_KEY); localStorage.setItem(_mfk, _mfv);
                             return newSave;
                         }
                     } catch(e) { localStorage.removeItem(OLD_KEY); }
                 }
-
                 const oldCoins = localStorage.getItem('quackCoins');
                 const oldThemes = localStorage.getItem('unlockedThemes');
                 const oldActive = localStorage.getItem('activeTheme');
@@ -863,21 +836,17 @@
                     try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
                     if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
                     parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
-                    const oldCoinCount = parseInt(oldCoins) || 0;
                     const newSave = {
-                        absolutelyNothingThatisImportantlol: oldCoinCount <= 50 ? oldCoinCount : 50,
+                        absolutelyNothingThatisImportantlol: Math.min(parseInt(oldCoins) || 0, 50),
                         unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
                         activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
                     };
                     localStorage.setItem(SAVE_KEY, await encode(newSave));
-                    localStorage.removeItem('quackCoins');
-                    localStorage.removeItem('unlockedThemes');
-                    localStorage.removeItem('activeTheme');
+                    localStorage.removeItem('quackCoins'); localStorage.removeItem('unlockedThemes'); localStorage.removeItem('activeTheme');
                     localStorage.setItem(_mfk, _mfv);
                     return newSave;
                 }
             }
-
             return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
         }
 
@@ -897,25 +866,22 @@
 
         let save = await hugh43go278872();
         if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
-
         absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
         unlockedThemes = save.unlockedThemes || ['default'];
         activeTheme = save.activeTheme || 'default';
-
         updateUI();
 
         // ===== COIN TIMER =====
         let activeSeconds = 0;
         let lastInteraction = Date.now();
         window.addEventListener('mousemove', () => lastInteraction = Date.now());
-        window.addEventListener('keydown', () => lastInteraction = Date.now());
-        window.addEventListener('click', () => lastInteraction = Date.now());
+        window.addEventListener('keydown',   () => lastInteraction = Date.now());
+        window.addEventListener('click',     () => lastInteraction = Date.now());
 
         setInterval(() => {
             let _45230X4xc = absolutelyNothingThatisImportantlol;
             let isIframeActive = document.activeElement === document.getElementById('game-frame');
             let isWindowActive = (Date.now() - lastInteraction) < 10000;
-
             if (_45230X4xc != absolutelyNothingThatisImportantlol) {
                 absolutelyNothingThatisImportantlol = 0; _45230X4xc = 0; showAlert("CHEATER", "🚨");
             }
@@ -929,17 +895,25 @@
                 }
             }
         }, 10);
+
+        // ===== SLOTS =====
         const symbols = ['🍒','🦆','💎','🎰','🖥️','🌅','🌲','✨','🔴','🐥','❄️','🌊'];
+        let freeSpins = 0;
 
         function randomGoofyAssFunction() {
             if (isSpinning) return;
-            if (absolutelyNothingThatisImportantlol < 3) { showAlert("You need 3 Quack Coins to spin!", "🎰"); return; }
-            absolutelyNothingThatisImportantlol -= 3;
+            const cost = freeSpins > 0 ? 0 : 3;
+            if (absolutelyNothingThatisImportantlol < cost) { showAlert("You need 3 Quack Coins to spin!", "🎰"); return; }
+            if (freeSpins > 0) {
+                freeSpins--;
+                document.getElementById('mega-spin-indicator').innerText = freeSpins > 0 ? `⚡ Free Spins left: ${freeSpins}` : '';
+            } else {
+                absolutelyNothingThatisImportantlol -= 3;
+            }
             hoihpohivpoweahovropagh4p9h8g4();
             isSpinning = true;
             document.getElementById('spin-btn').disabled = true;
             document.getElementById('slot-message').innerText = "Spinning...";
-
             let ticks = 0;
             const spinInterval = setInterval(() => {
                 document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
@@ -954,8 +928,6 @@
             const r1 = document.getElementById('reel1').innerText;
             const r2 = document.getElementById('reel2').innerText;
             const r3 = document.getElementById('reel3').innerText;
-            const msg = document.getElementById('slot-message');
-
             if (r1 === r2 && r2 === r3) {
                 if      (r1 === '🍒') grantReward('coins',           5,  "Jackpot! +5 Coins!");
                 else if (r1 === '🦆') grantReward('theme-dark',      10, "You unlocked DARK MODE!");
@@ -972,7 +944,7 @@
             } else if (r1 === r2 || r2 === r3 || r1 === r3) {
                 grantReward('coins', 1, "Two matched! +1 Coin back.");
             } else {
-                msg.innerText = "No luck this time. Try again!";
+                document.getElementById('slot-message').innerText = "No luck this time. Try again!";
             }
             isSpinning = false;
             document.getElementById('spin-btn').disabled = false;
@@ -998,541 +970,7 @@
                 showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
             }
         }
-        let alertTimeout = null;
-        function showAlert(msg, title = '', autoDismiss = 0) {
-            document.getElementById('custom-alert-title').innerText = title;
-            document.getElementById('custom-alert-msg').innerText = msg;
-            document.getElementById('custom-alert-overlay').classList.add('show');
-            const prog = document.getElementById('custom-alert-progress');
-            prog.style.transition = 'none';
-            prog.style.width = '100%';
-            if (alertTimeout) clearTimeout(alertTimeout);
-            if (autoDismiss > 0) {
-                setTimeout(() => {
-                    prog.style.transition = `width ${autoDismiss}ms linear`;
-                    prog.style.width = '0%';
-                }, 50);
-                alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
-            } else {
-                prog.style.width = '0%';
-            }
-        }
-        function closeCustomAlert() {
-            document.getElementById('custom-alert-overlay').classList.remove('show');
-            if (alertTimeout) { clearTimeout(alertTimeout); alertTimeout = null; }
-        }
-        function refreshHomeNametag() {
-            const stored = localStorage.getItem('qw_nametag');
-            const el = document.getElementById('home-nametag');
-            if (stored) {
-                try {
-                    el.innerText = '🏷️ ' + atob(stored);
-                    el.style.display = 'block';
-                } catch { el.style.display = 'none'; }
-            } else {
-                el.style.display = 'none';
-            }
-        }
-        refreshHomeNametag();
-        function syncCasinoCoins() {
-            ['casino-coin-display','roulette-coins','bj-coins','dice-coins','push-coins','bac-coins'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.innerText = absolutelyNothingThatisImportantlol;
-            });
-        }
-        function casinoBet(id) {
-            const bet = Math.max(1, parseInt(document.getElementById(id).value) || 1);
-            if (bet > absolutelyNothingThatisImportantlol) {
-                showAlert(`Not enough coins! You have ${absolutelyNothingThatisImportantlol}.`, '❌ Broke');
-                return null;
-            }
-            return bet;
-        }
-        const rouletteRed = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
-        function spinRoulette() {
-            const bet = casinoBet('roulette-bet');
-            if (bet === null) return;
-            const choice = document.getElementById('roulette-choice').value;
-            absolutelyNothingThatisImportantlol -= bet;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-            const btn = document.getElementById('roulette-btn');
-            btn.disabled = true;
-            document.getElementById('roulette-result').innerText = '';
-            document.getElementById('roulette-number').innerText = '';
-            const wheel = document.getElementById('roulette-wheel');
-            wheel.classList.add('roulette-spinning');
-            setTimeout(() => {
-                wheel.classList.remove('roulette-spinning');
-                const num = Math.floor(Math.random() * 37); // 0-36
-                const isRed = rouletteRed.includes(num);
-                const isGreen = num === 0;
-                const isBlack = !isRed && !isGreen;
-                const color = isGreen ? '🟢' : isRed ? '🔴' : '⚫';
-                document.getElementById('roulette-number').innerText = `${color} ${num}`;
-                let won = 0;
-                if (choice === 'green' && isGreen) won = bet * 14;
-                else if (choice === 'red' && isRed) won = bet * 2;
-                else if (choice === 'black' && isBlack) won = bet * 2;
-                else if (choice === 'odd' && !isGreen && num % 2 !== 0) won = bet * 2;
-                else if (choice === 'even' && !isGreen && num % 2 === 0) won = bet * 2;
-                if (won > 0) {
-                    absolutelyNothingThatisImportantlol += won;
-                    document.getElementById('roulette-result').innerText = `🎉 Win! +${won} coins`;
-                    spawnGlitter();
-                } else {
-                    document.getElementById('roulette-result').innerText = `😬 Lost ${bet} coins`;
-                }
-                hoihpohivpoweahovropagh4p9h8g4();
-                syncCasinoCoins();
-                btn.disabled = false;
-            }, 2100);
-        }
-        const suits = ['♠','♥','♦','♣'];
-        const ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-        let bjDeck = [], bjPlayer = [], bjDealer = [], bjBet = 0, bjActive = false;
 
-        function makeDeck() {
-            let d = [];
-            for (const s of suits) for (const r of ranks) d.push({r,s});
-            return d.sort(() => Math.random() - 0.5);
-        }
-        function cardVal(card) {
-            if (['J','Q','K'].includes(card.r)) return 10;
-            if (card.r === 'A') return 11;
-            return parseInt(card.r);
-        }
-        function handVal(hand) {
-            let total = hand.reduce((s,c) => s + cardVal(c), 0);
-            let aces = hand.filter(c => c.r === 'A').length;
-            while (total > 21 && aces > 0) { total -= 10; aces--; }
-            return total;
-        }
-        function isRed(card) { return card.s === '♥' || card.s === '♦'; }
-        function renderCard(card, hidden = false) {
-            const div = document.createElement('div');
-            div.className = 'bj-card' + (hidden ? ' back' : (isRed(card) ? '' : ' black'));
-            div.innerText = hidden ? '🂠' : `${card.r}${card.s}`;
-            return div;
-        }
-        function renderHand(containerId, hand, hideSecond = false) {
-            const el = document.getElementById(containerId);
-            el.innerHTML = '';
-            hand.forEach((c, i) => el.appendChild(renderCard(c, hideSecond && i === 1)));
-        }
-
-        function startBlackjack() {
-            openMenu('blackjack-screen');
-            bjActive = false;
-            document.getElementById('bj-dealer-hand').innerHTML = '';
-            document.getElementById('bj-player-hand').innerHTML = '';
-            document.getElementById('bj-result').innerText = '';
-            document.getElementById('bj-dealer-score').innerText = '?';
-            document.getElementById('bj-player-score').innerText = '?';
-            document.getElementById('bj-actions').innerHTML = '<button class="action-btn" id="bj-deal-btn" onclick="dealBlackjack()" style="background:#8e44ad;color:white">Deal</button>';
-            syncCasinoCoins();
-        }
-
-        function dealBlackjack() {
-            const bet = casinoBet('bj-bet');
-            if (bet === null) return;
-            bjBet = bet;
-            absolutelyNothingThatisImportantlol -= bet;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-            bjDeck = makeDeck();
-            bjPlayer = [bjDeck.pop(), bjDeck.pop()];
-            bjDealer = [bjDeck.pop(), bjDeck.pop()];
-            bjActive = true;
-            renderHand('bj-player-hand', bjPlayer);
-            renderHand('bj-dealer-hand', bjDealer, true);
-            document.getElementById('bj-player-score').innerText = handVal(bjPlayer);
-            document.getElementById('bj-dealer-score').innerText = cardVal(bjDealer[0]) + '?';
-            document.getElementById('bj-result').innerText = '';
-            document.getElementById('bj-actions').innerHTML = `
-                <button class="action-btn" onclick="bjHit()" style="background:#27ae60;color:white">Hit</button>
-                <button class="action-btn" onclick="bjStand()" style="background:#c0392b;color:white">Stand</button>
-            `;
-            if (handVal(bjPlayer) === 21) bjStand();
-        }
-
-        function bjHit() {
-            if (!bjActive) return;
-            bjPlayer.push(bjDeck.pop());
-            renderHand('bj-player-hand', bjPlayer);
-            const val = handVal(bjPlayer);
-            document.getElementById('bj-player-score').innerText = val;
-            if (val >= 21) bjStand();
-        }
-
-        function bjStand() {
-            bjActive = false;
-            while (handVal(bjDealer) < 17) bjDealer.push(bjDeck.pop());
-            renderHand('bj-dealer-hand', bjDealer);
-            const ps = handVal(bjPlayer), ds = handVal(bjDealer);
-            document.getElementById('bj-player-score').innerText = ps;
-            document.getElementById('bj-dealer-score').innerText = ds;
-            let msg = '';
-            if (ps > 21) { msg = `😬 Bust! Lost ${bjBet} coins`; }
-            else if (ds > 21 || ps > ds) {
-                const win = bjBet * 2;
-                absolutelyNothingThatisImportantlol += win;
-                msg = `🎉 Win! +${win} coins`;
-                spawnGlitter();
-            } else if (ps === ds) {
-                absolutelyNothingThatisImportantlol += bjBet;
-                msg = `🤝 Push! Bet returned`;
-            } else { msg = `😬 Dealer wins. Lost ${bjBet} coins`; }
-            document.getElementById('bj-result').innerText = msg;
-            document.getElementById('bj-actions').innerHTML = '<button class="action-btn" onclick="dealBlackjack()" style="background:#8e44ad;color:white">Deal Again</button>';
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-        }
-        const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-        let dicePoint = null, dicePhase = 'comeout';
-
-        function resetDice() { dicePoint = null; dicePhase = 'comeout'; document.getElementById('dice-point-display').innerText = ''; document.getElementById('dice-result').innerText = ''; }
-
-        function rollDice() {
-            const bet = casinoBet('dice-bet');
-            if (bet === null) return;
-            const btn = document.getElementById('dice-btn');
-            btn.disabled = true;
-
-            const d1 = Math.ceil(Math.random()*6), d2 = Math.ceil(Math.random()*6);
-            const total = d1 + d2;
-            document.getElementById('dice-display').innerHTML = `<span>${diceFaces[d1-1]}</span><span>${diceFaces[d2-1]}</span>`;
-
-            let msg = '';
-            if (dicePhase === 'comeout') {
-                absolutelyNothingThatisImportantlol -= bet;
-                hoihpohivpoweahovropagh4p9h8g4();
-                syncCasinoCoins();
-                if (total === 7 || total === 11) {
-                    absolutelyNothingThatisImportantlol += bet * 2;
-                    msg = `🎉 ${total}! Natural! +${bet*2} coins`;
-                    spawnGlitter();
-                    resetDice();
-                } else if (total === 2 || total === 3 || total === 12) {
-                    msg = `😬 Craps (${total})! Lost ${bet} coins`;
-                    resetDice();
-                } else {
-                    dicePoint = total; dicePhase = 'point';
-                    msg = `Point is ${total}! Roll again to match it (avoid 7)`;
-                    document.getElementById('dice-point-display').innerText = `🎯 Point: ${total}`;
-                    btn.disabled = false;
-                    document.getElementById('dice-result').innerText = msg;
-                    hoihpohivpoweahovropagh4p9h8g4();
-                    syncCasinoCoins();
-                    return;
-                }
-            } else {
-                absolutelyNothingThatisImportantlol -= bet;
-                hoihpohivpoweahovropagh4p9h8g4();
-                syncCasinoCoins();
-                if (total === dicePoint) {
-                    absolutelyNothingThatisImportantlol += bet * 2;
-                    msg = `🎉 Hit the point (${total})! +${bet*2} coins`;
-                    spawnGlitter();
-                    resetDice();
-                } else if (total === 7) {
-                    msg = `😬 Seven out! Lost ${bet} coins`;
-                    resetDice();
-                } else {
-                    msg = `Rolled ${total}, not ${dicePoint} or 7. Roll again!`;
-                    btn.disabled = false;
-                    document.getElementById('dice-result').innerText = msg;
-                    hoihpohivpoweahovropagh4p9h8g4();
-                    syncCasinoCoins();
-                    return;
-                }
-            }
-            document.getElementById('dice-result').innerText = msg;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-            btn.disabled = false;
-        }
-        function pushCardVal(r) {
-            if (['J','Q','K'].includes(r)) return 10;
-            if (r === 'A') return 11;
-            return parseInt(r);
-        }
-        function playPushCards() {
-            const bet = casinoBet('push-bet');
-            if (bet === null) return;
-            absolutelyNothingThatisImportantlol -= bet;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-            const deck = makeDeck();
-            const pCard = deck.pop(), dCard = deck.pop();
-            const pVal = pushCardVal(pCard.r), dVal = pushCardVal(dCard.r);
-
-            function renderPushHand(id, card) {
-                const el = document.getElementById(id);
-                el.innerHTML = '';
-                const div = document.createElement('div');
-                div.className = 'bj-card' + (isRed(card) ? '' : ' black');
-                div.innerText = `${card.r}${card.s}`;
-                div.style.width = '60px'; div.style.height = '80px'; div.style.fontSize = '20px';
-                el.appendChild(div);
-            }
-            renderPushHand('push-player-hand', pCard);
-            renderPushHand('push-dealer-hand', dCard);
-
-            let msg = '';
-            if (pVal > dVal) {
-                absolutelyNothingThatisImportantlol += bet * 2;
-                msg = `🎉 You win! ${pCard.r} vs ${dCard.r}. +${bet*2} coins`;
-                spawnGlitter();
-            } else if (pVal === dVal) {
-                absolutelyNothingThatisImportantlol += bet;
-                msg = `🤝 Push! Tied at ${pVal}. Bet returned.`;
-            } else {
-                msg = `😬 Dealer wins. ${dCard.r} beats ${pCard.r}. Lost ${bet}.`;
-            }
-            document.getElementById('push-result').innerText = msg;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-        }
-        function bacCardVal(r) {
-            if (['10','J','Q','K'].includes(r)) return 0;
-            if (r === 'A') return 1;
-            return parseInt(r);
-        }
-        function bacHandVal(hand) { return hand.reduce((s,c) => (s + bacCardVal(c.r)) % 10, 0); }
-
-        function playBaccarat() {
-            const bet = casinoBet('bac-bet');
-            if (bet === null) return;
-            const choice = document.getElementById('bac-choice').value;
-            absolutelyNothingThatisImportantlol -= bet;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-
-            const deck = makeDeck();
-            const player = [deck.pop(), deck.pop()];
-            const banker = [deck.pop(), deck.pop()];
-
-            let ps = bacHandVal(player), bs = bacHandVal(banker);
-            if (ps <= 5) { player.push(deck.pop()); ps = bacHandVal(player); }
-            if (bs <= 5) { banker.push(deck.pop()); bs = bacHandVal(banker); }
-
-            function renderBacHand(id, hand) {
-                const el = document.getElementById(id);
-                el.innerHTML = '';
-                hand.forEach(c => {
-                    const div = document.createElement('div');
-                    div.className = 'bj-card' + (isRed(c) ? '' : ' black');
-                    div.innerText = `${c.r}${c.s}`;
-                    el.appendChild(div);
-                });
-            }
-            renderBacHand('bac-player-hand', player);
-            renderBacHand('bac-banker-hand', banker);
-            document.getElementById('bac-player-score').innerText = ps;
-            document.getElementById('bac-banker-score').innerText = bs;
-
-            const winner = ps > bs ? 'player' : bs > ps ? 'banker' : 'tie';
-            let msg = '', won = 0;
-            if (choice === winner) {
-                if (choice === 'tie') won = Math.floor(bet * 8);
-                else if (choice === 'banker') won = Math.floor(bet * 1.95);
-                else won = bet * 2;
-                absolutelyNothingThatisImportantlol += won;
-                msg = `🎉 ${winner.toUpperCase()} wins! +${won} coins`;
-                spawnGlitter();
-            } else {
-                msg = `😬 ${winner.toUpperCase()} wins. Lost ${bet} coins.`;
-            }
-            document.getElementById('bac-result').innerText = msg;
-            hoihpohivpoweahovropagh4p9h8g4();
-            syncCasinoCoins();
-        }
-        function getDuckSave() {
-            try {
-                const raw = localStorage.getItem('duckV12Accounts');
-                if (!raw) return null;
-                const parsed = JSON.parse(raw);
-                const key = Object.keys(parsed)[0];
-                return { key, data: parsed[key] };
-            } catch { return null; }
-        }
-        function getDuckCoins() {
-            const s = getDuckSave();
-            return s ? (s.data.saveData?.coins || 0) : null;
-        }
-        function setDuckCoins(amount) {
-            try {
-                const raw = localStorage.getItem('duckV12Accounts');
-                const parsed = JSON.parse(raw);
-                const key = Object.keys(parsed)[0];
-                parsed[key].saveData.coins = amount;
-                localStorage.setItem('duckV12Accounts', JSON.stringify(parsed));
-                return true;
-            } catch { return false; }
-        }
-        function refreshDuckDisplay() {
-            const dc = getDuckCoins();
-            const el = document.getElementById('duck-coin-display');
-            if (el) el.innerText = dc !== null ? dc : 'N/A (play Duck RNG first)';
-            const elShop = document.getElementById('coin-display-shop');
-            if (elShop) elShop.innerText = absolutelyNothingThatisImportantlol;
-        }
-
-        // ===== EXCHANGE =====
-        function exchangeToDuck() {
-            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            absolutelyNothingThatisImportantlol--;
-            setDuckCoins(dc + 100);
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert("✅ -1 Quack Coins → +100 Duck Coins!", "🔄", 3000);
-        }
-        function exchangeToQuack() {
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 100) { showAlert(`Need 100 Duck Coins! You have ${dc}.`, "🔃"); return; }
-            setDuckCoins(dc - 100);
-            absolutelyNothingThatisImportantlol++;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert("✅ -100 Duck Coins → +1 Quack Coins!", "🔃", 3000);
-        }
-        let flipInProgress = false;
-        function doFlip(choice) {
-            if (flipInProgress) return;
-            const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
-            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌"); return; }
-            flipInProgress = true;
-            document.getElementById('flip-heads').disabled = true;
-            document.getElementById('flip-tails').disabled = true;
-            document.getElementById('flip-result').innerText = '';
-            const coin = document.getElementById('coinflip-coin');
-            coin.classList.add('flipping');
-            setTimeout(() => {
-                coin.classList.remove('flipping');
-                const result = Math.random() < 0.5 ? 'heads' : 'tails';
-                const won = result === choice;
-                if (won) {
-                    absolutelyNothingThatisImportantlol += bet;
-                    document.getElementById('flip-result').style.color = '#2ecc71';
-                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
-                    spawnGlitter();
-                } else {
-                    absolutelyNothingThatisImportantlol -= bet;
-                    document.getElementById('flip-result').style.color = '#e74c3c';
-                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
-                }
-                coin.innerText = result === 'heads' ? '🦆' : '🐟';
-                document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-                hoihpohivpoweahovropagh4p9h8g4();
-                flipInProgress = false;
-                document.getElementById('flip-heads').disabled = false;
-                document.getElementById('flip-tails').disabled = false;
-            }, 1900);
-        }
-        let scratchActive = false;
-        let scratchPrize = null;
-        function openScratch() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-
-            const prizes = [
-                { emoji: '💰', label: '+5 Coins', action: () => { absolutelyNothingThatisImportantlol += 5; hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💰', label: '+5 Coins', action: () => { absolutelyNothingThatisImportantlol += 5; hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',  action: () => { absolutelyNothingThatisImportantlol += 1; hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',  action: () => { absolutelyNothingThatisImportantlol += 1; hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',  action: () => { absolutelyNothingThatisImportantlol += 1; hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💎', label: '+10 Coins', action: () => { absolutelyNothingThatisImportantlol += 10; hoihpohivpoweahovropagh4p9h8g4(); spawnGlitter(); } },
-                { emoji: '🦆', label: '+3 Coins', action: () => { absolutelyNothingThatisImportantlol += 3; hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💸', label: 'Nothing',  action: () => {} },
-                { emoji: '💸', label: 'Nothing',  action: () => {} },
-                { emoji: '💸', label: 'Nothing',  action: () => {} },
-            ];
-            scratchPrize = prizes[Math.floor(Math.random() * prizes.length)];
-
-            document.getElementById('scratch-reveal').innerText = scratchPrize.emoji;
-            document.getElementById('scratch-result').innerText = '';
-            document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
-            scratchActive = true;
-
-            openMenu('scratch-screen');
-
-            setTimeout(() => {
-                const canvas = document.getElementById('scratch-canvas');
-                const ctx2 = canvas.getContext('2d');
-                ctx2.clearRect(0, 0, canvas.width, canvas.height);
-                ctx2.fillStyle = '#aaa';
-                ctx2.fillRect(0, 0, canvas.width, canvas.height);
-                ctx2.fillStyle = '#888';
-                ctx2.font = 'bold 18px sans-serif';
-                ctx2.textAlign = 'center';
-                ctx2.fillText('SCRATCH HERE', canvas.width / 2, canvas.height / 2);
-
-                let scratched = false;
-                let totalScratched = 0;
-                const totalPixels = canvas.width * canvas.height;
-
-                function scratch(e) {
-                    if (!scratchActive) return;
-                    const rect = canvas.getBoundingClientRect();
-                    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
-                    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
-                    ctx2.globalCompositeOperation = 'destination-out';
-                    ctx2.beginPath();
-                    ctx2.arc(x, y, 22, 0, Math.PI * 2);
-                    ctx2.fill();
-
-                    if (!scratched) {
-                        const imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
-                        let cleared = 0;
-                        for (let i = 3; i < imageData.data.length; i += 4) {
-                            if (imageData.data[i] === 0) cleared++;
-                        }
-                        if (cleared / totalPixels > 0.45) {
-                            scratched = true;
-                            scratchActive = false;
-                            ctx2.clearRect(0, 0, canvas.width, canvas.height);
-                            scratchPrize.action();
-                            document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
-                            hoihpohivpoweahovropagh4p9h8g4();
-                        }
-                    }
-                }
-                canvas.addEventListener('mousemove', e => { if (e.buttons === 1) scratch(e); });
-                canvas.addEventListener('touchmove', e => { e.preventDefault(); scratch(e); }, { passive: false });
-            }, 50);
-        }
-        function peekTheme() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
-            const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
-            if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const [id, data] = locked[Math.floor(Math.random() * locked.length)];
-            showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
-        }
-        function setNametag() {
-            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
-            const name = document.getElementById('nametag-input').value.trim();
-            if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
-            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
-            absolutelyNothingThatisImportantlol -= 5;
-            localStorage.setItem('qw_nametag', btoa(name));
-            document.getElementById('nametag-display').innerText = name;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshHomeNametag();
-            showAlert(`✅ Name set to "${name}"!`, "🏷️");
-        }
-        function loadNametag() {
-            const stored = localStorage.getItem('qw_nametag');
-            if (stored) {
-                try { document.getElementById('nametag-display').innerText = atob(stored); } catch {}
-            }
-        }
         function megaSpin() {
             if (isSpinning) return;
             if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡"); return; }
@@ -1568,19 +1006,358 @@
             }
             runOneSpin();
         }
+
+        // ===== ALERT =====
+        let alertTimeout = null;
+        function showAlert(msg, title = '', autoDismiss = 0) {
+            document.getElementById('custom-alert-title').innerText = title;
+            document.getElementById('custom-alert-msg').innerText = msg;
+            document.getElementById('custom-alert-overlay').classList.add('show');
+            const prog = document.getElementById('custom-alert-progress');
+            prog.style.transition = 'none'; prog.style.width = '100%';
+            if (alertTimeout) clearTimeout(alertTimeout);
+            if (autoDismiss > 0) {
+                setTimeout(() => { prog.style.transition = `width ${autoDismiss}ms linear`; prog.style.width = '0%'; }, 50);
+                alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
+            } else { prog.style.width = '0%'; }
+        }
+        function closeCustomAlert() {
+            document.getElementById('custom-alert-overlay').classList.remove('show');
+            if (alertTimeout) { clearTimeout(alertTimeout); alertTimeout = null; }
+        }
+
+        function refreshHomeNametag() {
+            const stored = localStorage.getItem('qw_nametag');
+            const el = document.getElementById('home-nametag');
+            if (stored) {
+                try { el.innerText = '🏷️ ' + atob(stored); el.style.display = 'block'; }
+                catch { el.style.display = 'none'; }
+            } else { el.style.display = 'none'; }
+        }
+        refreshHomeNametag();
+
+        // ===== DUCK RNG INTEGRATION =====
+        // getDuckSave: base64-decode the raw value first, then parse as JSON
+        function getDuckSave() {
+            try {
+                const raw = localStorage.getItem('duckV12Accounts');
+                if (!raw) return null;
+                const decoded = atob(raw);          // 1. Base64 decode
+                const parsed  = JSON.parse(decoded); // 2. Parse JSON
+                const key = Object.keys(parsed)[0];
+                return { key, data: parsed[key] };
+            } catch { return null; }
+        }
+        function getDuckCoins() {
+            const s = getDuckSave();
+            return s ? (s.data.saveData?.coins || 0) : null;
+        }
+        function setDuckCoins(amount) {
+            try {
+                const raw     = localStorage.getItem('duckV12Accounts');
+                const decoded = atob(raw);
+                const parsed  = JSON.parse(decoded);
+                const key = Object.keys(parsed)[0];
+                parsed[key].saveData.coins = amount;
+                // Re-encode: stringify then base64
+                localStorage.setItem('duckV12Accounts', btoa(JSON.stringify(parsed)));
+                return true;
+            } catch { return false; }
+        }
+        function refreshDuckDisplay() {
+            const dc = getDuckCoins();
+            const el = document.getElementById('duck-coin-display');
+            if (el) el.innerText = dc !== null ? dc : 'N/A (play Duck RNG first)';
+            const elShop = document.getElementById('coin-display-shop');
+            if (elShop) elShop.innerText = absolutelyNothingThatisImportantlol;
+        }
+
+        function exchangeToDuck() {
+            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
+            const dc = getDuckCoins();
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+            absolutelyNothingThatisImportantlol--;
+            setDuckCoins(dc + 100);
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshDuckDisplay();
+            showAlert("✅ -1 Quack Coin → +100 Duck Coins!", "🔄", 3000);
+        }
+        function exchangeToQuack() {
+            const dc = getDuckCoins();
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+            if (dc < 100) { showAlert(`Need 100 Duck Coins! You have ${dc}.`, "🔃"); return; }
+            setDuckCoins(dc - 100);
+            absolutelyNothingThatisImportantlol++;
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshDuckDisplay();
+            showAlert("✅ -100 Duck Coins → +1 Quack Coin!", "🔃", 3000);
+        }
+
+        // ===== COIN FLIP =====
+        let flipInProgress = false;
+        function doFlip(choice) {
+            if (flipInProgress) return;
+            const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
+            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌"); return; }
+            flipInProgress = true;
+            document.getElementById('flip-heads').disabled = true;
+            document.getElementById('flip-tails').disabled = true;
+            document.getElementById('flip-result').innerText = '';
+            const coin = document.getElementById('coinflip-coin');
+            coin.classList.add('flipping');
+            setTimeout(() => {
+                coin.classList.remove('flipping');
+                const result = Math.random() < 0.5 ? 'heads' : 'tails';
+                const won = result === choice;
+                if (won) {
+                    absolutelyNothingThatisImportantlol += bet;
+                    document.getElementById('flip-result').style.color = '#2ecc71';
+                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
+                    spawnGlitter();
+                } else {
+                    absolutelyNothingThatisImportantlol -= bet;
+                    document.getElementById('flip-result').style.color = '#e74c3c';
+                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
+                }
+                coin.innerText = result === 'heads' ? '🦆' : '🐟';
+                document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
+                hoihpohivpoweahovropagh4p9h8g4();
+                flipInProgress = false;
+                document.getElementById('flip-heads').disabled = false;
+                document.getElementById('flip-tails').disabled = false;
+            }, 1900);
+        }
+
+        // ===== SCRATCH CARD =====
+        let scratchActive = false, scratchPrize = null;
+        function openScratch() {
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
+            absolutelyNothingThatisImportantlol -= 2;
+            hoihpohivpoweahovropagh4p9h8g4();
+            const prizes = [
+                { emoji: '💰', label: '+5 Coins',  action: () => { absolutelyNothingThatisImportantlol += 5;  hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '💰', label: '+5 Coins',  action: () => { absolutelyNothingThatisImportantlol += 5;  hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 1;  hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 1;  hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 1;  hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '💎', label: '+10 Coins', action: () => { absolutelyNothingThatisImportantlol += 10; hoihpohivpoweahovropagh4p9h8g4(); spawnGlitter(); } },
+                { emoji: '🦆', label: '+3 Coins',  action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
+                { emoji: '💸', label: 'Nothing',   action: () => {} },
+                { emoji: '💸', label: 'Nothing',   action: () => {} },
+                { emoji: '💸', label: 'Nothing',   action: () => {} },
+            ];
+            scratchPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            document.getElementById('scratch-reveal').innerText = scratchPrize.emoji;
+            document.getElementById('scratch-result').innerText = '';
+            document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
+            scratchActive = true;
+            openMenu('scratch-screen');
+            setTimeout(() => {
+                const c = document.getElementById('scratch-canvas');
+                const cx = c.getContext('2d');
+                cx.clearRect(0, 0, c.width, c.height);
+                cx.fillStyle = '#aaa'; cx.fillRect(0, 0, c.width, c.height);
+                cx.fillStyle = '#888'; cx.font = 'bold 18px sans-serif'; cx.textAlign = 'center';
+                cx.fillText('SCRATCH HERE', c.width / 2, c.height / 2);
+                let scratched = false;
+                function scratch(e) {
+                    if (!scratchActive) return;
+                    const rect = c.getBoundingClientRect();
+                    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+                    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+                    cx.globalCompositeOperation = 'destination-out';
+                    cx.beginPath(); cx.arc(x, y, 22, 0, Math.PI * 2); cx.fill();
+                    if (!scratched) {
+                        const id = cx.getImageData(0, 0, c.width, c.height);
+                        let cleared = 0;
+                        for (let i = 3; i < id.data.length; i += 4) if (id.data[i] === 0) cleared++;
+                        if (cleared / (c.width * c.height) > 0.45) {
+                            scratched = true; scratchActive = false;
+                            cx.clearRect(0, 0, c.width, c.height);
+                            scratchPrize.action();
+                            document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
+                            hoihpohivpoweahovropagh4p9h8g4();
+                        }
+                    }
+                }
+                c.addEventListener('mousemove', e => { if (e.buttons === 1) scratch(e); });
+                c.addEventListener('touchmove', e => { e.preventDefault(); scratch(e); }, { passive: false });
+            }, 50);
+        }
+
+        // ===== NAMETAG =====
+        function peekTheme() {
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
+            const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
+            if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000); return; }
+            absolutelyNothingThatisImportantlol -= 2;
+            hoihpohivpoweahovropagh4p9h8g4();
+            const [id, data] = locked[Math.floor(Math.random() * locked.length)];
+            showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
+        }
+        function setNametag() {
+            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
+            const name = document.getElementById('nametag-input').value.trim();
+            if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
+            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
+            absolutelyNothingThatisImportantlol -= 5;
+            localStorage.setItem('qw_nametag', btoa(name));
+            document.getElementById('nametag-display').innerText = name;
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshHomeNametag();
+            showAlert(`✅ Name set to "${name}"!`, "🏷️");
+        }
+        function loadNametag() {
+            const stored = localStorage.getItem('qw_nametag');
+            if (stored) { try { document.getElementById('nametag-display').innerText = atob(stored); } catch {} }
+        }
+
+        // ===== LUCKY ROLL =====
+        const dieFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+        let luckyRolling = false;
+        function doLuckyRoll() {
+            if (luckyRolling) return;
+            if (absolutelyNothingThatisImportantlol < 3) { showAlert("Need 3 coins to roll!", "🎲"); return; }
+            absolutelyNothingThatisImportantlol -= 3;
+            hoihpohivpoweahovropagh4p9h8g4();
+            luckyRolling = true;
+            document.getElementById('lucky-roll-btn').disabled = true;
+            document.getElementById('lucky-roll-result').innerText = '';
+            const die = document.getElementById('lucky-roll-die');
+            die.classList.add('rolling');
+            let ticks = 0;
+            const iv = setInterval(() => {
+                die.innerText = dieFaces[Math.floor(Math.random() * 6)];
+                ticks++;
+                if (ticks > 18) {
+                    clearInterval(iv);
+                    die.classList.remove('rolling');
+                    const result = Math.floor(Math.random() * 6) + 1; // 1–6
+                    die.innerText = dieFaces[result - 1];
+                    absolutelyNothingThatisImportantlol += result;
+                    if (result >= 5) spawnGlitter();
+                    document.getElementById('lucky-roll-result').innerText = `Rolled ${result}! +${result} coins 🎉`;
+                    document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
+                    hoihpohivpoweahovropagh4p9h8g4();
+                    luckyRolling = false;
+                    document.getElementById('lucky-roll-btn').disabled = false;
+                }
+            }, 60);
+        }
+
+        // ===== MYSTERY BOX =====
+        function openMysteryBox() {
+            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 coins for a Mystery Box!", "🎁"); return; }
+            absolutelyNothingThatisImportantlol -= 5;
+            hoihpohivpoweahovropagh4p9h8g4();
+            const outcomes = [
+                { msg: "💩 It's empty. Just a box.", delta: 0 },
+                { msg: "🪙 You found 2 coins!",      delta: 2 },
+                { msg: "🪙 You found 2 coins!",      delta: 2 },
+                { msg: "🎉 +8 coins! Nice haul!",    delta: 8 },
+                { msg: "🎉 +8 coins! Nice haul!",    delta: 8 },
+                { msg: "💎 JACKPOT! +20 coins!!!",   delta: 20 },
+                { msg: "💀 Cursed box! -1 coin.",    delta: -1 },
+                { msg: "🦆 A rubber duck fell out. +4 coins!", delta: 4 },
+                { msg: "🌈 Rainbow dust! +6 coins.", delta: 6 },
+                { msg: "📦 Another box inside? +1 coin I guess.", delta: 1 },
+            ];
+            const pick = outcomes[Math.floor(Math.random() * outcomes.length)];
+            absolutelyNothingThatisImportantlol = Math.max(0, absolutelyNothingThatisImportantlol + pick.delta);
+            if (pick.delta >= 8) spawnGlitter();
+            hoihpohivpoweahovropagh4p9h8g4();
+            showAlert(pick.msg, "🎁 Mystery Box", 4000);
+        }
+
+        // ===== BULLSEYE =====
+        let bullseyeActive = true;
+        function doBullseye(pick) {
+            if (!bullseyeActive) return;
+            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 coins to play Bullseye!", "🎯"); return; }
+            absolutelyNothingThatisImportantlol -= 2;
+            hoihpohivpoweahovropagh4p9h8g4();
+            bullseyeActive = false;
+            document.querySelectorAll('.bullseye-btn').forEach(b => b.disabled = true);
+            const roll = Math.floor(Math.random() * 6) + 1;
+            document.getElementById('bullseye-roll').innerText = `🎲 Rolled: ${roll}`;
+            const btns = document.querySelectorAll('.bullseye-btn');
+            btns[roll - 1].classList.add('hit');
+            if (pick !== roll) btns[pick - 1].classList.add('miss');
+            let msg = '';
+            if (pick === roll) {
+                const win = 2 * 8;
+                absolutelyNothingThatisImportantlol += win;
+                msg = `🎯 BULLSEYE! +${win} coins!`;
+                spawnGlitter();
+            } else {
+                msg = `😬 Rolled ${roll}, not ${pick}. Lost 2 coins.`;
+            }
+            document.getElementById('bullseye-result').innerText = msg;
+            document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
+            hoihpohivpoweahovropagh4p9h8g4();
+            setTimeout(() => {
+                bullseyeActive = true;
+                document.querySelectorAll('.bullseye-btn').forEach(b => {
+                    b.disabled = false;
+                    b.classList.remove('hit', 'miss');
+                });
+                document.getElementById('bullseye-roll').innerText = '';
+                document.getElementById('bullseye-result').innerText = '';
+            }, 2200);
+        }
+
+        // ===== DAILY BONUS =====
+        function claimDailyBonus() {
+            const today = new Date().toDateString();
+            const lastClaim = localStorage.getItem('qw_daily');
+            if (lastClaim === today) {
+                showAlert("Already claimed today! Come back tomorrow 🌅", "📅", 3000);
+                return;
+            }
+            absolutelyNothingThatisImportantlol += 3;
+            localStorage.setItem('qw_daily', today);
+            hoihpohivpoweahovropagh4p9h8g4();
+            spawnGlitter();
+            showAlert("🎉 +3 Coins! See you tomorrow!", "📅 Daily Bonus", 3000);
+        }
+
+        // ===== FREE SPIN TOKEN =====
+        function buyFreeSpin() {
+            if (absolutelyNothingThatisImportantlol < 8) { showAlert("Need 8 coins for a Free Spin Token!", "⚡"); return; }
+            absolutelyNothingThatisImportantlol -= 8;
+            freeSpins++;
+            hoihpohivpoweahovropagh4p9h8g4();
+            document.getElementById('mega-spin-indicator').innerText = `⚡ Free Spins banked: ${freeSpins}`;
+            showAlert(`⚡ Free Spin banked! You now have ${freeSpins}. Use it at the slot machine!`, "⚡", 3000);
+        }
+
+        // ===== NAV =====
+        const ALL_SCREENS = [
+            'welcome-screen','slot-screen','themes-screen','shop-screen',
+            'coinflip-screen','scratch-screen','nametag-screen',
+            'luckyroll-screen','bullseye-screen'
+        ];
         function openMenu(menuId) {
-            ['welcome-screen','slot-screen','themes-screen','shop-screen','coinflip-screen','scratch-screen','nametag-screen','casino-screen','roulette-screen','blackjack-screen','dice-screen','pushcards-screen','baccarat-screen'].forEach(id => {
+            ALL_SCREENS.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
             });
             document.getElementById('game-frame').style.display = 'none';
             document.getElementById(menuId).style.display = 'block';
-            if (menuId === 'shop-screen') { refreshDuckDisplay(); }
-            if (menuId === 'welcome-screen') { refreshHomeNametag(); }
-            if (menuId === 'casino-screen' || menuId === 'roulette-screen' || menuId === 'blackjack-screen' || menuId === 'dice-screen' || menuId === 'pushcards-screen' || menuId === 'baccarat-screen') syncCasinoCoins();
-            if (menuId === 'coinflip-screen') document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'nametag-screen') loadNametag();
+            if (menuId === 'shop-screen')       refreshDuckDisplay();
+            if (menuId === 'welcome-screen')    refreshHomeNametag();
+            if (menuId === 'coinflip-screen')   document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
+            if (menuId === 'nametag-screen')    loadNametag();
+            if (menuId === 'luckyroll-screen')  document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
+            if (menuId === 'bullseye-screen') {
+                document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
+                bullseyeActive = true;
+                document.querySelectorAll('.bullseye-btn').forEach(b => { b.disabled = false; b.classList.remove('hit','miss'); });
+                document.getElementById('bullseye-roll').innerText = '';
+                document.getElementById('bullseye-result').innerText = '';
+            }
         }
+
         function playGame(gameUrl) {
             clearTimeout(loadTimer);
             openMenu('welcome-screen');
@@ -1616,6 +1393,7 @@
         }
         function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
 
+        // ===== EXPORTS =====
         window.randomGoofyAssFunction = randomGoofyAssFunction;
         window.megaSpin = megaSpin;
         window.openMenu = openMenu;
@@ -1630,15 +1408,11 @@
         window.peekTheme = peekTheme;
         window.exchangeToDuck = exchangeToDuck;
         window.exchangeToQuack = exchangeToQuack;
-        window.spinRoulette = spinRoulette;
-        window.startBlackjack = startBlackjack;
-        window.dealBlackjack = dealBlackjack;
-        window.bjHit = bjHit;
-        window.bjStand = bjStand;
-        window.rollDice = rollDice;
-        window.resetDice = resetDice;
-        window.playPushCards = playPushCards;
-        window.playBaccarat = playBaccarat;
+        window.doLuckyRoll = doLuckyRoll;
+        window.openMysteryBox = openMysteryBox;
+        window.doBullseye = doBullseye;
+        window.claimDailyBonus = claimDailyBonus;
+        window.buyFreeSpin = buyFreeSpin;
         window.closeCustomAlert = closeCustomAlert;
     })();
     </script>
