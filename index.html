@@ -619,15 +619,13 @@
 
     <script>
     (async function() {
-        window.gameState = {
-            let loadTimer;
-            let isSpinning = false;
-            let particles = [];
-            let animating = false;
-            let absolutelyNothingThatisImportantlol = 0;
-            let unlockedThemes = ['default'];
-            let activeTheme = 'default';
-        }
+        let loadTimer;
+        let isSpinning = false;
+        let particles = [];
+        let animating = false;
+        let absolutelyNothingThatisImportantlol = 0;
+        let unlockedThemes = ['default'];
+        let activeTheme = 'default';
         document.addEventListener('keydown', function(event) {
             if (event.keyCode === 123) event.preventDefault();
             if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
@@ -1409,6 +1407,7 @@
                 document.getElementById('bullseye-result').innerText = '';
             }
         }
+        window.gameState = {};
         window.randomGoofyAssFunction = randomGoofyAssFunction;
         window.megaSpin = megaSpin;
         window.openMenu = openMenu;
@@ -1432,6 +1431,9 @@
         window.closeCustomAlert = closeCustomAlert;
         window.exchangeAllToQuack = exchangeAllToQuack;
         window.grantReward = grantReward;
+        window.gameState.absolutelyNothingThatisImportantlol = absolutelyNothingThatisImportantlol;
+        window.gameState.unlockedThemes = unlockedThemes;
+        window.gameState.activeTheme = activeTheme;
     })();
     </script>
 </body>
