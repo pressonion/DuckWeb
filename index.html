@@ -521,6 +521,11 @@
                     Duck Coins → Quack Coins
                     <div class="shop-price">10,000 Duck Coins = 1 Quack Coin (blocked if banned)</div>
                 </div>
+                <div class="shop-item" onclick="exchangeAllToQuack()">
+                    <span class="shop-emoji">⚡</span>
+                        Convert ALL Duck Coins
+                    <div class="shop-price">Convert all Duck Coins → Quack Coins at once (blocked if banned)</div>
+                </div>
                 <div class="shop-item" onclick="unbanDuck()">
                     <span class="shop-emoji">🕊️</span>
                     Unban Duck RNG
@@ -1091,6 +1096,22 @@
             hoihpohivpoweahovropagh4p9h8g4();
             refreshDuckDisplay();
             showAlert("✅ -10,000 Duck Coins → +1 Quack Coin!", "🔃", 3000);
+        }
+        function exchangeAllToQuack() {
+            if (isDuckBanned()) {
+                showAlert("Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.", "🔨 Banned");
+                return;
+            }
+            const dc = getDuckCoins();
+            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+            if (dc < 10000) { showAlert("Need at least 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
+            const quackGain = Math.floor(dc / 10000);
+            const remainder = dc % 10000;
+            setDuckCoins(remainder);
+            absolutelyNothingThatisImportantlol += quackGain;
+            hoihpohivpoweahovropagh4p9h8g4();
+            refreshDuckDisplay();
+            showAlert(`✅ Converted ${quackGain * 10000} Duck Coins → +${quackGain} Quack Coins!\n${remainder > 0 ? remainder + " Duck Coins left over." : ""}`, "⚡ Convert All", 4000);
         }
         function unbanDuck() {
             if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000); return; }
