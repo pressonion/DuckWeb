@@ -1354,26 +1354,6 @@
             'coinflip-screen','scratch-screen','nametag-screen',
             'luckyroll-screen','bullseye-screen'
         ];
-        function openMenu(menuId) {
-            ALL_SCREENS.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.style.display = 'none';
-            });
-            document.getElementById('game-frame').style.display = 'none';
-            document.getElementById(menuId).style.display = 'block';
-            if (menuId === 'shop-screen')       refreshDuckDisplay();
-            if (menuId === 'welcome-screen')    refreshHomeNametag();
-            if (menuId === 'coinflip-screen')   document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'nametag-screen')    loadNametag();
-            if (menuId === 'luckyroll-screen')  document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'bullseye-screen') {
-                document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
-                bullseyeActive = true;
-                document.querySelectorAll('.bullseye-btn').forEach(b => { b.disabled = false; b.classList.remove('hit','miss'); });
-                document.getElementById('bullseye-roll').innerText = '';
-                document.getElementById('bullseye-result').innerText = '';
-            }
-        }
 
         function playGame(gameUrl) {
             clearTimeout(loadTimer);
@@ -1409,6 +1389,26 @@
             document.getElementById('info-panel').style.left = '320px';
         }
         function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
+        function openMenu(menuId) {
+            ALL_SCREENS.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+            document.getElementById('game-frame').style.display = 'none';
+            document.getElementById(menuId).style.display = 'block';
+            if (menuId === 'shop-screen')       refreshDuckDisplay();
+            if (menuId === 'welcome-screen')    refreshHomeNametag();
+            if (menuId === 'coinflip-screen')   document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
+            if (menuId === 'nametag-screen')    loadNametag();
+            if (menuId === 'luckyroll-screen')  document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
+            if (menuId === 'bullseye-screen') {
+                document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
+                bullseyeActive = true;
+                document.querySelectorAll('.bullseye-btn').forEach(b => { b.disabled = false; b.classList.remove('hit','miss'); });
+                document.getElementById('bullseye-roll').innerText = '';
+                document.getElementById('bullseye-result').innerText = '';
+            }
+        }
         window.randomGoofyAssFunction = randomGoofyAssFunction;
         window.megaSpin = megaSpin;
         window.openMenu = openMenu;
