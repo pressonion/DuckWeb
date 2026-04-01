@@ -619,8 +619,15 @@
 
     <script>
     (async function() {
-        let loadTimer;
-        let isSpinning = false;
+        window.gameState = {
+            let loadTimer;
+            let isSpinning = false;
+            let particles = [];
+            let animating = false;
+            let absolutelyNothingThatisImportantlol = 0;
+            let unlockedThemes = ['default'];
+            let activeTheme = 'default';
+        }
         document.addEventListener('keydown', function(event) {
             if (event.keyCode === 123) event.preventDefault();
             if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
@@ -649,9 +656,6 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
-        let particles = [];
-        let animating = false;
 
         function spawnGlitter() {
             const colors = ['#f1c40f','#e74c3c','#3498db','#2ecc71','#9b59b6','#e67e22','#ff71ce','#05ffa1','#fff'];
@@ -870,10 +874,6 @@
             localStorage.setItem(SAVE_KEY, await encode(data));
             updateUI();
         }
-
-        let absolutelyNothingThatisImportantlol = 0;
-        let unlockedThemes = ['default'];
-        let activeTheme = 'default';
 
         let save = await hugh43go278872();
         if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
