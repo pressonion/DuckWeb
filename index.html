@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ducky's website</title>
-    <link rel="icon" type="image/png" href="duck-logo.png">
+    <link rel="icon" type="image/png" href="duck-logo.png" />
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
@@ -15,6 +15,7 @@
             --btn-hover: #f1c40f;
             --btn-text: #2c3e50;
             --icon-color: #ffffff;
+            --hz-color: #2ecc71;
         }
 
         body.theme-dark {
@@ -25,6 +26,7 @@
             --box-bg: rgba(0, 0, 0, 0.75);
             --btn-hover: #e67e22;
             --btn-text: #fff;
+            --hz-color: #2ecc71;
         }
         body.-ocean {
             --bg-gradient: linear-gradient(135deg, #020024 0%, #090979 35%, #00d4ff 100%);
@@ -34,6 +36,7 @@
             --box-bg: rgba(0, 20, 50, 0.8);
             --btn-hover: #00d4ff;
             --btn-text: #010a26;
+            --hz-color: #00ffaa;
         }
         body.theme-neon {
             --bg-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -43,6 +46,7 @@
             --box-bg: rgba(42, 8, 69, 0.85);
             --btn-hover: #f093fb;
             --btn-text: #111;
+            --hz-color: #f093fb;
         }
         body.theme-retro {
             --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
@@ -53,6 +57,7 @@
             --btn-hover: #00ff41;
             --btn-text: #000;
             --icon-color: #00ff41;
+            --hz-color: #00ff41;
         }
         body.theme-sunset {
             --bg-gradient: linear-gradient(135deg, #ff6b35 0%, #f7c59f 40%, #e84393 100%);
@@ -62,6 +67,7 @@
             --box-bg: rgba(255, 220, 200, 0.88);
             --btn-hover: #e84393;
             --btn-text: #fff;
+            --hz-color: #e84393;
         }
         body.theme-forest {
             --bg-gradient: linear-gradient(135deg, #1a2f1a 0%, #2d5a27 50%, #4a7c59 100%);
@@ -71,6 +77,7 @@
             --box-bg: rgba(10, 30, 10, 0.82);
             --btn-hover: #4a7c59;
             --btn-text: #d4edda;
+            --hz-color: #4a7c59;
         }
         body.theme-galaxy {
             --bg-gradient: linear-gradient(135deg, #0d0015 0%, #1a0030 40%, #2d0060 70%, #0d0015 100%);
@@ -80,6 +87,7 @@
             --box-bg: rgba(20, 0, 40, 0.85);
             --btn-hover: #7c4dff;
             --btn-text: #fff;
+            --hz-color: #7c4dff;
         }
         body.theme-bloodmoon {
             --bg-gradient: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #2d0000 100%);
@@ -90,6 +98,7 @@
             --btn-hover: #cc0000;
             --btn-text: #fff;
             --icon-color: #ff3333;
+            --hz-color: #ff3333;
         }
         body.theme-rubberduck {
             --bg-gradient: linear-gradient(135deg, #ffe600 0%, #ffd000 50%, #ffb700 100%);
@@ -99,6 +108,7 @@
             --box-bg: rgba(255, 230, 0, 0.75);
             --btn-hover: #ff9900;
             --btn-text: #fff;
+            --hz-color: #cc9900;
         }
         body.theme-winter {
             --bg-gradient: linear-gradient(135deg, #e8f4f8 0%, #b3d9ea 50%, #7ec8e3 100%);
@@ -108,6 +118,7 @@
             --box-bg: rgba(255, 255, 255, 0.82);
             --btn-hover: #7ec8e3;
             --btn-text: #0d2535;
+            --hz-color: #1a3a4a;
         }
         body.theme-vaporwave {
             --bg-gradient: linear-gradient(135deg, #ff71ce 0%, #b967ff 50%, #05ffa1 100%);
@@ -117,6 +128,7 @@
             --box-bg: rgba(26, 0, 51, 0.82);
             --btn-hover: #05ffa1;
             --btn-text: #1a0033;
+            --hz-color: #05ffa1;
         }
 
         body {
@@ -128,237 +140,651 @@
             transition: background 0.5s ease;
         }
 
+        /* ---- refresh-rate indicator ---- */
+        #hz-badge {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            padding: 6px 14px 6px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            letter-spacing: 0.3px;
+        }
+        #hz-badge .hz-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            background: var(--hz-color, #2ecc71);
+            box-shadow: 0 0 8px var(--hz-color, #2ecc71);
+            flex-shrink: 0;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        #hz-badge .hz-label {
+            opacity: 0.7;
+            font-weight: 400;
+            margin-right: 2px;
+        }
+        #hz-badge .hz-value {
+            font-weight: 700;
+            min-width: 30px;
+            text-align: center;
+        }
+        #hz-badge .hz-status {
+            font-size: 11px;
+            opacity: 0.8;
+            padding-left: 4px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* ---- rest of original styles (unchanged) ---- */
         #icon-container {
-            position: fixed; top: 0; left: 0; width: 70px; z-index: 101;
-            background: var(--menu-bg); border-bottom-right-radius: 15px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.5); transition: background 0.3s;
-            display: flex; flex-direction: column; align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 70px;
+            z-index: 101;
+            background: var(--menu-bg);
+            border-bottom-right-radius: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .side-icon {
-            width: 100%; padding: 15px 0; cursor: pointer; color: var(--icon-color);
-            text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s; display: flex; justify-content: center;
+            width: 100%;
+            padding: 15px 0;
+            cursor: pointer;
+            color: var(--icon-color);
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s;
+            display: flex;
+            justify-content: center;
         }
-        .side-icon svg { width: 28px; height: 28px; }
-        .side-icon:hover { transform: scale(1.2); }
-        #menu-icon { border-top: none; }
+        .side-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+        .side-icon:hover {
+            transform: scale(1.2);
+        }
+        #menu-icon {
+            border-top: none;
+        }
 
         #sidebar {
-            position: absolute; top: 0; left: -320px; width: 320px; height: 100vh;
-            background-color: var(--menu-bg); color: white;
-            transition: left 0.3s ease, background 0.3s; padding-top: 180px;
-            box-sizing: border-box; z-index: 100;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5); overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background-color: var(--menu-bg);
+            color: white;
+            transition: left 0.3s ease, background 0.3s;
+            padding-top: 180px;
+            box-sizing: border-box;
+            z-index: 100;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
         }
-        #icon-container:hover ~ #sidebar, #sidebar:hover, #info-panel:hover { left: 0; }
+        #icon-container:hover~#sidebar,
+        #sidebar:hover,
+        #info-panel:hover {
+            left: 0;
+        }
 
         .game-btn {
-            display: flex; align-items: center; width: 100%; background: none; color: white;
-            border: none; border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 20px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background: none;
+            color: white;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .btn-icon { width: 28px; height: 28px; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
-        .game-btn:hover { background-color: var(--btn-hover); color: var(--btn-text); padding-left: 30px; }
+        .btn-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .game-btn:hover {
+            background-color: var(--btn-hover);
+            color: var(--btn-text);
+            padding-left: 30px;
+        }
 
         #info-panel {
-            position: fixed; top: 50%; left: -400px; transform: translateY(-50%); width: 300px;
-            background: var(--box-bg); color: var(--text-main); padding: 20px;
-            border-radius: 0 15px 15px 0; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
-            transition: left 0.3s ease; z-index: 99; pointer-events: none;
+            position: fixed;
+            top: 50%;
+            left: -400px;
+            transform: translateY(-50%);
+            width: 300px;
+            background: var(--box-bg);
+            color: var(--text-main);
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            transition: left 0.3s ease;
+            z-index: 99;
+            pointer-events: none;
         }
-        #info-panel h3 { margin-top: 0; color: var(--btn-hover); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        .controls-text { font-family: monospace; background: rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; }
+        #info-panel h3 {
+            margin-top: 0;
+            color: var(--btn-hover);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .controls-text {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            border-radius: 5px;
+        }
 
         #main-content {
-            margin-left: 70px; height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; position: relative;
+            margin-left: 70px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
         .menu-screen {
-            text-align: center; background: var(--box-bg); padding: 50px;
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: background 0.5s; position: relative; width: 600px; max-width: 90%;
+            text-align: center;
+            background: var(--box-bg);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s;
+            position: relative;
+            width: 600px;
+            max-width: 90%;
         }
-        .menu-screen h1 { font-size: 40px; margin: 0 0 10px 0; }
-        .menu-screen p { font-size: 18px; color: var(--text-light); margin-bottom: 20px; }
+        .menu-screen h1 {
+            font-size: 40px;
+            margin: 0 0 10px 0;
+        }
+        .menu-screen p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
 
         #main-menu-coins {
-            position: absolute; top: 20px; right: 20px;
-            font-size: 28px; font-weight: bold; display: flex; align-items: center; gap: 8px;
-            background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 20px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
         }
         .action-btn {
-            background: var(--menu-bg); color: white; border: none; padding: 12px 20px;
-            font-size: 18px; border-radius: 10px; cursor: pointer; margin: 10px;
-            font-weight: bold; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            background: var(--menu-bg);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: bold;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        .action-btn:hover { transform: scale(1.05); background: var(--btn-hover); color: var(--btn-text); }
+        .action-btn:hover {
+            transform: scale(1.05);
+            background: var(--btn-hover);
+            color: var(--btn-text);
+        }
 
         #slot-paytable {
-            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.1);
-            padding: 10px; border-radius: 10px; text-align: left; font-size: 13px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 13px;
         }
-        .reels { display: flex; justify-content: center; gap: 15px; margin: 30px 0; font-size: 50px; }
+        .reels {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            font-size: 50px;
+        }
         .reel {
-            background: white; border: 4px solid var(--menu-bg); border-radius: 10px;
-            width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            background: white;
+            border: 4px solid var(--menu-bg);
+            border-radius: 10px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
         }
-        #slot-message { font-size: 20px; font-weight: bold; min-height: 30px; margin-bottom: 15px; color: #e74c3c; }
+        #slot-message {
+            font-size: 20px;
+            font-weight: bold;
+            min-height: 30px;
+            margin-bottom: 15px;
+            color: #e74c3c;
+        }
 
-        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-height: 340px; overflow-y: auto; padding-right: 4px; }
+        .theme-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+            max-height: 340px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
         .theme-item-btn {
-            padding: 12px; font-size: 15px; font-weight: bold; border: 2px solid var(--menu-bg);
-            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.5); transition: 0.2s;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border: 2px solid var(--menu-bg);
+            border-radius: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.5);
+            transition: 0.2s;
         }
-        .theme-item-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); }
-        .theme-item-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #999; }
-        .equipped-stamp { color: green; font-weight: bold; display: block; font-size: 12px; margin-top: 5px; }
+        .theme-item-btn:hover:not(:disabled) {
+            background: var(--btn-hover);
+            color: var(--btn-text);
+        }
+        .theme-item-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #999;
+        }
+        .equipped-stamp {
+            color: green;
+            font-weight: bold;
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+        }
 
-        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .duck-decoration { width: 50px; height: 50px; display: inline-block; margin: 0 10px; animation: bob 2s infinite ease-in-out; }
-        .duck-decoration:nth-child(2) { animation-delay: 0.3s; }
-        .duck-decoration:nth-child(3) { animation-delay: 0.6s; }
+        @keyframes bob {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .duck-decoration {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            margin: 0 10px;
+            animation: bob 2s infinite ease-in-out;
+        }
+        .duck-decoration:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        .duck-decoration:nth-child(3) {
+            animation-delay: 0.6s;
+        }
 
         #loader {
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-gradient); z-index: 50;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            z-index: 50;
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
-        #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10; }
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        #loader-duck {
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+        }
+        #game-frame {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            border: none;
+            z-index: 10;
+        }
 
-        /* ===== SHOP ===== */
-        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+            max-height: 360px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
         .shop-item {
-            background: rgba(255,255,255,0.4); border: 2px solid var(--menu-bg);
-            border-radius: 12px; padding: 14px; text-align: center; cursor: pointer;
-            transition: 0.2s; font-weight: bold; color: var(--text-main);
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid var(--menu-bg);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: bold;
+            color: var(--text-main);
         }
-        .shop-item:hover { background: var(--btn-hover); color: var(--btn-text); transform: scale(1.03); }
-        .shop-item .shop-price { font-size: 13px; opacity: 0.8; margin-top: 4px; }
-        .shop-item .shop-emoji { font-size: 28px; display: block; margin-bottom: 6px; }
+        .shop-item:hover {
+            background: var(--btn-hover);
+            color: var(--btn-text);
+            transform: scale(1.03);
+        }
+        .shop-item .shop-price {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .shop-item .shop-emoji {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 6px;
+        }
 
-        /* Coin Flip */
         #coinflip-coin {
-            font-size: 64px; display: block; margin: 20px auto;
-            transition: transform 0.1s; cursor: default;
+            font-size: 64px;
+            display: block;
+            margin: 20px auto;
+            transition: transform 0.1s;
+            cursor: default;
         }
         @keyframes flipAnim {
-            0%   { transform: scaleX(1); }
-            25%  { transform: scaleX(0); }
-            50%  { transform: scaleX(1); }
-            75%  { transform: scaleX(0); }
-            100% { transform: scaleX(1); }
+            0% {
+                transform: scaleX(1);
+            }
+            25% {
+                transform: scaleX(0);
+            }
+            50% {
+                transform: scaleX(1);
+            }
+            75% {
+                transform: scaleX(0);
+            }
+            100% {
+                transform: scaleX(1);
+            }
         }
-        .flipping { animation: flipAnim 0.6s ease 3; }
+        .flipping {
+            animation: flipAnim 0.6s ease 3;
+        }
 
-        /* Scratch Card */
-        #scratch-canvas-wrap { position: relative; display: inline-block; margin: 16px 0; }
-        #scratch-canvas { border-radius: 12px; cursor: crosshair; display: block; }
+        #scratch-canvas-wrap {
+            position: relative;
+            display: inline-block;
+            margin: 16px 0;
+        }
+        #scratch-canvas {
+            border-radius: 12px;
+            cursor: crosshair;
+            display: block;
+        }
         #scratch-reveal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 48px; border-radius: 12px; pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border-radius: 12px;
+            pointer-events: none;
             background: var(--box-bg);
         }
 
-        /* Name Tag */
         #nametag-display {
-            font-size: 22px; font-weight: bold; padding: 8px 20px;
-            background: rgba(0,0,0,0.1); border-radius: 20px; display: inline-block;
-            margin: 10px 0; min-width: 120px;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 8px 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            display: inline-block;
+            margin: 10px 0;
+            min-width: 120px;
         }
         #nametag-input {
-            font-size: 18px; padding: 8px 14px; border-radius: 8px;
-            border: 2px solid var(--menu-bg); background: var(--box-bg);
-            color: var(--text-main); margin: 8px; width: 200px; text-align: center;
+            font-size: 18px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 2px solid var(--menu-bg);
+            background: var(--box-bg);
+            color: var(--text-main);
+            margin: 8px;
+            width: 200px;
+            text-align: center;
         }
 
-        /* Mega Spin indicator */
         #mega-spin-indicator {
-            font-size: 13px; font-weight: bold; color: #e67e22;
-            min-height: 18px; margin-bottom: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #e67e22;
+            min-height: 18px;
+            margin-bottom: 4px;
         }
         #glitter-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
         }
 
-        /* Lucky Roll screen */
-        #lucky-roll-die { font-size: 72px; display: block; margin: 16px auto; min-height: 80px; }
+        #lucky-roll-die {
+            font-size: 72px;
+            display: block;
+            margin: 16px auto;
+            min-height: 80px;
+        }
         @keyframes dieRoll {
-            0%,100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-15deg) scale(1.1); }
-            75% { transform: rotate(15deg) scale(1.1); }
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(-15deg) scale(1.1);
+            }
+            75% {
+                transform: rotate(15deg) scale(1.1);
+            }
         }
-        .rolling { animation: dieRoll 0.15s ease infinite; }
+        .rolling {
+            animation: dieRoll 0.15s ease infinite;
+        }
 
-        /* Mystery Box */
         @keyframes boxShake {
-            0%,100% { transform: translateX(0); }
-            20% { transform: translateX(-8px) rotate(-4deg); }
-            40% { transform: translateX(8px) rotate(4deg); }
-            60% { transform: translateX(-5px) rotate(-2deg); }
-            80% { transform: translateX(5px) rotate(2deg); }
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-8px) rotate(-4deg);
+            }
+            40% {
+                transform: translateX(8px) rotate(4deg);
+            }
+            60% {
+                transform: translateX(-5px) rotate(-2deg);
+            }
+            80% {
+                transform: translateX(5px) rotate(2deg);
+            }
         }
-        .shaking { animation: boxShake 0.5s ease 3; }
+        .shaking {
+            animation: boxShake 0.5s ease 3;
+        }
 
-        /* Bullseye */
         .bullseye-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-            margin: 16px auto; max-width: 260px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 16px auto;
+            max-width: 260px;
         }
         .bullseye-btn {
-            padding: 14px; font-size: 22px; border: 2px solid var(--menu-bg);
-            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.4);
-            font-weight: bold; color: var(--text-main); transition: 0.2s;
+            padding: 14px;
+            font-size: 22px;
+            border: 2px solid var(--menu-bg);
+            border-radius: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+            color: var(--text-main);
+            transition: 0.2s;
         }
-        .bullseye-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); transform: scale(1.05); }
-        .bullseye-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .bullseye-btn.hit  { background: #2ecc71 !important; color: #fff !important; }
-        .bullseye-btn.miss { background: #e74c3c !important; color: #fff !important; }
+        .bullseye-btn:hover:not(:disabled) {
+            background: var(--btn-hover);
+            color: var(--btn-text);
+            transform: scale(1.05);
+        }
+        .bullseye-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .bullseye-btn.hit {
+            background: #2ecc71 !important;
+            color: #fff !important;
+        }
+        .bullseye-btn.miss {
+            background: #e74c3c !important;
+            color: #fff !important;
+        }
 
-        /* ===== UNLOCK POPUP ===== */
         #unlock-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
             background: linear-gradient(135deg, #f1c40f, #e67e22);
-            color: #fff; padding: 30px 50px; border-radius: 20px;
-            font-size: 28px; font-weight: bold; text-align: center;
-            box-shadow: 0 0 60px rgba(241,196,15,0.8); z-index: 10000;
+            color: #fff;
+            padding: 30px 50px;
+            border-radius: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(241, 196, 15, 0.8);
+            z-index: 10000;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
         }
-        #unlock-popup.show { transform: translate(-50%, -50%) scale(1); }
-        #unlock-popup .unlock-emoji { font-size: 50px; display: block; margin-bottom: 10px; }
+        #unlock-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        #unlock-popup .unlock-emoji {
+            font-size: 50px;
+            display: block;
+            margin-bottom: 10px;
+        }
 
-        /* Custom alert */
         #custom-alert-overlay {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.55); z-index: 20000;
-            align-items: center; justify-content: center;
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 20000;
+            align-items: center;
+            justify-content: center;
         }
-        #custom-alert-overlay.show { display: flex; }
+        #custom-alert-overlay.show {
+            display: flex;
+        }
         #custom-alert-box {
-            background: var(--box-bg); color: var(--text-main);
-            padding: 32px 40px; border-radius: 16px; min-width: 280px; max-width: 420px;
-            text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.4); position: relative;
+            background: var(--box-bg);
+            color: var(--text-main);
+            padding: 32px 40px;
+            border-radius: 16px;
+            min-width: 280px;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
-        .alert-title { font-size: 26px; font-weight: bold; margin-bottom: 10px; }
-        .alert-msg { font-size: 17px; margin-bottom: 20px; white-space: pre-line; }
+        .alert-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .alert-msg {
+            font-size: 17px;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
         #custom-alert-ok {
-            background: var(--menu-bg); color: white; border: none; padding: 10px 30px;
-            font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold;
+            background: var(--menu-bg);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
         }
-        #custom-alert-ok:hover { background: var(--btn-hover); color: var(--btn-text); }
+        #custom-alert-ok:hover {
+            background: var(--btn-hover);
+            color: var(--btn-text);
+        }
         #custom-alert-progress {
-            position: absolute; bottom: 0; left: 0; height: 4px;
-            background: var(--btn-hover); border-radius: 0 0 16px 16px; width: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--btn-hover);
+            border-radius: 0 0 16px 16px;
+            width: 0;
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
+    <!-- custom alert -->
     <div id="custom-alert-overlay">
         <div id="custom-alert-box">
             <div class="alert-title" id="custom-alert-title"></div>
@@ -370,6 +796,14 @@
 
     <canvas id="glitter-canvas"></canvas>
     <div id="unlock-popup"><span class="unlock-emoji" id="unlock-emoji">🎉</span><span id="unlock-text">Theme Unlocked!</span></div>
+
+    <!-- refresh-rate badge -->
+    <div id="hz-badge">
+        <span class="hz-dot" id="hzDot"></span>
+        <span class="hz-label">🖥️</span>
+        <span class="hz-value" id="hzValue">--</span><span>Hz</span>
+        <span class="hz-status" id="hzStatus">• calibrating</span>
+    </div>
 
     <svg style="display: none;">
         <symbol id="custom-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#fff"/><rect x="5" y="2" width="6" height="2" fill="#c0392b"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#f1c40f"/><rect x="4" y="7" width="7" height="6" fill="#fff"/><rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/><rect x="5" y="13" width="1" height="2" fill="#f1c40f"/><rect x="8" y="13" width="1" height="2" fill="#f1c40f"/></symbol>
@@ -401,8 +835,6 @@
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/StocksBuy/')" onmouseover="showInfo('StocksBuy','Buy Stocks Make Profit!!','buy and sell')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">📈</div> StonksBuy</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/keyboard/')" onmouseover="showInfo('Keyboard','type for fun and practice','have fun')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⌨️</div> Keyboard</button>
         <button class="game-btn" onclick="playGame('https://pressonion.github.io/CyberLoot/')" onmouseover="showInfo('CyberLoot','go gambling on cases','I  enjoy this game')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">📦</div> CyberLoot</button>
-
-
     </div>
 
     <div id="info-panel">
@@ -529,7 +961,7 @@
             <p>Coins: <strong id="coin-display-flip">0</strong></p>
             <div style="margin:10px 0;">
                 Bet: <input id="flip-bet" type="number" min="1" max="10" value="1"
-                    style="width:60px;font-size:18px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);text-align:center;">
+                style="width:60px;font-size:18px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);text-align:center;">
                 coins
             </div>
             <span id="coinflip-coin">🪙</span>
@@ -604,370 +1036,417 @@
     </div>
 
     <script>
-    (async function() {
-        let loadTimer;
-        let isSpinning = false;
-        let particles = [];
-        let animating = false;
-        let absolutelyNothingThatisImportantlol = 0;
-        let unlockedThemes = ['default'];
-        let activeTheme = 'default';
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode === 123) event.preventDefault();
-            if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
-                (event.ctrlKey && event.shiftKey && event.keyCode === 74) ||
-                (event.ctrlKey && event.shiftKey && event.keyCode === 67)) event.preventDefault();
-            if (event.ctrlKey && event.keyCode === 85) event.preventDefault();
-        });
+        (async function() {
+            // ─── REFRESH RATE DETECTION & DELTA-TIME ────────────────────────────────
+            let detectedHz = 60;
+            let hzCalibrated = false;
+            const hzDot = document.getElementById('hzDot');
+            const hzValue = document.getElementById('hzValue');
+            const hzStatus = document.getElementById('hzStatus');
 
-        const themeData = {
-            'default':        { name: '☀️ Daylight (Default)', emoji: '☀️' },
-            'theme-dark':     { name: '🌙 Dark Mode',          emoji: '🌙' },
-            'theme-ocean':    { name: '🌊 Ocean Blue',         emoji: '🌊' },
-            'theme-retro':    { name: '🖥️ Retro Terminal',     emoji: '🖥️' },
-            'theme-sunset':   { name: '🌅 Sunset',             emoji: '🌅' },
-            'theme-forest':   { name: '🌲 Forest',             emoji: '🌲' },
-            'theme-galaxy':   { name: '✨ Galaxy',             emoji: '✨' },
-            'theme-rubberduck':{ name: '🐥 Rubber Duck',       emoji: '🐥' },
-            'theme-winter':   { name: '❄️ Winter',             emoji: '❄️' },
-        };
+            function detectRefreshRate() {
+                let frames = 0;
+                let start = performance.now();
+                let lastFrame = start;
 
-        const canvas = document.getElementById('glitter-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
-        function spawnGlitter() {
-            const colors = ['#f1c40f','#e74c3c','#3498db','#2ecc71','#9b59b6','#e67e22','#ff71ce','#05ffa1','#fff'];
-            for (let i = 0; i < 180; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height * 0.5,
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: Math.random() * 3 + 1,
-                    size: Math.random() * 10 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    rotation: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 8,
-                    life: 1,
-                    decay: Math.random() * 0.012 + 0.008,
-                    shape: Math.random() > 0.5 ? 'rect' : 'circle'
-                });
-            }
-            if (!animating) animateGlitter();
-        }
-
-        function animateGlitter() {
-            animating = true;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles = particles.filter(p => p.life > 0);
-            for (const p of particles) {
-                ctx.save();
-                ctx.globalAlpha = p.life;
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                if (p.shape === 'rect') {
-                    ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-                p.x += p.vx; p.y += p.vy; p.vy += 0.05;
-                p.rotation += p.rotSpeed; p.life -= p.decay;
-            }
-            if (particles.length > 0) requestAnimationFrame(animateGlitter);
-            else { animating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        }
-
-        function showUnlockPopup(themeName, emoji) {
-            const popup = document.getElementById('unlock-popup');
-            document.getElementById('unlock-emoji').innerText = emoji;
-            document.getElementById('unlock-text').innerText = themeName + ' Unlocked!';
-            popup.classList.add('show');
-            spawnGlitter();
-            setTimeout(() => popup.classList.remove('show'), 2800);
-        }
-
-        function updateUI() {
-            document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
-            document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
-            document.body.className = activeTheme || '';
-
-            const grid = document.getElementById('theme-grid-container');
-            grid.innerHTML = '';
-            for (const [themeId, data] of Object.entries(themeData)) {
-                const btn = document.createElement('button');
-                btn.className = 'theme-item-btn';
-                if (unlockedThemes.includes(themeId)) {
-                    btn.innerHTML = data.name;
-                    if (activeTheme === themeId) {
-                        btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
-                        btn.style.borderColor = 'green';
+                function count() {
+                    frames++;
+                    const now = performance.now();
+                    if (now - start < 1200) {
+                        requestAnimationFrame(count);
                     } else {
-                        btn.onclick = () => { activeTheme = themeId; hoihpohivpoweahovropagh4p9h8g4(); };
+                        const elapsed = now - start;
+                        const rawHz = Math.round((frames * 1000) / elapsed);
+                        detectedHz = Math.max(1, Math.min(999, rawHz));
+                        hzCalibrated = true;
+                        hzValue.textContent = detectedHz;
+                        // dot color: green if 60, else amber/warning
+                        const is60 = Math.abs(detectedHz - 60) <= 1;
+                        hzDot.style.background = is60 ? '#2ecc71' : '#f39c12';
+                        hzDot.style.boxShadow = is60 ?
+                            '0 0 12px #2ecc71' :
+                            '0 0 14px #f39c12';
+                        hzStatus.textContent = is60 ? '✓ 60Hz' : `⚡ ${detectedHz}Hz (auto-scaled)`;
+                        // if non-60, show a subtle indicator on the badge
+                        if (!is60) {
+                            hzStatus.style.color = '#f1c40f';
+                        } else {
+                            hzStatus.style.color = 'rgba(255,255,255,0.8)';
+                        }
+                        // re-spawn glitter with correct timing
+                        spawnGlitter();
                     }
+                }
+                requestAnimationFrame(count);
+            }
+
+            // ─── GLITTER WITH DELTA TIME ─────────────────────────────────────────────
+            const canvas = document.getElementById('glitter-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            let particles = [];
+            let animating = false;
+            let prevGlitterTime = performance.now();
+
+            function spawnGlitter() {
+                const colors = ['#f1c40f', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#e67e22', '#ff71ce', '#05ffa1', '#fff'];
+                const count = 180;
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height * 0.5,
+                        vx: (Math.random() - 0.5) * 4,
+                        vy: Math.random() * 3 + 1,
+                        size: Math.random() * 10 + 4,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rotation: Math.random() * 360,
+                        rotSpeed: (Math.random() - 0.5) * 8,
+                        life: 1,
+                        decay: Math.random() * 0.012 + 0.008,
+                        shape: Math.random() > 0.5 ? 'rect' : 'circle'
+                    });
+                }
+                if (!animating) animateGlitter();
+            }
+
+            function animateGlitter() {
+                animating = true;
+                const now = performance.now();
+                let dt = now - prevGlitterTime;
+                prevGlitterTime = now;
+                // clamp to avoid huge jumps
+                dt = Math.min(dt, 50);
+                // scale to 60Hz: 16.67ms is one frame at 60Hz
+                const scale = dt / 16.67;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = particles.filter(p => p.life > 0);
+
+                for (const p of particles) {
+                    ctx.save();
+                    ctx.globalAlpha = p.life;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    if (p.shape === 'rect') {
+                        ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+
+                    // delta-time scaled movement & decay
+                    p.x += p.vx * scale;
+                    p.y += p.vy * scale;
+                    p.vy += 0.05 * scale;
+                    p.rotation += p.rotSpeed * scale;
+                    p.life -= p.decay * scale;
+                }
+
+                if (particles.length > 0) {
+                    requestAnimationFrame(animateGlitter);
                 } else {
-                    btn.innerText = '🔒 ???';
-                    btn.disabled = true;
-                }
-                grid.appendChild(btn);
-            }
-        }
-
-        // ===== SAVE SYSTEM =====
-        const SAVE_KEY = "ihg398g231f1g3ig1f13f";
-        const _skr = "gf2378g8o32843g7p243f";
-        const _mfk = "gvg437v2g7937v9g329";
-        const _mfv = "f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v";
-        const _v3k = "pZ9&kL2#mN8vR4xQ9@yB6cA3sT7dV5fG1hJ0kL8nP4qW9rE6tY3uU1iO0pA7sD4fF9gG6hH3jJ0kK9lL8";
-        const _v3s = "g42h3g90487gf80g3802gf7802gf780g2180fg81g387f3g2780fg34gfg283gf08g138fg842gfgyiofsiogfuiodgfiuogfuog42q8g84g378fg834gv7894gv6794567g67967^&*%^&*%&*%&*&*f8o4h8fg84g38og8o4$%#%^%#&#$!&34g78g894g3789ghv348q";
-
-        function _b64ToArr(b64) {
-            const bin = atob(b64);
-            const arr = new Uint8Array(bin.length);
-            for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-            return arr;
-        }
-        function _arrToB64(arr) {
-            let bin = '';
-            arr.forEach(b => bin += String.fromCharCode(b));
-            return btoa(bin);
-        }
-        async function _deriveKey(rawKeyB64, saltArr) {
-            const rawBytes = _b64ToArr(rawKeyB64);
-            const baseKey = await crypto.subtle.importKey('raw', rawBytes, 'PBKDF2', false, ['deriveKey']);
-            return crypto.subtle.deriveKey(
-                { name: 'PBKDF2', salt: saltArr, iterations: 310000, hash: 'SHA-512' },
-                baseKey, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
-            );
-        }
-        async function _getOrCreateMaterial() {
-            let rawB64 = localStorage.getItem(_v3k);
-            let saltB64 = localStorage.getItem(_v3s);
-            if (!rawB64 || !saltB64) {
-                const raw = crypto.getRandomValues(new Uint8Array(64));
-                const salt = crypto.getRandomValues(new Uint8Array(32));
-                rawB64 = _arrToB64(raw); saltB64 = _arrToB64(salt);
-                localStorage.setItem(_v3k, rawB64); localStorage.setItem(_v3s, saltB64);
-            }
-            return _deriveKey(rawB64, _b64ToArr(saltB64));
-        }
-        async function encode(data) {
-            const key = await _getOrCreateMaterial();
-            const iv = crypto.getRandomValues(new Uint8Array(12));
-            const plain = new TextEncoder().encode(JSON.stringify(data));
-            const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain);
-            const combined = new Uint8Array(iv.byteLength + cipher.byteLength);
-            combined.set(iv, 0); combined.set(new Uint8Array(cipher), iv.byteLength);
-            return _arrToB64(combined);
-        }
-        async function decode(str) {
-            try {
-                const key = await _getOrCreateMaterial();
-                const combined = _b64ToArr(str);
-                const iv = combined.slice(0, 12), cipher = combined.slice(12);
-                const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher);
-                return JSON.parse(new TextDecoder().decode(plain));
-            } catch { return null; }
-        }
-        function _legacyDecodeV2(str, secret) {
-            try {
-                let dec = decodeURIComponent(escape(atob(str)));
-                if (!dec.endsWith(secret)) return null;
-                return JSON.parse(dec.slice(0, -secret.length));
-            } catch { return null; }
-        }
-
-        async function hugh43go278872() {
-            const validThemes = Object.keys(themeData);
-            const alreadyMigrated = localStorage.getItem(_mfk) === _mfv;
-            const encrypted = localStorage.getItem(SAVE_KEY);
-            if (encrypted) {
-                const data = await decode(encrypted);
-                if (data && typeof data === 'object') return data;
-                if (!alreadyMigrated) {
-                    const legacySecret = localStorage.getItem(_skr);
-                    if (legacySecret) {
-                        const legacyData = _legacyDecodeV2(encrypted, legacySecret);
-                        if (legacyData && typeof legacyData === 'object') {
-                            let themes = Array.isArray(legacyData.unlockedThemes) ? legacyData.unlockedThemes : ['default'];
-                            themes = themes.filter(t => validThemes.includes(t));
-                            const coins = Math.min(parseInt(legacyData.absolutelyNothingThatisImportantlol || legacyData.coins || 0), 50);
-                            const active = validThemes.includes(legacyData.activeTheme) ? legacyData.activeTheme : 'default';
-                            const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
-                            localStorage.setItem(SAVE_KEY, await encode(newSave));
-                            localStorage.removeItem(_skr); localStorage.setItem(_mfk, _mfv);
-                            return newSave;
-                        }
-                    }
+                    animating = false;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                 }
             }
-            if (!alreadyMigrated) {
-                const OLD_KEY = "duckSecureV2", OLD_SECRET = "duck_key_v2_secure";
-                const oldRaw = localStorage.getItem(OLD_KEY);
-                if (oldRaw) {
-                    try {
-                        const oldData = _legacyDecodeV2(oldRaw, OLD_SECRET);
-                        if (oldData) {
-                            let themes = Array.isArray(oldData.unlockedThemes) ? oldData.unlockedThemes : ['default'];
-                            themes = themes.filter(t => validThemes.includes(t));
-                            const coins = Math.min(parseInt(oldData.coins || oldData.absolutelyNothingThatisImportantlol || 0), 50);
-                            const active = validThemes.includes(oldData.activeTheme) ? oldData.activeTheme : 'default';
-                            const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
-                            localStorage.setItem(SAVE_KEY, await encode(newSave));
-                            localStorage.removeItem(OLD_KEY); localStorage.setItem(_mfk, _mfv);
-                            return newSave;
-                        }
-                    } catch(e) { localStorage.removeItem(OLD_KEY); }
-                }
-                const oldCoins = localStorage.getItem('quackCoins');
-                const oldThemes = localStorage.getItem('unlockedThemes');
-                const oldActive = localStorage.getItem('activeTheme');
-                if (oldCoins !== null || oldThemes !== null || oldActive !== null) {
-                    let parsedThemes;
-                    try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
-                    if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
-                    parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
-                    const newSave = {
-                        absolutelyNothingThatisImportantlol: Math.min(parseInt(oldCoins) || 0, 50),
-                        unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
-                        activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
-                    };
-                    localStorage.setItem(SAVE_KEY, await encode(newSave));
-                    localStorage.removeItem('quackCoins'); localStorage.removeItem('unlockedThemes'); localStorage.removeItem('activeTheme');
-                    localStorage.setItem(_mfk, _mfv);
-                    return newSave;
-                }
-            }
-            return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
-        }
 
-        async function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
-            const data = dataOverride ? dataOverride : {
-                absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
-                unlockedThemes: unlockedThemes || ['default'],
-                activeTheme: activeTheme || 'default'
+            // ─── start refresh-rate detection ──────────────────────────────────────
+            detectRefreshRate();
+
+            // ─── rest of original script (wrapped) ──────────────────────────────────
+            let loadTimer;
+            let isSpinning = false;
+            let absolutelyNothingThatisImportantlol = 0;
+            let unlockedThemes = ['default'];
+            let activeTheme = 'default';
+
+            // prevent dev tools
+            document.addEventListener('keydown', function(event) {
+                if (event.keyCode === 123) event.preventDefault();
+                if ((event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74 || event
+                        .keyCode === 67)) ||
+                    (event.ctrlKey && event.keyCode === 85)) event.preventDefault();
+            });
+
+            const themeData = {
+                'default': { name: '☀️ Daylight (Default)', emoji: '☀️' },
+                'theme-dark': { name: '🌙 Dark Mode', emoji: '🌙' },
+                'theme-ocean': { name: '🌊 Ocean Blue', emoji: '🌊' },
+                'theme-retro': { name: '🖥️ Retro Terminal', emoji: '🖥️' },
+                'theme-sunset': { name: '🌅 Sunset', emoji: '🌅' },
+                'theme-forest': { name: '🌲 Forest', emoji: '🌲' },
+                'theme-galaxy': { name: '✨ Galaxy', emoji: '✨' },
+                'theme-rubberduck': { name: '🐥 Rubber Duck', emoji: '🐥' },
+                'theme-winter': { name: '❄️ Winter', emoji: '❄️' },
             };
-            localStorage.setItem(SAVE_KEY, await encode(data));
+
+            function showUnlockPopup(themeName, emoji) {
+                const popup = document.getElementById('unlock-popup');
+                document.getElementById('unlock-emoji').innerText = emoji;
+                document.getElementById('unlock-text').innerText = themeName + ' Unlocked!';
+                popup.classList.add('show');
+                spawnGlitter();
+                setTimeout(() => popup.classList.remove('show'), 2800);
+            }
+
+            function updateUI() {
+                document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
+                document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
+                document.body.className = activeTheme || '';
+
+                const grid = document.getElementById('theme-grid-container');
+                grid.innerHTML = '';
+                for (const [themeId, data] of Object.entries(themeData)) {
+                    const btn = document.createElement('button');
+                    btn.className = 'theme-item-btn';
+                    if (unlockedThemes.includes(themeId)) {
+                        btn.innerHTML = data.name;
+                        if (activeTheme === themeId) {
+                            btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
+                            btn.style.borderColor = 'green';
+                        } else {
+                            btn.onclick = () => { activeTheme = themeId;
+                                hoihpohivpoweahovropagh4p9h8g4(); };
+                        }
+                    } else {
+                        btn.innerText = '🔒 ???';
+                        btn.disabled = true;
+                    }
+                    grid.appendChild(btn);
+                }
+            }
+
+            // ─── SAVE SYSTEM ────────────────────────────────────────────────────────
+            const SAVE_KEY = "ihg398g231f1g3ig1f13f";
+            const _skr = "gf2378g8o32843g7p243f";
+            const _mfk = "gvg437v2g7937v9g329";
+            const _mfv = "f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v";
+            const _v3k = "pZ9&kL2#mN8vR4xQ9@yB6cA3sT7dV5fG1hJ0kL8nP4qW9rE6tY3uU1iO0pA7sD4fF9gG6hH3jJ0kK9lL8";
+            const _v3s = "g42h3g90487gf80g3802gf7802gf780g2180fg81g387f3g2780fg34gfg283gf08g138fg842gfgyiofsiogfuiodgfiuogfuog42q8g84g378fg834gv7894gv6794567g67967^&*%^&*%&*%&*&*f8o4h8fg84g38og8o4$%#%^%#&#$!&34g78g894g3789ghv348q";
+
+            function _b64ToArr(b64) {
+                const bin = atob(b64);
+                const arr = new Uint8Array(bin.length);
+                for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+                return arr;
+            }
+
+            function _arrToB64(arr) {
+                let bin = '';
+                arr.forEach(b => bin += String.fromCharCode(b));
+                return btoa(bin);
+            }
+
+            async function _deriveKey(rawKeyB64, saltArr) {
+                const rawBytes = _b64ToArr(rawKeyB64);
+                const baseKey = await crypto.subtle.importKey('raw', rawBytes, 'PBKDF2', false, ['deriveKey']);
+                return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: saltArr, iterations: 310000, hash: 'SHA-512' },
+                    baseKey, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
+                );
+            }
+
+            async function _getOrCreateMaterial() {
+                let rawB64 = localStorage.getItem(_v3k);
+                let saltB64 = localStorage.getItem(_v3s);
+                if (!rawB64 || !saltB64) {
+                    const raw = crypto.getRandomValues(new Uint8Array(64));
+                    const salt = crypto.getRandomValues(new Uint8Array(32));
+                    rawB64 = _arrToB64(raw);
+                    saltB64 = _arrToB64(salt);
+                    localStorage.setItem(_v3k, rawB64);
+                    localStorage.setItem(_v3s, saltB64);
+                }
+                return _deriveKey(rawB64, _b64ToArr(saltB64));
+            }
+
+            async function encode(data) {
+                const key = await _getOrCreateMaterial();
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const plain = new TextEncoder().encode(JSON.stringify(data));
+                const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain);
+                const combined = new Uint8Array(iv.byteLength + cipher.byteLength);
+                combined.set(iv, 0);
+                combined.set(new Uint8Array(cipher), iv.byteLength);
+                return _arrToB64(combined);
+            }
+
+            async function decode(str) {
+                try {
+                    const key = await _getOrCreateMaterial();
+                    const combined = _b64ToArr(str);
+                    const iv = combined.slice(0, 12),
+                        cipher = combined.slice(12);
+                    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher);
+                    return JSON.parse(new TextDecoder().decode(plain));
+                } catch { return null; }
+            }
+
+            function _legacyDecodeV2(str, secret) {
+                try {
+                    let dec = decodeURIComponent(escape(atob(str)));
+                    if (!dec.endsWith(secret)) return null;
+                    return JSON.parse(dec.slice(0, -secret.length));
+                } catch { return null; }
+            }
+
+            async function hugh43go278872() {
+                const validThemes = Object.keys(themeData);
+                const alreadyMigrated = localStorage.getItem(_mfk) === _mfv;
+                const encrypted = localStorage.getItem(SAVE_KEY);
+                if (encrypted) {
+                    const data = await decode(encrypted);
+                    if (data && typeof data === 'object') return data;
+                    if (!alreadyMigrated) {
+                        const legacySecret = localStorage.getItem(_skr);
+                        if (legacySecret) {
+                            const legacyData = _legacyDecodeV2(encrypted, legacySecret);
+                            if (legacyData && typeof legacyData === 'object') {
+                                let themes = Array.isArray(legacyData.unlockedThemes) ? legacyData.unlockedThemes : [
+                                    'default'
+                                ];
+                                themes = themes.filter(t => validThemes.includes(t));
+                                const coins = Math.min(parseInt(legacyData.absolutelyNothingThatisImportantlol ||
+                                    legacyData.coins || 0), 50);
+                                const active = validThemes.includes(legacyData.activeTheme) ? legacyData
+                                    .activeTheme : 'default';
+                                const newSave = {
+                                    absolutelyNothingThatisImportantlol: coins,
+                                    unlockedThemes: themes.length ? themes : ['default'],
+                                    activeTheme: active
+                                };
+                                localStorage.setItem(SAVE_KEY, await encode(newSave));
+                                localStorage.removeItem(_skr);
+                                localStorage.setItem(_mfk, _mfv);
+                                return newSave;
+                            }
+                        }
+                    }
+                }
+                if (!alreadyMigrated) {
+                    const OLD_KEY = "duckSecureV2",
+                        OLD_SECRET = "duck_key_v2_secure";
+                    const oldRaw = localStorage.getItem(OLD_KEY);
+                    if (oldRaw) {
+                        try {
+                            const oldData = _legacyDecodeV2(oldRaw, OLD_SECRET);
+                            if (oldData) {
+                                let themes = Array.isArray(oldData.unlockedThemes) ? oldData.unlockedThemes : [
+                                    'default'
+                                ];
+                                themes = themes.filter(t => validThemes.includes(t));
+                                const coins = Math.min(parseInt(oldData.coins || oldData
+                                    .absolutelyNothingThatisImportantlol || 0), 50);
+                                const active = validThemes.includes(oldData.activeTheme) ? oldData.activeTheme :
+                                    'default';
+                                const newSave = {
+                                    absolutelyNothingThatisImportantlol: coins,
+                                    unlockedThemes: themes.length ? themes : ['default'],
+                                    activeTheme: active
+                                };
+                                localStorage.setItem(SAVE_KEY, await encode(newSave));
+                                localStorage.removeItem(OLD_KEY);
+                                localStorage.setItem(_mfk, _mfv);
+                                return newSave;
+                            }
+                        } catch (e) { localStorage.removeItem(OLD_KEY); }
+                    }
+                    const oldCoins = localStorage.getItem('quackCoins');
+                    const oldThemes = localStorage.getItem('unlockedThemes');
+                    const oldActive = localStorage.getItem('activeTheme');
+                    if (oldCoins !== null || oldThemes !== null || oldActive !== null) {
+                        let parsedThemes;
+                        try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
+                        if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
+                        parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
+                        const newSave = {
+                            absolutelyNothingThatisImportantlol: Math.min(parseInt(oldCoins) || 0, 50),
+                            unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
+                            activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
+                        };
+                        localStorage.setItem(SAVE_KEY, await encode(newSave));
+                        localStorage.removeItem('quackCoins');
+                        localStorage.removeItem('unlockedThemes');
+                        localStorage.removeItem('activeTheme');
+                        localStorage.setItem(_mfk, _mfv);
+                        return newSave;
+                    }
+                }
+                return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
+            }
+
+            async function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
+                const data = dataOverride ? dataOverride : {
+                    absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
+                    unlockedThemes: unlockedThemes || ['default'],
+                    activeTheme: activeTheme || 'default'
+                };
+                localStorage.setItem(SAVE_KEY, await encode(data));
+                updateUI();
+            }
+
+            let save = await hugh43go278872();
+            if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: [
+                    'default'
+                ], activeTheme: 'default' };
+            absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
+            unlockedThemes = save.unlockedThemes || ['default'];
+            activeTheme = save.activeTheme || 'default';
             updateUI();
-        }
 
-        let save = await hugh43go278872();
-        if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
-        absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
-        unlockedThemes = save.unlockedThemes || ['default'];
-        activeTheme = save.activeTheme || 'default';
-        updateUI();
-        let activeSeconds = 0;
-        let lastInteraction = Date.now();
-        window.addEventListener('mousemove', () => lastInteraction = Date.now());
-        window.addEventListener('keydown',   () => lastInteraction = Date.now());
-        window.addEventListener('click',     () => lastInteraction = Date.now());
+            let activeSeconds = 0;
+            let lastInteraction = Date.now();
+            window.addEventListener('mousemove', () => lastInteraction = Date.now());
+            window.addEventListener('keydown', () => lastInteraction = Date.now());
+            window.addEventListener('click', () => lastInteraction = Date.now());
 
-        setInterval(() => {
-            let _45230X4xc = absolutelyNothingThatisImportantlol;
-            let isIframeActive = document.activeElement === document.getElementById('game-frame');
-            let isWindowActive = (Date.now() - lastInteraction) < 10000;
-            if (_45230X4xc != absolutelyNothingThatisImportantlol) {
-                absolutelyNothingThatisImportantlol = 0; _45230X4xc = 0; showAlert("CHEATER", "🚨");
-            }
-            if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !== 'none')) {
-                activeSeconds++;
-                if (activeSeconds >= 6000) {
-                    absolutelyNothingThatisImportantlol += 10;
-                    _45230X4xc = absolutelyNothingThatisImportantlol;
-                    hoihpohivpoweahovropagh4p9h8g4();
-                    activeSeconds = 0;
+            setInterval(() => {
+                let _45230X4xc = absolutelyNothingThatisImportantlol;
+                let isIframeActive = document.activeElement === document.getElementById('game-frame');
+                let isWindowActive = (Date.now() - lastInteraction) < 10000;
+                if (_45230X4xc != absolutelyNothingThatisImportantlol) {
+                    absolutelyNothingThatisImportantlol = 0;
+                    _45230X4xc = 0;
+                    showAlert("CHEATER", "🚨");
                 }
-            }
-        }, 10);
-        const symbols = ['🍒','🦆','💎','🎰','🖥️','🌅','🌲','✨','🔴','🐥','❄️','🌊'];
-        let freeSpins = 0;
+                if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !==
+                        'none')) {
+                    activeSeconds++;
+                    if (activeSeconds >= 6000) {
+                        absolutelyNothingThatisImportantlol += 10;
+                        _45230X4xc = absolutelyNothingThatisImportantlol;
+                        hoihpohivpoweahovropagh4p9h8g4();
+                        activeSeconds = 0;
+                    }
+                }
+            }, 10);
 
-        function randomGoofyAssFunction() {
-            if (isSpinning) return;
-            const cost = freeSpins > 0 ? 0 : 3;
-            if (absolutelyNothingThatisImportantlol < cost) { showAlert("You need 3 Quack Coins to spin!", "🎰"); return; }
-            if (freeSpins > 0) {
-                freeSpins--;
-                document.getElementById('mega-spin-indicator').innerText = freeSpins > 0 ? `⚡ Free Spins left: ${freeSpins}` : '';
-            } else {
-                absolutelyNothingThatisImportantlol -= 3;
-            }
-            hoihpohivpoweahovropagh4p9h8g4();
-            isSpinning = true;
-            document.getElementById('spin-btn').disabled = true;
-            document.getElementById('slot-message').innerText = "Spinning...";
-            let ticks = 0;
-            const spinInterval = setInterval(() => {
-                document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                ticks++;
-                if (ticks > 20) { clearInterval(spinInterval); finishSpin(); }
-            }, 50);
-        }
-        function finishSpin() {
-            const r1 = document.getElementById('reel1').innerText;
-            const r2 = document.getElementById('reel2').innerText;
-            const r3 = document.getElementById('reel3').innerText;
-            if (r1 === r2 && r2 === r3) {
-                if      (r1 === '🍒') grantReward('coins',           5,  "Jackpot! +5 Coins!");
-                else if (r1 === '🦆') grantReward('theme-dark',      10, "You unlocked DARK MODE!");
-                else if (r1 === '💎') grantReward('theme-ocean',     15, "You unlocked OCEAN BLUE!");
-                else if (r1 === '🎰') grantReward('theme-neon',      25, "You unlocked NEON PINK!");
-                else if (r1 === '🖥️') grantReward('theme-retro',     20, "You unlocked RETRO TERMINAL!");
-                else if (r1 === '🌅') grantReward('theme-sunset',    20, "You unlocked SUNSET!");
-                else if (r1 === '🌲') grantReward('theme-forest',    20, "You unlocked FOREST!");
-                else if (r1 === '✨') grantReward('theme-galaxy',    30, "You unlocked GALAXY!");
-                else if (r1 === '🔴') grantReward('theme-bloodmoon', 35, "You unlocked BLOOD MOON!");
-                else if (r1 === '🐥') grantReward('theme-rubberduck',15, "You unlocked RUBBER DUCK!");
-                else if (r1 === '❄️') grantReward('theme-winter',    20, "You unlocked WINTER!");
-                else if (r1 === '🌊') grantReward('theme-vaporwave', 25, "You unlocked VAPORWAVE!");
-            } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                grantReward('coins', 1, "Two matched! +1 Coin back.");
-            } else {
-                document.getElementById('slot-message').innerText = "No luck this time. Try again!";
-            }
-            isSpinning = false;
-            document.getElementById('spin-btn').disabled = false;
-        }
-        function grantReward(type, coinFallback, successMsg) {
-            let isNewUnlock = false;
-            if (type === 'coins') {
-                absolutelyNothingThatisImportantlol += coinFallback;
-            } else {
-                if (unlockedThemes.includes(type)) {
-                    absolutelyNothingThatisImportantlol += coinFallback;
-                    successMsg = `Already owned! Here are ${coinFallback} Coins instead.`;
+            const symbols = ['🍒', '🦆', '💎', '🎰', '🖥️', '🌅', '🌲', '✨', '🔴', '🐥', '❄️', '🌊'];
+            let freeSpins = 0;
+
+            function randomGoofyAssFunction() {
+                if (isSpinning) return;
+                const cost = freeSpins > 0 ? 0 : 3;
+                if (absolutelyNothingThatisImportantlol < cost) { showAlert("You need 3 Quack Coins to spin!", "🎰");
+                    return; }
+                if (freeSpins > 0) {
+                    freeSpins--;
+                    document.getElementById('mega-spin-indicator').innerText = freeSpins > 0 ? `⚡ Free Spins left: ${freeSpins}` :
+                        '';
                 } else {
-                    unlockedThemes.push(type);
-                    isNewUnlock = true;
+                    absolutelyNothingThatisImportantlol -= 3;
                 }
-            }
-            document.getElementById('slot-message').innerText = successMsg;
-            hoihpohivpoweahovropagh4p9h8g4();
-            if (isNewUnlock) {
-                const data = themeData[type];
-                showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
-            }
-        }
-        function megaSpin() {
-            if (isSpinning) return;
-            if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡"); return; }
-            absolutelyNothingThatisImportantlol -= 9;
-            hoihpohivpoweahovropagh4p9h8g4();
-            let spinsLeft = 3;
-            document.getElementById('mega-spin-indicator').innerText = `⚡ Mega Spin: ${spinsLeft} spins left`;
-            document.getElementById('spin-btn').disabled = true;
-            document.getElementById('mega-btn').disabled = true;
-            isSpinning = true;
-
-            function runOneSpin() {
+                hoihpohivpoweahovropagh4p9h8g4();
+                isSpinning = true;
+                document.getElementById('spin-btn').disabled = true;
                 document.getElementById('slot-message').innerText = "Spinning...";
                 let ticks = 0;
                 const spinInterval = setInterval(() => {
@@ -975,450 +1454,599 @@
                     document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                     document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                     ticks++;
-                    if (ticks > 20) {
-                        clearInterval(spinInterval);
-                        finishSpin();
-                        spinsLeft--;
-                        document.getElementById('mega-spin-indicator').innerText = spinsLeft > 0 ? `⚡ Mega Spin: ${spinsLeft} spins left` : '';
-                        if (spinsLeft > 0) setTimeout(runOneSpin, 800);
-                        else {
-                            isSpinning = false;
-                            document.getElementById('spin-btn').disabled = false;
-                            document.getElementById('mega-btn').disabled = false;
-                        }
-                    }
+                    if (ticks > 20) { clearInterval(spinInterval);
+                        finishSpin(); }
                 }, 50);
             }
-            runOneSpin();
-        }
-        let alertTimeout = null;
-        function showAlert(msg, title = '', autoDismiss = 0) {
-            document.getElementById('custom-alert-title').innerText = title;
-            document.getElementById('custom-alert-msg').innerText = msg;
-            document.getElementById('custom-alert-overlay').classList.add('show');
-            const prog = document.getElementById('custom-alert-progress');
-            prog.style.transition = 'none'; prog.style.width = '100%';
-            if (alertTimeout) clearTimeout(alertTimeout);
-            if (autoDismiss > 0) {
-                setTimeout(() => { prog.style.transition = `width ${autoDismiss}ms linear`; prog.style.width = '0%'; }, 50);
-                alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
-            } else { prog.style.width = '0%'; }
-        }
-        function closeCustomAlert() {
-            document.getElementById('custom-alert-overlay').classList.remove('show');
-            if (alertTimeout) { clearTimeout(alertTimeout); alertTimeout = null; }
-        }
 
-        function refreshHomeNametag() {
-            const stored = localStorage.getItem('qw_nametag');
-            const el = document.getElementById('home-nametag');
-            if (stored) {
-                try { el.innerText = '🏷️ ' + atob(stored); el.style.display = 'block'; }
-                catch { el.style.display = 'none'; }
-            } else { el.style.display = 'none'; }
-        }
-        refreshHomeNametag();
-        function getDuckSave() {
-            try {
-                const raw = localStorage.getItem('duckV12Accounts');
-                if (!raw) return null;
-                const parsed = JSON.parse(decodeURIComponent(atob(raw))); // match Duck RNG's d102mc84
-                const key = Object.keys(parsed)[0];
-                return { key, data: parsed[key] };
-            } catch { return null; }
-        }
-        function getDuckCoins() {
-            const s = getDuckSave();
-            return s ? (s.data.saveData?.coins || 0) : null;
-        }
-        function isDuckBanned() {
-            const s = getDuckSave();
-            return s ? !!(s.data.saveData?.banned) : false;
-        }
-        function setDuckField(field, value) {
-            try {
-                const raw    = localStorage.getItem('duckV12Accounts');
-                const parsed = JSON.parse(decodeURIComponent(atob(raw)));
-                const key    = Object.keys(parsed)[0];
-                parsed[key].saveData[field] = value;
-                localStorage.setItem('duckV12Accounts', btoa(encodeURIComponent(JSON.stringify(parsed))));
-                return true;
-            } catch { return false; }
-        }
-        function setDuckCoins(amount) { return setDuckField('coins', amount); }
-        function refreshDuckDisplay() {
-            const dc = getDuckCoins();
-            const el = document.getElementById('duck-coin-display');
-            if (el) el.innerText = dc !== null ? dc : 'N/A (play Duck RNG first)';
-            const elShop = document.getElementById('coin-display-shop');
-            if (elShop) elShop.innerText = absolutelyNothingThatisImportantlol;
-        }
-
-        function exchangeToDuck() {
-            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            absolutelyNothingThatisImportantlol--;
-            setDuckCoins(dc + 10000);
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert("✅ -1 Quack Coin → +10,000 Duck Coins!", "🔄", 3000);
-        }
-        function exchangeToQuack() {
-            if (isDuckBanned()) {
-                showAlert("Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.", "🔨 Banned");
-                return;
-            }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 10000) { showAlert("Need 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
-            setDuckCoins(dc - 10000);
-            absolutelyNothingThatisImportantlol++;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert("✅ -10,000 Duck Coins → +1 Quack Coin!", "🔃", 3000);
-        }
-        function exchangeAllToQuack() {
-            if (isDuckBanned()) {
-                showAlert("Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.", "🔨 Banned");
-                return;
-            }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 10000) { showAlert("Need at least 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
-            const quackGain = Math.floor(dc / 10000);
-            const remainder = dc % 10000;
-            setDuckCoins(remainder);
-            absolutelyNothingThatisImportantlol += quackGain;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert(`✅ Converted ${quackGain * 10000} Duck Coins → +${quackGain} Quack Coins!\n${remainder > 0 ? remainder + " Duck Coins left over." : ""}`, "⚡ Convert All", 4000);
-        }
-        function unbanDuck() {
-            if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000); return; }
-            if (absolutelyNothingThatisImportantlol < 100) {
-                showAlert("Need 100 Quack Coins to unban. You have " + absolutelyNothingThatisImportantlol + ".", "🔨");
-                return;
-            }
-            absolutelyNothingThatisImportantlol -= 100;
-            setDuckField('banned', false);
-            setDuckField('strikes', 0);
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            spawnGlitter();
-            showAlert("✅ Duck RNG account unbanned! Strikes reset. Don't get caught again.", "🕊️ Unbanned", 4000);
-        }
-        let flipInProgress = false;
-        function doFlip(choice) {
-            if (flipInProgress) return;
-            const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
-            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌"); return; }
-            flipInProgress = true;
-            document.getElementById('flip-heads').disabled = true;
-            document.getElementById('flip-tails').disabled = true;
-            document.getElementById('flip-result').innerText = '';
-            const coin = document.getElementById('coinflip-coin');
-            coin.classList.add('flipping');
-            setTimeout(() => {
-                coin.classList.remove('flipping');
-                const result = Math.random() < 0.5 ? 'heads' : 'tails';
-                const won = result === choice;
-                if (won) {
-                    absolutelyNothingThatisImportantlol += bet;
-                    document.getElementById('flip-result').style.color = '#2ecc71';
-                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
-                    spawnGlitter();
+            function finishSpin() {
+                const r1 = document.getElementById('reel1').innerText;
+                const r2 = document.getElementById('reel2').innerText;
+                const r3 = document.getElementById('reel3').innerText;
+                if (r1 === r2 && r2 === r3) {
+                    if (r1 === '🍒') grantReward('coins', 5, "Jackpot! +5 Coins!");
+                    else if (r1 === '🦆') grantReward('theme-dark', 10, "You unlocked DARK MODE!");
+                    else if (r1 === '💎') grantReward('theme-ocean', 15, "You unlocked OCEAN BLUE!");
+                    else if (r1 === '🎰') grantReward('theme-neon', 25, "You unlocked NEON PINK!");
+                    else if (r1 === '🖥️') grantReward('theme-retro', 20, "You unlocked RETRO TERMINAL!");
+                    else if (r1 === '🌅') grantReward('theme-sunset', 20, "You unlocked SUNSET!");
+                    else if (r1 === '🌲') grantReward('theme-forest', 20, "You unlocked FOREST!");
+                    else if (r1 === '✨') grantReward('theme-galaxy', 30, "You unlocked GALAXY!");
+                    else if (r1 === '🔴') grantReward('theme-bloodmoon', 35, "You unlocked BLOOD MOON!");
+                    else if (r1 === '🐥') grantReward('theme-rubberduck', 15, "You unlocked RUBBER DUCK!");
+                    else if (r1 === '❄️') grantReward('theme-winter', 20, "You unlocked WINTER!");
+                    else if (r1 === '🌊') grantReward('theme-vaporwave', 25, "You unlocked VAPORWAVE!");
+                } else if (r1 === r2 || r2 === r3 || r1 === r3) {
+                    grantReward('coins', 1, "Two matched! +1 Coin back.");
                 } else {
-                    absolutelyNothingThatisImportantlol -= bet;
-                    document.getElementById('flip-result').style.color = '#e74c3c';
-                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
+                    document.getElementById('slot-message').innerText = "No luck this time. Try again!";
                 }
-                coin.innerText = result === 'heads' ? '🦆' : '🐟';
-                document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-                hoihpohivpoweahovropagh4p9h8g4();
-                flipInProgress = false;
-                document.getElementById('flip-heads').disabled = false;
-                document.getElementById('flip-tails').disabled = false;
-            }, 1900);
-        }
-        let scratchActive = false, scratchPrize = null;
-        function openScratch() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const prizes = [
-                { emoji: '💰', label: '+5 Coins',  action: () => { absolutelyNothingThatisImportantlol += 5;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💰', label: '+5 Coins',  action: () => { absolutelyNothingThatisImportantlol += 5;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💎', label: '+10 Coins', action: () => { absolutelyNothingThatisImportantlol += 10; hoihpohivpoweahovropagh4p9h8g4(); spawnGlitter(); } },
-                { emoji: '🦆', label: '+3 Coins',  action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💸', label: 'Nothing',   action: () => {} },
-                { emoji: '💸', label: 'Nothing',   action: () => {} },
-                { emoji: '💸', label: 'Nothing',   action: () => {} },
-            ];
-            scratchPrize = prizes[Math.floor(Math.random() * prizes.length)];
-            document.getElementById('scratch-reveal').innerText = scratchPrize.emoji;
-            document.getElementById('scratch-result').innerText = '';
-            document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
-            scratchActive = true;
-            openMenu('scratch-screen');
-            setTimeout(() => {
-                const c = document.getElementById('scratch-canvas');
-                const cx = c.getContext('2d');
-                cx.clearRect(0, 0, c.width, c.height);
-                cx.fillStyle = '#aaa'; cx.fillRect(0, 0, c.width, c.height);
-                cx.fillStyle = '#888'; cx.font = 'bold 18px sans-serif'; cx.textAlign = 'center';
-                cx.fillText('SCRATCH HERE', c.width / 2, c.height / 2);
-                let scratched = false;
-                function scratch(e) {
-                    if (!scratchActive) return;
-                    const rect = c.getBoundingClientRect();
-                    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
-                    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
-                    cx.globalCompositeOperation = 'destination-out';
-                    cx.beginPath(); cx.arc(x, y, 22, 0, Math.PI * 2); cx.fill();
-                    if (!scratched) {
-                        const id = cx.getImageData(0, 0, c.width, c.height);
-                        let cleared = 0;
-                        for (let i = 3; i < id.data.length; i += 4) if (id.data[i] === 0) cleared++;
-                        if (cleared / (c.width * c.height) > 0.45) {
-                            scratched = true; scratchActive = false;
-                            cx.clearRect(0, 0, c.width, c.height);
-                            scratchPrize.action();
-                            document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
-                            hoihpohivpoweahovropagh4p9h8g4();
-                        }
+                isSpinning = false;
+                document.getElementById('spin-btn').disabled = false;
+            }
+
+            function grantReward(type, coinFallback, successMsg) {
+                let isNewUnlock = false;
+                if (type === 'coins') {
+                    absolutelyNothingThatisImportantlol += coinFallback;
+                } else {
+                    if (unlockedThemes.includes(type)) {
+                        absolutelyNothingThatisImportantlol += coinFallback;
+                        successMsg = `Already owned! Here are ${coinFallback} Coins instead.`;
+                    } else {
+                        unlockedThemes.push(type);
+                        isNewUnlock = true;
                     }
                 }
-                c.addEventListener('mousemove', e => { if (e.buttons === 1) scratch(e); });
-                c.addEventListener('touchmove', e => { e.preventDefault(); scratch(e); }, { passive: false });
-            }, 50);
-        }
-        function peekTheme() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
-            const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
-            if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const [id, data] = locked[Math.floor(Math.random() * locked.length)];
-            showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
-        }
-        function setNametag() {
-            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
-            const name = document.getElementById('nametag-input').value.trim();
-            if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
-            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
-            absolutelyNothingThatisImportantlol -= 5;
-            localStorage.setItem('qw_nametag', btoa(name));
-            document.getElementById('nametag-display').innerText = name;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshHomeNametag();
-            showAlert(`✅ Name set to "${name}"!`, "🏷️");
-        }
-        function loadNametag() {
-            const stored = localStorage.getItem('qw_nametag');
-            if (stored) { try { document.getElementById('nametag-display').innerText = atob(stored); } catch {} }
-        }
-        const dieFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-        let luckyRolling = false;
-        function doLuckyRoll() {
-            if (luckyRolling) return;
-            if (absolutelyNothingThatisImportantlol < 3) { showAlert("Need 3 coins to roll!", "🎲"); return; }
-            absolutelyNothingThatisImportantlol -= 3;
-            hoihpohivpoweahovropagh4p9h8g4();
-            luckyRolling = true;
-            document.getElementById('lucky-roll-btn').disabled = true;
-            document.getElementById('lucky-roll-result').innerText = '';
-            const die = document.getElementById('lucky-roll-die');
-            die.classList.add('rolling');
-            let ticks = 0;
-            const iv = setInterval(() => {
-                die.innerText = dieFaces[Math.floor(Math.random() * 6)];
-                ticks++;
-                if (ticks > 18) {
-                    clearInterval(iv);
-                    die.classList.remove('rolling');
-                    const result = Math.floor(Math.random() * 6) + 1;
-                    die.innerText = dieFaces[result - 1];
-                    absolutelyNothingThatisImportantlol += result;
-                    if (result >= 5) spawnGlitter();
-                    document.getElementById('lucky-roll-result').innerText = `Rolled ${result}! +${result} coins 🎉`;
-                    document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
-                    hoihpohivpoweahovropagh4p9h8g4();
-                    luckyRolling = false;
-                    document.getElementById('lucky-roll-btn').disabled = false;
+                document.getElementById('slot-message').innerText = successMsg;
+                hoihpohivpoweahovropagh4p9h8g4();
+                if (isNewUnlock) {
+                    const data = themeData[type];
+                    showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
                 }
-            }, 60);
-        }
-        function openMysteryBox() {
-            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 coins for a Mystery Box!", "🎁"); return; }
-            absolutelyNothingThatisImportantlol -= 5;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const outcomes = [
-                { msg: "💩 It's empty. Just a box.", delta: 0 },
-                { msg: "🪙 You found 2 coins!",      delta: 2 },
-                { msg: "🪙 You found 2 coins!",      delta: 2 },
-                { msg: "🎉 +8 coins! Nice haul!",    delta: 8 },
-                { msg: "🎉 +8 coins! Nice haul!",    delta: 8 },
-                { msg: "💎 JACKPOT! +20 coins!!!",   delta: 20 },
-                { msg: "💀 Cursed box! -1 coin.",    delta: -1 },
-                { msg: "🦆 A rubber duck fell out. +4 coins!", delta: 4 },
-                { msg: "🌈 Rainbow dust! +6 coins.", delta: 6 },
-                { msg: "📦 Another box inside? +1 coin I guess.", delta: 1 },
-            ];
-            const pick = outcomes[Math.floor(Math.random() * outcomes.length)];
-            absolutelyNothingThatisImportantlol = Math.max(0, absolutelyNothingThatisImportantlol + pick.delta);
-            if (pick.delta >= 8) spawnGlitter();
-            hoihpohivpoweahovropagh4p9h8g4();
-            showAlert(pick.msg, "🎁 Mystery Box", 4000);
-        }
-        let bullseyeActive = true;
-        function doBullseye(pick) {
-            if (!bullseyeActive) return;
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 coins to play Bullseye!", "🎯"); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            bullseyeActive = false;
-            document.querySelectorAll('.bullseye-btn').forEach(b => b.disabled = true);
-            const roll = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('bullseye-roll').innerText = `🎲 Rolled: ${roll}`;
-            const btns = document.querySelectorAll('.bullseye-btn');
-            btns[roll - 1].classList.add('hit');
-            if (pick !== roll) btns[pick - 1].classList.add('miss');
-            let msg = '';
-            if (pick === roll) {
-                const win = 2 * 8;
-                absolutelyNothingThatisImportantlol += win;
-                msg = `🎯 BULLSEYE! +${win} coins!`;
-                spawnGlitter();
-            } else {
-                msg = `😬 Rolled ${roll}, not ${pick}. Lost 2 coins.`;
             }
-            document.getElementById('bullseye-result').innerText = msg;
-            document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
-            hoihpohivpoweahovropagh4p9h8g4();
-            setTimeout(() => {
-                bullseyeActive = true;
-                document.querySelectorAll('.bullseye-btn').forEach(b => {
-                    b.disabled = false;
-                    b.classList.remove('hit', 'miss');
-                });
-                document.getElementById('bullseye-roll').innerText = '';
-                document.getElementById('bullseye-result').innerText = '';
-            }, 2200);
-        }
-        function claimDailyBonus() {
-            const today = new Date().toDateString();
-            const lastClaim = localStorage.getItem('qw_daily');
-            if (lastClaim === today) {
-                showAlert("Already claimed today! Come back tomorrow 🌅", "📅", 3000);
-                return;
-            }
-            absolutelyNothingThatisImportantlol += 3;
-            localStorage.setItem('qw_daily', today);
-            hoihpohivpoweahovropagh4p9h8g4();
-            spawnGlitter();
-            showAlert("🎉 +3 Coins! See you tomorrow!", "📅 Daily Bonus", 3000);
-        }
-        function buyFreeSpin() {
-            if (absolutelyNothingThatisImportantlol < 8) { showAlert("Need 8 coins for a Free Spin Token!", "⚡"); return; }
-            absolutelyNothingThatisImportantlol -= 8;
-            freeSpins++;
-            hoihpohivpoweahovropagh4p9h8g4();
-            document.getElementById('mega-spin-indicator').innerText = `⚡ Free Spins banked: ${freeSpins}`;
-            showAlert(`⚡ Free Spin banked! You now have ${freeSpins}. Use it at the slot machine!`, "⚡", 3000);
-        }
-        const ALL_SCREENS = [
-            'welcome-screen','slot-screen','themes-screen','shop-screen',
-            'coinflip-screen','scratch-screen','nametag-screen',
-            'luckyroll-screen','bullseye-screen'
-        ];
 
-        function playGame(gameUrl) {
-            clearTimeout(loadTimer);
-            openMenu('welcome-screen');
-            document.getElementById('welcome-screen').style.display = 'none';
-            const sidebar = document.getElementById('sidebar');
-            sidebar.style.display = 'none';
-            setTimeout(() => { sidebar.style.display = ''; }, 100);
-            const loader = document.getElementById('loader');
-            loader.style.display = 'flex';
-            loadTimer = setTimeout(() => {
-                loader.style.display = 'none';
-                const frame = document.getElementById('game-frame');
-                frame.style.display = 'block';
-                frame.src = gameUrl + "?v=" + new Date().getTime();
-                frame.focus();
-            }, 2000);
-        }
-        function goHome() {
-            clearTimeout(loadTimer);
-            document.getElementById('game-frame').src = '';
-            document.getElementById('loader').style.display = 'none';
-            openMenu('welcome-screen');
-        }
-        function toggleFullScreen() {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(`Error: ${err.message}`, "❌"));
-            else document.exitFullscreen();
-        }
-        function showInfo(title, desc, controls) {
-            document.getElementById('info-title').innerText = title;
-            document.getElementById('info-desc').innerText = desc;
-            document.getElementById('info-controls').innerText = controls;
-            document.getElementById('info-panel').style.left = '320px';
-        }
-        function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
-        function openMenu(menuId) {
-            ALL_SCREENS.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.style.display = 'none';
-            });
-            document.getElementById('game-frame').style.display = 'none';
-            document.getElementById(menuId).style.display = 'block';
-            if (menuId === 'shop-screen')       refreshDuckDisplay();
-            if (menuId === 'welcome-screen')    refreshHomeNametag();
-            if (menuId === 'coinflip-screen')   document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'nametag-screen')    loadNametag();
-            if (menuId === 'luckyroll-screen')  document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'bullseye-screen') {
-                document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
-                bullseyeActive = true;
-                document.querySelectorAll('.bullseye-btn').forEach(b => { b.disabled = false; b.classList.remove('hit','miss'); });
-                document.getElementById('bullseye-roll').innerText = '';
-                document.getElementById('bullseye-result').innerText = '';
+            function megaSpin() {
+                if (isSpinning) return;
+                if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡");
+                    return; }
+                absolutelyNothingThatisImportantlol -= 9;
+                hoihpohivpoweahovropagh4p9h8g4();
+                let spinsLeft = 3;
+                document.getElementById('mega-spin-indicator').innerText = `⚡ Mega Spin: ${spinsLeft} spins left`;
+                document.getElementById('spin-btn').disabled = true;
+                document.getElementById('mega-btn').disabled = true;
+                isSpinning = true;
+
+                function runOneSpin() {
+                    document.getElementById('slot-message').innerText = "Spinning...";
+                    let ticks = 0;
+                    const spinInterval = setInterval(() => {
+                        document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols
+                            .length)];
+                        document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols
+                            .length)];
+                        document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols
+                            .length)];
+                        ticks++;
+                        if (ticks > 20) {
+                            clearInterval(spinInterval);
+                            finishSpin();
+                            spinsLeft--;
+                            document.getElementById('mega-spin-indicator').innerText = spinsLeft > 0 ?
+                                `⚡ Mega Spin: ${spinsLeft} spins left` : '';
+                            if (spinsLeft > 0) setTimeout(runOneSpin, 800);
+                            else {
+                                isSpinning = false;
+                                document.getElementById('spin-btn').disabled = false;
+                                document.getElementById('mega-btn').disabled = false;
+                            }
+                        }
+                    }, 50);
+                }
+                runOneSpin();
             }
-        }
-        window.gameState = {};
-        window.randomGoofyAssFunction = randomGoofyAssFunction;
-        window.megaSpin = megaSpin;
-        window.openMenu = openMenu;
-        window.playGame = playGame;
-        window.goHome = goHome;
-        window.toggleFullScreen = toggleFullScreen;
-        window.showInfo = showInfo;
-        window.hideInfo = hideInfo;
-        window.doFlip = doFlip;
-        window.openScratch = openScratch;
-        window.setNametag = setNametag;
-        window.peekTheme = peekTheme;
-        window.exchangeToDuck = exchangeToDuck;
-        window.exchangeToQuack = exchangeToQuack;
-        window.unbanDuck = unbanDuck;
-        window.doLuckyRoll = doLuckyRoll;
-        window.openMysteryBox = openMysteryBox;
-        window.doBullseye = doBullseye;
-        window.claimDailyBonus = claimDailyBonus;
-        window.buyFreeSpin = buyFreeSpin;
-        window.closeCustomAlert = closeCustomAlert;
-        window.exchangeAllToQuack = exchangeAllToQuack;
-        window.grantReward = grantReward;
-        window.gameState.absolutelyNothingThatisImportantlol = absolutelyNothingThatisImportantlol;
-        window.gameState.unlockedThemes = unlockedThemes;
-        window.gameState.activeTheme = activeTheme;
-        window.hoihpohivpoweahovropagh4p9h8g4 = hoihpohivpoweahovropagh4p9h8g4;
-    })();
+
+            let alertTimeout = null;
+
+            function showAlert(msg, title = '', autoDismiss = 0) {
+                document.getElementById('custom-alert-title').innerText = title;
+                document.getElementById('custom-alert-msg').innerText = msg;
+                document.getElementById('custom-alert-overlay').classList.add('show');
+                const prog = document.getElementById('custom-alert-progress');
+                prog.style.transition = 'none';
+                prog.style.width = '100%';
+                if (alertTimeout) clearTimeout(alertTimeout);
+                if (autoDismiss > 0) {
+                    setTimeout(() => { prog.style.transition = `width ${autoDismiss}ms linear`;
+                        prog.style.width = '0%'; }, 50);
+                    alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
+                } else { prog.style.width = '0%'; }
+            }
+
+            function closeCustomAlert() {
+                document.getElementById('custom-alert-overlay').classList.remove('show');
+                if (alertTimeout) { clearTimeout(alertTimeout);
+                    alertTimeout = null; }
+            }
+
+            function refreshHomeNametag() {
+                const stored = localStorage.getItem('qw_nametag');
+                const el = document.getElementById('home-nametag');
+                if (stored) {
+                    try { el.innerText = '🏷️ ' + atob(stored);
+                        el.style.display = 'block'; } catch { el.style.display = 'none'; }
+                } else { el.style.display = 'none'; }
+            }
+            refreshHomeNametag();
+
+            function getDuckSave() {
+                try {
+                    const raw = localStorage.getItem('duckV12Accounts');
+                    if (!raw) return null;
+                    const parsed = JSON.parse(decodeURIComponent(atob(raw)));
+                    const key = Object.keys(parsed)[0];
+                    return { key, data: parsed[key] };
+                } catch { return null; }
+            }
+
+            function getDuckCoins() {
+                const s = getDuckSave();
+                return s ? (s.data.saveData?.coins || 0) : null;
+            }
+
+            function isDuckBanned() {
+                const s = getDuckSave();
+                return s ? !!(s.data.saveData?.banned) : false;
+            }
+
+            function setDuckField(field, value) {
+                try {
+                    const raw = localStorage.getItem('duckV12Accounts');
+                    const parsed = JSON.parse(decodeURIComponent(atob(raw)));
+                    const key = Object.keys(parsed)[0];
+                    parsed[key].saveData[field] = value;
+                    localStorage.setItem('duckV12Accounts', btoa(encodeURIComponent(JSON.stringify(parsed))));
+                    return true;
+                } catch { return false; }
+            }
+
+            function setDuckCoins(amount) { return setDuckField('coins', amount); }
+
+            function refreshDuckDisplay() {
+                const dc = getDuckCoins();
+                const el = document.getElementById('duck-coin-display');
+                if (el) el.innerText = dc !== null ? dc : 'N/A (play Duck RNG first)';
+                const elShop = document.getElementById('coin-display-shop');
+                if (elShop) elShop.innerText = absolutelyNothingThatisImportantlol;
+            }
+
+            function exchangeToDuck() {
+                if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
+                const dc = getDuckCoins();
+                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+                absolutelyNothingThatisImportantlol--;
+                setDuckCoins(dc + 10000);
+                hoihpohivpoweahovropagh4p9h8g4();
+                refreshDuckDisplay();
+                showAlert("✅ -1 Quack Coin → +10,000 Duck Coins!", "🔄", 3000);
+            }
+
+            function exchangeToQuack() {
+                if (isDuckBanned()) {
+                    showAlert(
+                        "Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.",
+                        "🔨 Banned");
+                    return;
+                }
+                const dc = getDuckCoins();
+                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+                if (dc < 10000) { showAlert("Need 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
+                setDuckCoins(dc - 10000);
+                absolutelyNothingThatisImportantlol++;
+                hoihpohivpoweahovropagh4p9h8g4();
+                refreshDuckDisplay();
+                showAlert("✅ -10,000 Duck Coins → +1 Quack Coin!", "🔃", 3000);
+            }
+
+            function exchangeAllToQuack() {
+                if (isDuckBanned()) {
+                    showAlert(
+                        "Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.",
+                        "🔨 Banned");
+                    return;
+                }
+                const dc = getDuckCoins();
+                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+                if (dc < 10000) { showAlert("Need at least 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
+                const quackGain = Math.floor(dc / 10000);
+                const remainder = dc % 10000;
+                setDuckCoins(remainder);
+                absolutelyNothingThatisImportantlol += quackGain;
+                hoihpohivpoweahovropagh4p9h8g4();
+                refreshDuckDisplay();
+                showAlert(
+                    `✅ Converted ${quackGain * 10000} Duck Coins → +${quackGain} Quack Coins!\n${remainder > 0 ? remainder + " Duck Coins left over." : ""}`,
+                    "⚡ Convert All", 4000);
+            }
+
+            function unbanDuck() {
+                if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000); return; }
+                if (absolutelyNothingThatisImportantlol < 100) {
+                    showAlert("Need 100 Quack Coins to unban. You have " + absolutelyNothingThatisImportantlol + ".",
+                        "🔨");
+                    return;
+                }
+                absolutelyNothingThatisImportantlol -= 100;
+                setDuckField('banned', false);
+                setDuckField('strikes', 0);
+                hoihpohivpoweahovropagh4p9h8g4();
+                refreshDuckDisplay();
+                spawnGlitter();
+                showAlert("✅ Duck RNG account unbanned! Strikes reset. Don't get caught again.", "🕊️ Unbanned", 4000);
+            }
+
+            let flipInProgress = false;
+
+            function doFlip(choice) {
+                if (flipInProgress) return;
+                const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
+                if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`,
+                        "❌"); return; }
+                flipInProgress = true;
+                document.getElementById('flip-heads').disabled = true;
+                document.getElementById('flip-tails').disabled = true;
+                document.getElementById('flip-result').innerText = '';
+                const coin = document.getElementById('coinflip-coin');
+                coin.classList.add('flipping');
+                setTimeout(() => {
+                    coin.classList.remove('flipping');
+                    const result = Math.random() < 0.5 ? 'heads' : 'tails';
+                    const won = result === choice;
+                    if (won) {
+                        absolutelyNothingThatisImportantlol += bet;
+                        document.getElementById('flip-result').style.color = '#2ecc71';
+                        document.getElementById('flip-result').innerText =
+                            `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
+                        spawnGlitter();
+                    } else {
+                        absolutelyNothingThatisImportantlol -= bet;
+                        document.getElementById('flip-result').style.color = '#e74c3c';
+                        document.getElementById('flip-result').innerText =
+                            `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
+                    }
+                    coin.innerText = result === 'heads' ? '🦆' : '🐟';
+                    document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
+                    hoihpohivpoweahovropagh4p9h8g4();
+                    flipInProgress = false;
+                    document.getElementById('flip-heads').disabled = false;
+                    document.getElementById('flip-tails').disabled = false;
+                }, 1900);
+            }
+
+            let scratchActive = false,
+                scratchPrize = null;
+
+            function openScratch() {
+                if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!",
+                        "🎫"); return; }
+                absolutelyNothingThatisImportantlol -= 2;
+                hoihpohivpoweahovropagh4p9h8g4();
+                const prizes = [
+                    { emoji: '💰', label: '+5 Coins', action: () => { absolutelyNothingThatisImportantlol += 5;
+                            hoihpohivpoweahovropagh4p9h8g4(); } },
+                    { emoji: '💰', label: '+5 Coins', action: () => { absolutelyNothingThatisImportantlol += 5;
+                            hoihpohivpoweahovropagh4p9h8g4(); } },
+                    { emoji: '🪙', label: '+1 Coin', action: () => { absolutelyNothingThatisImportantlol += 3;
+                            hoihpohivpoweahovropagh4p9h8g4(); } },
+                    { emoji: '🪙', label: '+1 Coin', action: () => { absolutelyNothingThatisImportantlol += 3;
+                            hoihpohivpoweahovropagh4p9h8g4(); } },
+                    { emoji: '🪙', label: '+1 Coin', action: () => { absolutelyNothingThatisImportantlol += 3;
+                            hoihpohivpoweahovropagh4p9h8g4(); } },
+                    { emoji: '💎', label: '+10 Coins', action: () => { absolutelyNothingThatisImportantlol += 10;
+                            hoihpohivpoweahovropagh4p9h8g4();
+                            spawnGlitter(); } },
+                    { emoji: '🦆', label: '+3 Coins', action: () => { absolutelyNothingThatisImportantlol += 3;
+                            hoihpohivpoweahovropagh4p9h8g4(); } },
+                    { emoji: '💸', label: 'Nothing', action: () => {} },
+                    { emoji: '💸', label: 'Nothing', action: () => {} },
+                    { emoji: '💸', label: 'Nothing', action: () => {} },
+                ];
+                scratchPrize = prizes[Math.floor(Math.random() * prizes.length)];
+                document.getElementById('scratch-reveal').innerText = scratchPrize.emoji;
+                document.getElementById('scratch-result').innerText = '';
+                document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
+                scratchActive = true;
+                openMenu('scratch-screen');
+                setTimeout(() => {
+                    const c = document.getElementById('scratch-canvas');
+                    const cx = c.getContext('2d');
+                    cx.clearRect(0, 0, c.width, c.height);
+                    cx.fillStyle = '#aaa';
+                    cx.fillRect(0, 0, c.width, c.height);
+                    cx.fillStyle = '#888';
+                    cx.font = 'bold 18px sans-serif';
+                    cx.textAlign = 'center';
+                    cx.fillText('SCRATCH HERE', c.width / 2, c.height / 2);
+                    let scratched = false;
+
+                    function scratch(e) {
+                        if (!scratchActive) return;
+                        const rect = c.getBoundingClientRect();
+                        const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+                        const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+                        cx.globalCompositeOperation = 'destination-out';
+                        cx.beginPath();
+                        cx.arc(x, y, 22, 0, Math.PI * 2);
+                        cx.fill();
+                        if (!scratched) {
+                            const id = cx.getImageData(0, 0, c.width, c.height);
+                            let cleared = 0;
+                            for (let i = 3; i < id.data.length; i += 4)
+                                if (id.data[i] === 0) cleared++;
+                            if (cleared / (c.width * c.height) > 0.45) {
+                                scratched = true;
+                                scratchActive = false;
+                                cx.clearRect(0, 0, c.width, c.height);
+                                scratchPrize.action();
+                                document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
+                                hoihpohivpoweahovropagh4p9h8g4();
+                            }
+                        }
+                    }
+                    c.addEventListener('mousemove', e => { if (e.buttons === 1) scratch(e); });
+                    c.addEventListener('touchmove', e => { e.preventDefault();
+                        scratch(e); }, { passive: false });
+                }, 50);
+            }
+
+            function peekTheme() {
+                if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
+                const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
+                if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000); return; }
+                absolutelyNothingThatisImportantlol -= 2;
+                hoihpohivpoweahovropagh4p9h8g4();
+                const [id, data] = locked[Math.floor(Math.random() * locked.length)];
+                showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
+            }
+
+            function setNametag() {
+                if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
+                const name = document.getElementById('nametag-input').value.trim();
+                if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
+                if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
+                absolutelyNothingThatisImportantlol -= 5;
+                localStorage.setItem('qw_nametag', btoa(name));
+                document.getElementById('nametag-display').innerText = name;
+                hoihpohivpoweahovropagh4p9h8g4();
+                refreshHomeNametag();
+                showAlert(`✅ Name set to "${name}"!`, "🏷️");
+            }
+
+            function loadNametag() {
+                const stored = localStorage.getItem('qw_nametag');
+                if (stored) { try { document.getElementById('nametag-display').innerText = atob(stored); } catch {} }
+            }
+
+            const dieFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            let luckyRolling = false;
+
+            function doLuckyRoll() {
+                if (luckyRolling) return;
+                if (absolutelyNothingThatisImportantlol < 3) { showAlert("Need 3 coins to roll!", "🎲"); return; }
+                absolutelyNothingThatisImportantlol -= 3;
+                hoihpohivpoweahovropagh4p9h8g4();
+                luckyRolling = true;
+                document.getElementById('lucky-roll-btn').disabled = true;
+                document.getElementById('lucky-roll-result').innerText = '';
+                const die = document.getElementById('lucky-roll-die');
+                die.classList.add('rolling');
+                let ticks = 0;
+                const iv = setInterval(() => {
+                    die.innerText = dieFaces[Math.floor(Math.random() * 6)];
+                    ticks++;
+                    if (ticks > 18) {
+                        clearInterval(iv);
+                        die.classList.remove('rolling');
+                        const result = Math.floor(Math.random() * 6) + 1;
+                        die.innerText = dieFaces[result - 1];
+                        absolutelyNothingThatisImportantlol += result;
+                        if (result >= 5) spawnGlitter();
+                        document.getElementById('lucky-roll-result').innerText = `Rolled ${result}! +${result} coins 🎉`;
+                        document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
+                        hoihpohivpoweahovropagh4p9h8g4();
+                        luckyRolling = false;
+                        document.getElementById('lucky-roll-btn').disabled = false;
+                    }
+                }, 60);
+            }
+
+            function openMysteryBox() {
+                if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 coins for a Mystery Box!", "🎁");
+                    return; }
+                absolutelyNothingThatisImportantlol -= 5;
+                hoihpohivpoweahovropagh4p9h8g4();
+                const outcomes = [
+                    { msg: "💩 It's empty. Just a box.", delta: 0 },
+                    { msg: "🪙 You found 2 coins!", delta: 2 },
+                    { msg: "🪙 You found 2 coins!", delta: 2 },
+                    { msg: "🎉 +8 coins! Nice haul!", delta: 8 },
+                    { msg: "🎉 +8 coins! Nice haul!", delta: 8 },
+                    { msg: "💎 JACKPOT! +20 coins!!!", delta: 20 },
+                    { msg: "💀 Cursed box! -1 coin.", delta: -1 },
+                    { msg: "🦆 A rubber duck fell out. +4 coins!", delta: 4 },
+                    { msg: "🌈 Rainbow dust! +6 coins.", delta: 6 },
+                    { msg: "📦 Another box inside? +1 coin I guess.", delta: 1 },
+                ];
+                const pick = outcomes[Math.floor(Math.random() * outcomes.length)];
+                absolutelyNothingThatisImportantlol = Math.max(0, absolutelyNothingThatisImportantlol + pick.delta);
+                if (pick.delta >= 8) spawnGlitter();
+                hoihpohivpoweahovropagh4p9h8g4();
+                showAlert(pick.msg, "🎁 Mystery Box", 4000);
+            }
+
+            let bullseyeActive = true;
+
+            function doBullseye(pick) {
+                if (!bullseyeActive) return;
+                if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 coins to play Bullseye!", "🎯");
+                    return; }
+                absolutelyNothingThatisImportantlol -= 2;
+                hoihpohivpoweahovropagh4p9h8g4();
+                bullseyeActive = false;
+                document.querySelectorAll('.bullseye-btn').forEach(b => b.disabled = true);
+                const roll = Math.floor(Math.random() * 6) + 1;
+                document.getElementById('bullseye-roll').innerText = `🎲 Rolled: ${roll}`;
+                const btns = document.querySelectorAll('.bullseye-btn');
+                btns[roll - 1].classList.add('hit');
+                if (pick !== roll) btns[pick - 1].classList.add('miss');
+                let msg = '';
+                if (pick === roll) {
+                    const win = 2 * 8;
+                    absolutelyNothingThatisImportantlol += win;
+                    msg = `🎯 BULLSEYE! +${win} coins!`;
+                    spawnGlitter();
+                } else {
+                    msg = `😬 Rolled ${roll}, not ${pick}. Lost 2 coins.`;
+                }
+                document.getElementById('bullseye-result').innerText = msg;
+                document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
+                hoihpohivpoweahovropagh4p9h8g4();
+                setTimeout(() => {
+                    bullseyeActive = true;
+                    document.querySelectorAll('.bullseye-btn').forEach(b => {
+                        b.disabled = false;
+                        b.classList.remove('hit', 'miss');
+                    });
+                    document.getElementById('bullseye-roll').innerText = '';
+                    document.getElementById('bullseye-result').innerText = '';
+                }, 2200);
+            }
+
+            function claimDailyBonus() {
+                const today = new Date().toDateString();
+                const lastClaim = localStorage.getItem('qw_daily');
+                if (lastClaim === today) {
+                    showAlert("Already claimed today! Come back tomorrow 🌅", "📅", 3000);
+                    return;
+                }
+                absolutelyNothingThatisImportantlol += 3;
+                localStorage.setItem('qw_daily', today);
+                hoihpohivpoweahovropagh4p9h8g4();
+                spawnGlitter();
+                showAlert("🎉 +3 Coins! See you tomorrow!", "📅 Daily Bonus", 3000);
+            }
+
+            function buyFreeSpin() {
+                if (absolutelyNothingThatisImportantlol < 8) { showAlert("Need 8 coins for a Free Spin Token!", "⚡");
+                    return; }
+                absolutelyNothingThatisImportantlol -= 8;
+                freeSpins++;
+                hoihpohivpoweahovropagh4p9h8g4();
+                document.getElementById('mega-spin-indicator').innerText = `⚡ Free Spins banked: ${freeSpins}`;
+                showAlert(`⚡ Free Spin banked! You now have ${freeSpins}. Use it at the slot machine!`, "⚡", 3000);
+            }
+
+            const ALL_SCREENS = [
+                'welcome-screen', 'slot-screen', 'themes-screen', 'shop-screen',
+                'coinflip-screen', 'scratch-screen', 'nametag-screen',
+                'luckyroll-screen', 'bullseye-screen'
+            ];
+
+            function playGame(gameUrl) {
+                clearTimeout(loadTimer);
+                openMenu('welcome-screen');
+                document.getElementById('welcome-screen').style.display = 'none';
+                const sidebar = document.getElementById('sidebar');
+                sidebar.style.display = 'none';
+                setTimeout(() => { sidebar.style.display = ''; }, 100);
+                const loader = document.getElementById('loader');
+                loader.style.display = 'flex';
+                loadTimer = setTimeout(() => {
+                    loader.style.display = 'none';
+                    const frame = document.getElementById('game-frame');
+                    frame.style.display = 'block';
+                    frame.src = gameUrl + "?v=" + new Date().getTime();
+                    frame.focus();
+                }, 2000);
+            }
+
+            function goHome() {
+                clearTimeout(loadTimer);
+                document.getElementById('game-frame').src = '';
+                document.getElementById('loader').style.display = 'none';
+                openMenu('welcome-screen');
+            }
+
+            function toggleFullScreen() {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(
+                    `Error: ${err.message}`, "❌"));
+                else document.exitFullscreen();
+            }
+
+            function showInfo(title, desc, controls) {
+                document.getElementById('info-title').innerText = title;
+                document.getElementById('info-desc').innerText = desc;
+                document.getElementById('info-controls').innerText = controls;
+                document.getElementById('info-panel').style.left = '320px';
+            }
+
+            function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
+
+            function openMenu(menuId) {
+                ALL_SCREENS.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+                document.getElementById('game-frame').style.display = 'none';
+                document.getElementById(menuId).style.display = 'block';
+                if (menuId === 'shop-screen') refreshDuckDisplay();
+                if (menuId === 'welcome-screen') refreshHomeNametag();
+                if (menuId === 'coinflip-screen') document.getElementById('coin-display-flip').innerText =
+                    absolutelyNothingThatisImportantlol;
+                if (menuId === 'nametag-screen') loadNametag();
+                if (menuId === 'luckyroll-screen') document.getElementById('luckyroll-coins').innerText =
+                    absolutelyNothingThatisImportantlol;
+                if (menuId === 'bullseye-screen') {
+                    document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
+                    bullseyeActive = true;
+                    document.querySelectorAll('.bullseye-btn').forEach(b => { b.disabled = false;
+                        b.classList.remove('hit', 'miss'); });
+                    document.getElementById('bullseye-roll').innerText = '';
+                    document.getElementById('bullseye-result').innerText = '';
+                }
+            }
+
+            // ─── expose globals ────────────────────────────────────────────────────────
+            window.randomGoofyAssFunction = randomGoofyAssFunction;
+            window.megaSpin = megaSpin;
+            window.openMenu = openMenu;
+            window.playGame = playGame;
+            window.goHome = goHome;
+            window.toggleFullScreen = toggleFullScreen;
+            window.showInfo = showInfo;
+            window.hideInfo = hideInfo;
+            window.doFlip = doFlip;
+            window.openScratch = openScratch;
+            window.setNametag = setNametag;
+            window.peekTheme = peekTheme;
+            window.exchangeToDuck = exchangeToDuck;
+            window.exchangeToQuack = exchangeToQuack;
+            window.unbanDuck = unbanDuck;
+            window.doLuckyRoll = doLuckyRoll;
+            window.openMysteryBox = openMysteryBox;
+            window.doBullseye = doBullseye;
+            window.claimDailyBonus = claimDailyBonus;
+            window.buyFreeSpin = buyFreeSpin;
+            window.closeCustomAlert = closeCustomAlert;
+            window.exchangeAllToQuack = exchangeAllToQuack;
+            window.grantReward = grantReward;
+            window.hoihpohivpoweahovropagh4p9h8g4 = hoihpohivpoweahovropagh4p9h8g4;
+
+            // initial glitter spawn
+            spawnGlitter();
+
+        })();
     </script>
 </body>
 </html>
