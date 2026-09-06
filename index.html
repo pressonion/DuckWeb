@@ -229,37 +229,45 @@
         #sidebar {
             position: absolute;
             top: 0;
-            left: -320px;
-            width: 320px;
+            left: -360px;
+            width: 360px;
             height: 100vh;
             background-color: var(--menu-bg);
             color: white;
-            transition: left 0.3s ease, background 0.3s;
+            transition: left 0.3s ease, box-shadow 0.3s ease;
             padding-top: 180px;
             box-sizing: border-box;
             z-index: 100;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0);
             overflow-y: auto;
         }
-        #icon-container:hover~#sidebar,
+        #icon-container:hover ~ #sidebar,
         #sidebar:hover,
         #info-panel:hover {
             left: 0;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         }
 
         .game-btn {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
             width: 100%;
             background: none;
             color: white;
             border: none;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 20px;
+            padding: 12px 20px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
+            text-align: left;
+        }
+        .game-btn .btn-top {
+            display: flex;
+            align-items: center;
+            width: 100%;
         }
         .btn-icon {
             width: 28px;
@@ -268,11 +276,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-shrink: 0;
+        }
+        .game-btn .genre-tag {
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.6;
+            margin-top: 2px;
+            padding-left: 43px; /* align with text after icon */
+            letter-spacing: 0.5px;
         }
         .game-btn:hover {
             background-color: var(--btn-hover);
             color: var(--btn-text);
-            padding-left: 30px;
+            padding-left: 25px;
+        }
+        .game-btn:hover .genre-tag {
+            opacity: 0.9;
         }
 
         #info-panel {
@@ -471,6 +491,8 @@
             height: 100%;
             background: var(--bg-gradient);
             z-index: 50;
+            padding: 20px;
+            box-sizing: border-box;
         }
         @keyframes spin {
             100% {
@@ -481,6 +503,30 @@
             width: 80px;
             height: 80px;
             animation: spin 1s linear infinite;
+        }
+        #loader-text {
+            margin-top: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--text-main);
+            transition: opacity 0.3s;
+        }
+        #loader-progress-wrap {
+            margin-top: 20px;
+            width: 60%;
+            max-width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+        #loader-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--btn-hover);
+            border-radius: 10px;
+            transition: width 0.2s ease;
         }
         #game-frame {
             display: none;
@@ -812,31 +858,70 @@
     </svg>
 
     <div id="icon-container">
-        <div id="menu-icon" class="side-icon" title="Menu">
+        <div id="menu-icon" class="side-icon" title="Menu" onclick="playSound('click')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </div>
-        <div class="side-icon" onclick="goHome()" title="Back to Main Menu">
+        <div class="side-icon" onclick="goHome(); playSound('click')" title="Back to Main Menu">
             <svg><use href="#custom-duck"></use></svg>
         </div>
-        <div class="side-icon" onclick="toggleFullScreen()" title="Fullscreen">
+        <div class="side-icon" onclick="toggleFullScreen(); playSound('click')" title="Fullscreen">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
         </div>
     </div>
 
     <div id="sidebar">
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue','Battle endless rooms as a brave duck!','Arrow Keys to move, Space to dash')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action','A fast-paced drawn action game.','WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🫟</div> Doodle Action</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/')" onmouseover="showInfo('Shooting Fun','Test your aim and reflexes.','Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎯</div> Shooting Fun</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over','A frustratingly fun physics game.','Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⛏</div> Getting Over</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG','Test your luck! Roll for the rarest ducks.','Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎲</div> Duck RNG</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker','Test your card skills.','Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⛀⛁</div> Poker</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚘</div> Car Game</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Defenders-Realm/')" onmouseover="showInfo('Defender\'s Realm','Defend your realm against waves of enemies!','Mouse to aim and shoot/build')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🛡️</div> Defender's Realm</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/StocksBuy/')" onmouseover="showInfo('StocksBuy','Buy Stocks Make Profit!!','buy and sell')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">📈</div> StonksBuy</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/keyboard/')" onmouseover="showInfo('Keyboard','type for fun and practice','have fun')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⌨️</div> Keyboard</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/CyberLoot/')" onmouseover="showInfo('CyberLoot','go gambling on cases','I  enjoy this game')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">📦</div> CyberLoot</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/pol.io/')" onmouseover="showInfo('pol.io','MULTIPLAYER FUN','get kills get levels upgrade to a better version')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⬆️</div> pol.io</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Goose-hunt/')" onmouseover="showInfo('Goose hunt','shoot goose','shoot gooses get upgrades sell and more')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">𖦏</div> Goose hunt</button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/'); playSound('click')" onmouseover="showInfo('Duck Rogue','Battle endless rooms as a brave duck!','Arrow Keys to move, Space to dash')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></span> Duck Rogue</span>
+            <span class="genre-tag">🎮 Action</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/'); playSound('click')" onmouseover="showInfo('Doodle Action','A fast-paced drawn action game.','WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">🫟</span> Doodle Action</span>
+            <span class="genre-tag">⚔️ Action</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Shooting-FUn/'); playSound('click')" onmouseover="showInfo('Shooting Fun','Test your aim and reflexes.','Mouse to aim, Left Click to shoot')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">🎯</span> Shooting Fun</span>
+            <span class="genre-tag">🔫 Shooter</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/'); playSound('click')" onmouseover="showInfo('Getting Over','A frustratingly fun physics game.','Mouse movement controls the hammer')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">⛏</span> Getting Over</span>
+            <span class="genre-tag">🔄 Physics</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/'); playSound('click')" onmouseover="showInfo('Duck RNG','Test your luck! Roll for the rarest ducks.','Click the button to roll')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">🎲</span> Duck RNG</span>
+            <span class="genre-tag">🍀 Luck</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/'); playSound('click')" onmouseover="showInfo('Poker','Test your card skills.','Mouse to play your hand')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">♠️♥️</span> Poker</span>
+            <span class="genre-tag">🃏 Cards</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/'); playSound('click')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">🚘</span> Car Game</span>
+            <span class="genre-tag">🏎️ Racing</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Defenders-Realm/'); playSound('click')" onmouseover="showInfo('Defender\'s Realm','Defend your realm against waves of enemies!','Mouse to aim and shoot/build')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">🛡️</span> Defender's Realm</span>
+            <span class="genre-tag">🏰 Tower Defense</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/StocksBuy/'); playSound('click')" onmouseover="showInfo('StocksBuy','Buy Stocks Make Profit!!','buy and sell')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">📈</span> StonksBuy</span>
+            <span class="genre-tag">💰 Finance</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/keyboard/'); playSound('click')" onmouseover="showInfo('Keyboard','type for fun and practice','have fun')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">⌨️</span> Keyboard</span>
+            <span class="genre-tag">🖋️ Typing</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/CyberLoot/'); playSound('click')" onmouseover="showInfo('CyberLoot','go gambling on cases','I  enjoy this game')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">📦</span> CyberLoot</span>
+            <span class="genre-tag">🎁 Gambling</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/pol.io/'); playSound('click')" onmouseover="showInfo('pol.io','MULTIPLAYER FUN','get kills get levels upgrade to a better version')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">⬆️</span> pol.io</span>
+            <span class="genre-tag">🌐 Multiplayer</span>
+        </button>
+        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Goose-hunt/'); playSound('click')" onmouseover="showInfo('Goose hunt','shoot goose','shoot gooses get upgrades sell and more')" onmouseout="hideInfo()">
+            <span class="btn-top"><span class="btn-icon" style="font-size:22px">𖦏</span> Goose hunt</span>
+            <span class="genre-tag">🔫 Shooter</span>
+        </button>
     </div>
 
     <div id="info-panel">
@@ -859,9 +944,9 @@
                 Make sure FN is on and click Ctrl + F5 to update!<br>Play for a minute and get a Quack Coin!
             </p>
             <div style="margin: 20px 0;">
-                <button class="action-btn" onclick="openMenu('slot-screen')">🎰 Slot Machine (3 Coins)</button>
-                <button class="action-btn" onclick="openMenu('themes-screen')">🎨 Equip Themes</button>
-                <button class="action-btn" onclick="openMenu('shop-screen')">🛒 Shop</button>
+                <button class="action-btn" onclick="openMenu('slot-screen'); playSound('click')">🎰 Slot Machine (3 Coins)</button>
+                <button class="action-btn" onclick="openMenu('themes-screen'); playSound('click')">🎨 Equip Themes</button>
+                <button class="action-btn" onclick="openMenu('shop-screen'); playSound('click')">🛒 Shop</button>
             </div>
             <div>
                 <div class="duck-decoration"><svg width="100%" height="100%"><use href="#main-duck"></use></svg></div>
@@ -885,10 +970,10 @@
             </div>
             <div id="slot-message">Match 3 to win!</div>
             <div id="mega-spin-indicator"></div>
-            <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction()">Spin (Cost: 3 Coins)</button>
-            <button class="action-btn" id="mega-btn" onclick="megaSpin()" style="background:#e67e22">⚡ Mega Spin (9 Coins)</button>
+            <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction(); playSound('click')">Spin (Cost: 3 Coins)</button>
+            <button class="action-btn" id="mega-btn" onclick="megaSpin(); playSound('click')" style="background:#e67e22">⚡ Mega Spin (9 Coins)</button>
             <br>
-            <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
+            <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- THEMES -->
@@ -897,7 +982,7 @@
             <p>Win themes at the slot machine!</p>
             <div class="theme-grid" id="theme-grid-container"></div>
             <br>
-            <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
+            <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- SHOP -->
@@ -906,54 +991,54 @@
             <p>Spend your hard-earned coins!</p>
             <p style="font-size:15px;">Your coins: <strong id="coin-display-shop">0</strong> &nbsp;|&nbsp; Duck Coins: <strong id="duck-coin-display">?</strong></p>
             <div class="shop-grid">
-                <div class="shop-item" onclick="openMenu('coinflip-screen')">
+                <div class="shop-item" onclick="openMenu('coinflip-screen'); playSound('click')">
                     <span class="shop-emoji">🪙</span>
                     Coin Flip
                     <div class="shop-price">Bet 1–10 coins, double or nothing</div>
                 </div>
-                <div class="shop-item" onclick="openScratch()">
+                <div class="shop-item" onclick="openScratch(); playSound('click')">
                     <span class="shop-emoji">🎫</span>
                     Scratch Card
                     <div class="shop-price">2 coins — mystery prize</div>
                 </div>
-                <div class="shop-item" onclick="openMenu('nametag-screen')">
+                <div class="shop-item" onclick="openMenu('nametag-screen'); playSound('click')">
                     <span class="shop-emoji">🏷️</span>
                     Name Tag
                     <div class="shop-price">5 coins — set your username</div>
                 </div>
-                <div class="shop-item" onclick="peekTheme()">
+                <div class="shop-item" onclick="peekTheme(); playSound('click')">
                     <span class="shop-emoji">👁️</span>
                     Theme Peek
                     <div class="shop-price">2 coins — reveal a locked theme name for 5s</div>
                 </div>
-                <div class="shop-item" onclick="openMenu('luckyroll-screen')">
+                <div class="shop-item" onclick="openMenu('luckyroll-screen'); playSound('click')">
                     <span class="shop-emoji">🎲</span>
                     Lucky Roll
                     <div class="shop-price">3 coins — roll a d6, win that many coins</div>
                 </div>
-                <div class="shop-item" onclick="openMysteryBox()">
+                <div class="shop-item" onclick="openMysteryBox(); playSound('click')">
                     <span class="shop-emoji">🎁</span>
                     Mystery Box
                     <div class="shop-price">5 coins — could be amazing, could be trash</div>
                 </div>
-                <div class="shop-item" onclick="openMenu('bullseye-screen')">
+                <div class="shop-item" onclick="openMenu('bullseye-screen'); playSound('click')">
                     <span class="shop-emoji">🎯</span>
                     Bullseye
                     <div class="shop-price">2 coins — pick 1–6, hit it for 8× payout</div>
                 </div>
-                <div class="shop-item" onclick="claimDailyBonus()">
+                <div class="shop-item" onclick="claimDailyBonus(); playSound('click')">
                     <span class="shop-emoji">📅</span>
                     Daily Bonus
                     <div class="shop-price">Free! Claim 3 coins once per day</div>
                 </div>
-                <div class="shop-item" onclick="buyFreeSpin()">
+                <div class="shop-item" onclick="buyFreeSpin(); playSound('click')">
                     <span class="shop-emoji">⚡</span>
                     Free Spin Token
                     <div class="shop-price">8 coins — bank a free slot spin for later</div>
                 </div>
             </div>
             <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('welcome-screen')">⬅ Back</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('welcome-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- COIN FLIP -->
@@ -969,10 +1054,10 @@
             <span id="coinflip-coin">🪙</span>
             <div id="flip-result" style="font-size:20px;font-weight:bold;min-height:30px;color:#e74c3c;"></div>
             <div style="margin:10px 0;">
-                <button class="action-btn" onclick="doFlip('heads')" id="flip-heads">🦆 Heads</button>
-                <button class="action-btn" onclick="doFlip('tails')" id="flip-tails">🐟 Tails</button>
+                <button class="action-btn" onclick="doFlip('heads'); playSound('click')" id="flip-heads">🦆 Heads</button>
+                <button class="action-btn" onclick="doFlip('tails'); playSound('click')" id="flip-tails">🐟 Tails</button>
             </div>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- SCRATCH CARD -->
@@ -985,7 +1070,7 @@
             </div>
             <div id="scratch-result" style="font-size:18px;font-weight:bold;min-height:24px;"></div>
             <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- NAME TAG -->
@@ -996,8 +1081,8 @@
             <br>
             <input id="nametag-input" type="text" maxlength="16" placeholder="Enter name...">
             <br>
-            <button class="action-btn" onclick="setNametag()">✅ Set Name (5 coins)</button>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+            <button class="action-btn" onclick="setNametag(); playSound('click')">✅ Set Name (5 coins)</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- LUCKY ROLL -->
@@ -1007,9 +1092,9 @@
             <p>Coins: <strong id="luckyroll-coins">0</strong></p>
             <span id="lucky-roll-die">🎲</span>
             <div id="lucky-roll-result" style="font-size:20px;font-weight:bold;min-height:28px;"></div>
-            <button class="action-btn" id="lucky-roll-btn" onclick="doLuckyRoll()" style="background:#27ae60;color:white">Roll! (3 coins)</button>
+            <button class="action-btn" id="lucky-roll-btn" onclick="doLuckyRoll(); playSound('click')" style="background:#27ae60;color:white">Roll! (3 coins)</button>
             <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <!-- BULLSEYE -->
@@ -1018,26 +1103,125 @@
             <p>Pay 2 coins, pick a number 1–6. Hit it for <strong>8×</strong> your bet back!</p>
             <p>Coins: <strong id="bullseye-coins">0</strong></p>
             <div class="bullseye-grid" id="bullseye-grid">
-                <button class="bullseye-btn" onclick="doBullseye(1)">1</button>
-                <button class="bullseye-btn" onclick="doBullseye(2)">2</button>
-                <button class="bullseye-btn" onclick="doBullseye(3)">3</button>
-                <button class="bullseye-btn" onclick="doBullseye(4)">4</button>
-                <button class="bullseye-btn" onclick="doBullseye(5)">5</button>
-                <button class="bullseye-btn" onclick="doBullseye(6)">6</button>
+                <button class="bullseye-btn" onclick="doBullseye(1); playSound('click')">1</button>
+                <button class="bullseye-btn" onclick="doBullseye(2); playSound('click')">2</button>
+                <button class="bullseye-btn" onclick="doBullseye(3); playSound('click')">3</button>
+                <button class="bullseye-btn" onclick="doBullseye(4); playSound('click')">4</button>
+                <button class="bullseye-btn" onclick="doBullseye(5); playSound('click')">5</button>
+                <button class="bullseye-btn" onclick="doBullseye(6); playSound('click')">6</button>
             </div>
             <div id="bullseye-roll" style="font-size:26px;min-height:36px;"></div>
             <div id="bullseye-result" style="font-size:18px;font-weight:bold;min-height:26px;"></div>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen'); playSound('click')">⬅ Back</button>
         </div>
 
         <div id="loader">
             <div id="loader-duck"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div>
             <div id="loader-text">Loading Game...</div>
+            <div id="loader-progress-wrap"><div id="loader-progress-bar"></div></div>
         </div>
         <iframe id="game-frame" src="" oncontextmenu="return false;"></iframe>
     </div>
 
     <script>
+        // ─── SOUND ENGINE ─────────────────────────────────────────────────────────────
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(type) {
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+                const gain = audioCtx.createGain();
+                gain.gain.value = 0.15; // volume
+                const osc = audioCtx.createOscillator();
+                osc.type = 'sine';
+
+                switch (type) {
+                    case 'click':
+                        osc.frequency.setValueAtTime(600, now);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                        osc.start(now);
+                        osc.stop(now + 0.08);
+                        break;
+                    case 'win':
+                        osc.frequency.setValueAtTime(500, now);
+                        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.25);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                        osc.start(now);
+                        osc.stop(now + 0.25);
+                        break;
+                    case 'lose':
+                        osc.frequency.setValueAtTime(400, now);
+                        osc.frequency.exponentialRampToValueAtTime(150, now + 0.3);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                        osc.start(now);
+                        osc.stop(now + 0.3);
+                        break;
+                    case 'unlock':
+                        osc.frequency.setValueAtTime(523, now);
+                        osc.start(now);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                        osc.stop(now + 0.1);
+                        // second tone
+                        const osc2 = audioCtx.createOscillator();
+                        osc2.type = 'sine';
+                        osc2.frequency.setValueAtTime(659, now + 0.12);
+                        const gain2 = audioCtx.createGain();
+                        gain2.gain.value = 0.15;
+                        gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+                        osc2.connect(gain2);
+                        gain2.connect(audioCtx.destination);
+                        osc2.start(now + 0.12);
+                        osc2.stop(now + 0.22);
+                        break;
+                    case 'slot':
+                        osc.type = 'square';
+                        osc.frequency.setValueAtTime(300, now);
+                        gain.gain.value = 0.08;
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                        osc.start(now);
+                        osc.stop(now + 0.1);
+                        break;
+                    case 'coin':
+                        osc.frequency.setValueAtTime(700, now);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+                        osc.start(now);
+                        osc.stop(now + 0.06);
+                        break;
+                    case 'error':
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(200, now);
+                        gain.gain.value = 0.1;
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                        osc.start(now);
+                        osc.stop(now + 0.25);
+                        break;
+                    default:
+                        osc.frequency.setValueAtTime(440, now);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                        osc.start(now);
+                        osc.stop(now + 0.1);
+                }
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+            } catch (e) { /* silent fail */ }
+        }
+
+        // ─── WRAPPER FOR CLICK SOUND ON ALL BUTTONS ────────────────────────────────
+        // We'll add playSound('click') to all relevant onclick attributes in HTML.
+        // Additionally, we can add a global listener for all button clicks, but that might conflict.
+        // The HTML already has playSound('click') in many places. We'll add to remaining ones.
+
+        // ─── REST OF ORIGINAL SCRIPT (with sound calls added to key functions) ──────
         (async function() {
             // ─── REFRESH RATE DETECTION & DELTA-TIME ────────────────────────────────
             let detectedHz = 60;
@@ -1197,6 +1381,7 @@
                 document.getElementById('unlock-text').innerText = themeName + ' Unlocked!';
                 popup.classList.add('show');
                 spawnGlitter();
+                playSound('unlock');
                 setTimeout(() => popup.classList.remove('show'), 2800);
             }
 
@@ -1217,7 +1402,8 @@
                             btn.style.borderColor = 'green';
                         } else {
                             btn.onclick = () => { activeTheme = themeId;
-                                hoihpohivpoweahovropagh4p9h8g4(); };
+                                hoihpohivpoweahovropagh4p9h8g4();
+                                playSound('click'); };
                         }
                     } else {
                         btn.innerText = '🔒 ???';
@@ -1438,7 +1624,7 @@
                 if (isSpinning) return;
                 const cost = freeSpins > 0 ? 0 : 3;
                 if (absolutelyNothingThatisImportantlol < cost) { showAlert("You need 3 Quack Coins to spin!", "🎰");
-                    return; }
+                    playSound('error'); return; }
                 if (freeSpins > 0) {
                     freeSpins--;
                     document.getElementById('mega-spin-indicator').innerText = freeSpins > 0 ? `⚡ Free Spins left: ${freeSpins}` :
@@ -1450,22 +1636,43 @@
                 isSpinning = true;
                 document.getElementById('spin-btn').disabled = true;
                 document.getElementById('slot-message').innerText = "Spinning...";
+                playSound('slot');
+
+                // Decide outcome: 15% chance of a forced match, else random
+                let finalSymbols;
+                if (Math.random() < 0.15) {
+                    const sym = symbols[Math.floor(Math.random() * symbols.length)];
+                    finalSymbols = [sym, sym, sym];
+                } else {
+                    finalSymbols = [
+                        symbols[Math.floor(Math.random() * symbols.length)],
+                        symbols[Math.floor(Math.random() * symbols.length)],
+                        symbols[Math.floor(Math.random() * symbols.length)]
+                    ];
+                }
+
                 let ticks = 0;
                 const spinInterval = setInterval(() => {
                     document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                     document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                     document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
                     ticks++;
-                    if (ticks > 20) { clearInterval(spinInterval);
-                        finishSpin(); }
+                    if (ticks > 20) {
+                        clearInterval(spinInterval);
+                        document.getElementById('reel1').innerText = finalSymbols[0];
+                        document.getElementById('reel2').innerText = finalSymbols[1];
+                        document.getElementById('reel3').innerText = finalSymbols[2];
+                        finishSpin(finalSymbols);
+                    }
                 }, 50);
             }
 
-            function finishSpin() {
-                const r1 = document.getElementById('reel1').innerText;
-                const r2 = document.getElementById('reel2').innerText;
-                const r3 = document.getElementById('reel3').innerText;
+            function finishSpin(finalSymbols) {
+                const r1 = finalSymbols[0];
+                const r2 = finalSymbols[1];
+                const r3 = finalSymbols[2];
                 if (r1 === r2 && r2 === r3) {
+                    playSound('win');
                     if (r1 === '🍒') grantReward('coins', 5, "Jackpot! +5 Coins!");
                     else if (r1 === '🦆') grantReward('theme-dark', 10, "You unlocked DARK MODE!");
                     else if (r1 === '💎') grantReward('theme-ocean', 15, "You unlocked OCEAN BLUE!");
@@ -1479,8 +1686,10 @@
                     else if (r1 === '❄️') grantReward('theme-winter', 20, "You unlocked WINTER!");
                     else if (r1 === '🌊') grantReward('theme-vaporwave', 25, "You unlocked VAPORWAVE!");
                 } else if (r1 === r2 || r2 === r3 || r1 === r3) {
+                    playSound('click');
                     grantReward('coins', 1, "Two matched! +1 Coin back.");
                 } else {
+                    playSound('lose');
                     document.getElementById('slot-message').innerText = "No luck this time. Try again!";
                 }
                 isSpinning = false;
@@ -1511,7 +1720,7 @@
             function megaSpin() {
                 if (isSpinning) return;
                 if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡");
-                    return; }
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 9;
                 hoihpohivpoweahovropagh4p9h8g4();
                 let spinsLeft = 3;
@@ -1522,7 +1731,19 @@
 
                 function runOneSpin() {
                     document.getElementById('slot-message').innerText = "Spinning...";
+                    playSound('slot');
                     let ticks = 0;
+                    let final;
+                    if (Math.random() < 0.15) {
+                        const sym = symbols[Math.floor(Math.random() * symbols.length)];
+                        final = [sym, sym, sym];
+                    } else {
+                        final = [
+                            symbols[Math.floor(Math.random() * symbols.length)],
+                            symbols[Math.floor(Math.random() * symbols.length)],
+                            symbols[Math.floor(Math.random() * symbols.length)]
+                        ];
+                    }
                     const spinInterval = setInterval(() => {
                         document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols
                             .length)];
@@ -1533,7 +1754,10 @@
                         ticks++;
                         if (ticks > 20) {
                             clearInterval(spinInterval);
-                            finishSpin();
+                            document.getElementById('reel1').innerText = final[0];
+                            document.getElementById('reel2').innerText = final[1];
+                            document.getElementById('reel3').innerText = final[2];
+                            finishSpin(final);
                             spinsLeft--;
                             document.getElementById('mega-spin-indicator').innerText = spinsLeft > 0 ?
                                 `⚡ Mega Spin: ${spinsLeft} spins left` : '';
@@ -1564,6 +1788,7 @@
                         prog.style.width = '0%'; }, 50);
                     alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
                 } else { prog.style.width = '0%'; }
+                playSound('click');
             }
 
             function closeCustomAlert() {
@@ -1624,14 +1849,17 @@
             }
 
             function exchangeToDuck() {
-                if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
+                if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌");
+                    playSound('error'); return; }
                 const dc = getDuckCoins();
-                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
+                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆");
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol--;
                 setDuckCoins(dc + 10000);
                 hoihpohivpoweahovropagh4p9h8g4();
                 refreshDuckDisplay();
                 showAlert("✅ -1 Quack Coin → +10,000 Duck Coins!", "🔄", 3000);
+                playSound('click');
             }
 
             function exchangeToQuack() {
@@ -1639,16 +1867,20 @@
                     showAlert(
                         "Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.",
                         "🔨 Banned");
+                    playSound('error');
                     return;
                 }
                 const dc = getDuckCoins();
-                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-                if (dc < 10000) { showAlert("Need 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
+                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆");
+                    playSound('error'); return; }
+                if (dc < 10000) { showAlert("Need 10,000 Duck Coins! You have " + dc + ".", "🔃");
+                    playSound('error'); return; }
                 setDuckCoins(dc - 10000);
                 absolutelyNothingThatisImportantlol++;
                 hoihpohivpoweahovropagh4p9h8g4();
                 refreshDuckDisplay();
                 showAlert("✅ -10,000 Duck Coins → +1 Quack Coin!", "🔃", 3000);
+                playSound('win');
             }
 
             function exchangeAllToQuack() {
@@ -1656,11 +1888,14 @@
                     showAlert(
                         "Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.",
                         "🔨 Banned");
+                    playSound('error');
                     return;
                 }
                 const dc = getDuckCoins();
-                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-                if (dc < 10000) { showAlert("Need at least 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
+                if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆");
+                    playSound('error'); return; }
+                if (dc < 10000) { showAlert("Need at least 10,000 Duck Coins! You have " + dc + ".", "🔃");
+                    playSound('error'); return; }
                 const quackGain = Math.floor(dc / 10000);
                 const remainder = dc % 10000;
                 setDuckCoins(remainder);
@@ -1670,13 +1905,16 @@
                 showAlert(
                     `✅ Converted ${quackGain * 10000} Duck Coins → +${quackGain} Quack Coins!\n${remainder > 0 ? remainder + " Duck Coins left over." : ""}`,
                     "⚡ Convert All", 4000);
+                playSound('win');
             }
 
             function unbanDuck() {
-                if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000); return; }
+                if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000);
+                    playSound('click'); return; }
                 if (absolutelyNothingThatisImportantlol < 100) {
                     showAlert("Need 100 Quack Coins to unban. You have " + absolutelyNothingThatisImportantlol + ".",
                         "🔨");
+                    playSound('error');
                     return;
                 }
                 absolutelyNothingThatisImportantlol -= 100;
@@ -1686,6 +1924,7 @@
                 refreshDuckDisplay();
                 spawnGlitter();
                 showAlert("✅ Duck RNG account unbanned! Strikes reset. Don't get caught again.", "🕊️ Unbanned", 4000);
+                playSound('unlock');
             }
 
             let flipInProgress = false;
@@ -1694,13 +1933,15 @@
                 if (flipInProgress) return;
                 const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
                 if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`,
-                        "❌"); return; }
+                        "❌");
+                    playSound('error'); return; }
                 flipInProgress = true;
                 document.getElementById('flip-heads').disabled = true;
                 document.getElementById('flip-tails').disabled = true;
                 document.getElementById('flip-result').innerText = '';
                 const coin = document.getElementById('coinflip-coin');
                 coin.classList.add('flipping');
+                playSound('coin');
                 setTimeout(() => {
                     coin.classList.remove('flipping');
                     const result = Math.random() < 0.5 ? 'heads' : 'tails';
@@ -1711,11 +1952,13 @@
                         document.getElementById('flip-result').innerText =
                             `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
                         spawnGlitter();
+                        playSound('win');
                     } else {
                         absolutelyNothingThatisImportantlol -= bet;
                         document.getElementById('flip-result').style.color = '#e74c3c';
                         document.getElementById('flip-result').innerText =
                             `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
+                        playSound('lose');
                     }
                     coin.innerText = result === 'heads' ? '🦆' : '🐟';
                     document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
@@ -1731,7 +1974,8 @@
 
             function openScratch() {
                 if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!",
-                        "🎫"); return; }
+                        "🎫");
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 2;
                 hoihpohivpoweahovropagh4p9h8g4();
                 const prizes = [
@@ -1760,6 +2004,7 @@
                 document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
                 scratchActive = true;
                 openMenu('scratch-screen');
+                playSound('click');
                 setTimeout(() => {
                     const c = document.getElementById('scratch-canvas');
                     const cx = c.getContext('2d');
@@ -1793,6 +2038,12 @@
                                 scratchPrize.action();
                                 document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
                                 hoihpohivpoweahovropagh4p9h8g4();
+                                if (scratchPrize.label !== 'Nothing') {
+                                    playSound('win');
+                                    spawnGlitter();
+                                } else {
+                                    playSound('lose');
+                                }
                             }
                         }
                     }
@@ -1803,26 +2054,33 @@
             }
 
             function peekTheme() {
-                if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
+                if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️");
+                    playSound('error'); return; }
                 const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
-                if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000); return; }
+                if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000);
+                    playSound('click'); return; }
                 absolutelyNothingThatisImportantlol -= 2;
                 hoihpohivpoweahovropagh4p9h8g4();
                 const [id, data] = locked[Math.floor(Math.random() * locked.length)];
                 showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
+                playSound('click');
             }
 
             function setNametag() {
-                if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
+                if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️");
+                    playSound('error'); return; }
                 const name = document.getElementById('nametag-input').value.trim();
-                if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
-                if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
+                if (!name) { showAlert("Enter a name first!", "🏷️");
+                    playSound('error'); return; }
+                if (name.length > 16) { showAlert("Max 16 characters!", "🏷️");
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 5;
                 localStorage.setItem('qw_nametag', btoa(name));
                 document.getElementById('nametag-display').innerText = name;
                 hoihpohivpoweahovropagh4p9h8g4();
                 refreshHomeNametag();
                 showAlert(`✅ Name set to "${name}"!`, "🏷️");
+                playSound('click');
             }
 
             function loadNametag() {
@@ -1835,7 +2093,8 @@
 
             function doLuckyRoll() {
                 if (luckyRolling) return;
-                if (absolutelyNothingThatisImportantlol < 3) { showAlert("Need 3 coins to roll!", "🎲"); return; }
+                if (absolutelyNothingThatisImportantlol < 3) { showAlert("Need 3 coins to roll!", "🎲");
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 3;
                 hoihpohivpoweahovropagh4p9h8g4();
                 luckyRolling = true;
@@ -1843,6 +2102,7 @@
                 document.getElementById('lucky-roll-result').innerText = '';
                 const die = document.getElementById('lucky-roll-die');
                 die.classList.add('rolling');
+                playSound('coin');
                 let ticks = 0;
                 const iv = setInterval(() => {
                     die.innerText = dieFaces[Math.floor(Math.random() * 6)];
@@ -1853,7 +2113,12 @@
                         const result = Math.floor(Math.random() * 6) + 1;
                         die.innerText = dieFaces[result - 1];
                         absolutelyNothingThatisImportantlol += result;
-                        if (result >= 5) spawnGlitter();
+                        if (result >= 5) {
+                            spawnGlitter();
+                            playSound('win');
+                        } else {
+                            playSound('click');
+                        }
                         document.getElementById('lucky-roll-result').innerText = `Rolled ${result}! +${result} coins 🎉`;
                         document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
                         hoihpohivpoweahovropagh4p9h8g4();
@@ -1865,7 +2130,7 @@
 
             function openMysteryBox() {
                 if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 coins for a Mystery Box!", "🎁");
-                    return; }
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 5;
                 hoihpohivpoweahovropagh4p9h8g4();
                 const outcomes = [
@@ -1882,7 +2147,14 @@
                 ];
                 const pick = outcomes[Math.floor(Math.random() * outcomes.length)];
                 absolutelyNothingThatisImportantlol = Math.max(0, absolutelyNothingThatisImportantlol + pick.delta);
-                if (pick.delta >= 8) spawnGlitter();
+                if (pick.delta >= 8) {
+                    spawnGlitter();
+                    playSound('win');
+                } else if (pick.delta <= 0) {
+                    playSound('lose');
+                } else {
+                    playSound('click');
+                }
                 hoihpohivpoweahovropagh4p9h8g4();
                 showAlert(pick.msg, "🎁 Mystery Box", 4000);
             }
@@ -1892,7 +2164,7 @@
             function doBullseye(pick) {
                 if (!bullseyeActive) return;
                 if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 coins to play Bullseye!", "🎯");
-                    return; }
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 2;
                 hoihpohivpoweahovropagh4p9h8g4();
                 bullseyeActive = false;
@@ -1908,8 +2180,10 @@
                     absolutelyNothingThatisImportantlol += win;
                     msg = `🎯 BULLSEYE! +${win} coins!`;
                     spawnGlitter();
+                    playSound('win');
                 } else {
                     msg = `😬 Rolled ${roll}, not ${pick}. Lost 2 coins.`;
+                    playSound('lose');
                 }
                 document.getElementById('bullseye-result').innerText = msg;
                 document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
@@ -1930,6 +2204,7 @@
                 const lastClaim = localStorage.getItem('qw_daily');
                 if (lastClaim === today) {
                     showAlert("Already claimed today! Come back tomorrow 🌅", "📅", 3000);
+                    playSound('click');
                     return;
                 }
                 absolutelyNothingThatisImportantlol += 3;
@@ -1937,16 +2212,18 @@
                 hoihpohivpoweahovropagh4p9h8g4();
                 spawnGlitter();
                 showAlert("🎉 +3 Coins! See you tomorrow!", "📅 Daily Bonus", 3000);
+                playSound('win');
             }
 
             function buyFreeSpin() {
                 if (absolutelyNothingThatisImportantlol < 8) { showAlert("Need 8 coins for a Free Spin Token!", "⚡");
-                    return; }
+                    playSound('error'); return; }
                 absolutelyNothingThatisImportantlol -= 8;
                 freeSpins++;
                 hoihpohivpoweahovropagh4p9h8g4();
                 document.getElementById('mega-spin-indicator').innerText = `⚡ Free Spins banked: ${freeSpins}`;
                 showAlert(`⚡ Free Spin banked! You now have ${freeSpins}. Use it at the slot machine!`, "⚡", 3000);
+                playSound('click');
             }
 
             const ALL_SCREENS = [
@@ -1955,6 +2232,49 @@
                 'luckyroll-screen', 'bullseye-screen'
             ];
 
+            // ─── IMPROVED LOADER WITH PROGRESS BAR AND FUN MESSAGES ──────────────────
+            let loaderMessages = [
+                "Warming up the pixels...",
+                "Rounding up the ducks...",
+                "Loading the quack...",
+                "Feathering the nest...",
+                "Polishing the eggs...",
+                "Quack! Quack!",
+                "Almost there...",
+                "Ready? Let's go!"
+            ];
+            let loaderInterval;
+
+            function showLoader(gameUrl) {
+                const loader = document.getElementById('loader');
+                const textEl = document.getElementById('loader-text');
+                const bar = document.getElementById('loader-progress-bar');
+                loader.style.display = 'flex';
+                bar.style.width = '0%';
+                let progress = 0;
+                let msgIndex = 0;
+                textEl.innerText = loaderMessages[0];
+                if (loaderInterval) clearInterval(loaderInterval);
+                loaderInterval = setInterval(() => {
+                    progress += Math.random() * 8 + 2;
+                    if (progress > 100) progress = 100;
+                    bar.style.width = Math.min(progress, 100) + '%';
+                    msgIndex = (msgIndex + 1) % loaderMessages.length;
+                    textEl.innerText = loaderMessages[msgIndex];
+                    if (progress >= 100) {
+                        clearInterval(loaderInterval);
+                        loaderInterval = null;
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            const frame = document.getElementById('game-frame');
+                            frame.style.display = 'block';
+                            frame.src = gameUrl + "?v=" + new Date().getTime();
+                            frame.focus();
+                        }, 400);
+                    }
+                }, 300);
+            }
+
             function playGame(gameUrl) {
                 clearTimeout(loadTimer);
                 openMenu('welcome-screen');
@@ -1962,28 +2282,24 @@
                 const sidebar = document.getElementById('sidebar');
                 sidebar.style.display = 'none';
                 setTimeout(() => { sidebar.style.display = ''; }, 100);
-                const loader = document.getElementById('loader');
-                loader.style.display = 'flex';
-                loadTimer = setTimeout(() => {
-                    loader.style.display = 'none';
-                    const frame = document.getElementById('game-frame');
-                    frame.style.display = 'block';
-                    frame.src = gameUrl + "?v=" + new Date().getTime();
-                    frame.focus();
-                }, 2000);
+                playSound('click');
+                showLoader(gameUrl);
             }
 
             function goHome() {
                 clearTimeout(loadTimer);
+                if (loaderInterval) clearInterval(loaderInterval);
                 document.getElementById('game-frame').src = '';
                 document.getElementById('loader').style.display = 'none';
                 openMenu('welcome-screen');
+                playSound('click');
             }
 
             function toggleFullScreen() {
                 if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(
                     `Error: ${err.message}`, "❌"));
                 else document.exitFullscreen();
+                playSound('click');
             }
 
             function showInfo(title, desc, controls) {
@@ -2017,6 +2333,8 @@
                     document.getElementById('bullseye-roll').innerText = '';
                     document.getElementById('bullseye-result').innerText = '';
                 }
+                // play sound only if not triggered by a button that already plays
+                // we'll not play here to avoid double sound.
             }
 
             // ─── expose globals ────────────────────────────────────────────────────────
@@ -2044,9 +2362,13 @@
             window.exchangeAllToQuack = exchangeAllToQuack;
             window.grantReward = grantReward;
             window.hoihpohivpoweahovropagh4p9h8g4 = hoihpohivpoweahovropagh4p9h8g4;
+            window.playSound = playSound;
 
             // initial glitter spawn
             spawnGlitter();
+
+            // init audio on first user click anywhere
+            document.addEventListener('click', () => { initAudio(); }, { once: true });
 
         })();
     </script>
