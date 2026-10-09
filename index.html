@@ -1,12 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>DuckWeb</title>
-
-<!-- Website favicon (browser tab icon) -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="shortcut icon" type="image/png" href="logo.png">
 
@@ -19,12 +17,10 @@
   --text: #302b18;
   --muted: #77715e;
   --border: #eee4b9;
-  --shadow: 0 5px 18px rgba(91, 72, 0, 0.08);
+  --shadow: 0 5px 18px rgba(91,72,0,.08);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -105,13 +101,8 @@ main {
   padding: 25px 20px 55px;
 }
 
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-}
+.page { display: none; }
+.page.active { display: block; }
 
 .hero {
   background: var(--yellow-light);
@@ -127,7 +118,7 @@ main {
 }
 
 .hero h1 {
-  font-size: clamp(32px, 5vw, 52px);
+  font-size: clamp(32px,5vw,52px);
   margin: 0 0 12px;
 }
 
@@ -143,13 +134,8 @@ main {
   object-fit: contain;
 }
 
-h2 {
-  margin: 25px 0 14px;
-}
-
-h3 {
-  margin-top: 0;
-}
+h2 { margin: 25px 0 14px; }
+h3 { margin-top: 0; }
 
 .card {
   background: var(--surface);
@@ -161,7 +147,7 @@ h3 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  grid-template-columns: repeat(auto-fill,minmax(205px,1fr));
   gap: 13px;
 }
 
@@ -217,23 +203,14 @@ button.action {
   cursor: pointer;
 }
 
-button.action:hover {
-  filter: brightness(.97);
-}
+button.action:hover { filter: brightness(.97); }
 
 button.action:disabled {
   opacity: .5;
   cursor: not-allowed;
 }
 
-button.secondary {
-  background: var(--yellow-light);
-}
-
-button.danger {
-  background: #f5e5e1;
-  color: #8a3023;
-}
+button.secondary { background: var(--yellow-light); }
 
 #gameViewer {
   display: none;
@@ -249,21 +226,36 @@ button.danger {
   margin-bottom: 12px;
 }
 
+.game-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 #gameFrame {
   width: 100%;
-  height: min(72vh, 760px);
+  height: min(72vh,760px);
   border: 1px solid var(--border);
   border-radius: 14px;
   background: white;
 }
 
+#gameFrame:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  border: 0;
+  border-radius: 0;
+  background: black;
+}
+
 .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill,minmax(230px,1fr));
   gap: 15px;
 }
 
-.shop-item {
+.shop-item,
+.inventory-item {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -284,21 +276,6 @@ button.danger {
   justify-content: center;
   font-weight: 900;
   font-size: 22px;
-}
-
-.preview-classic {
-  background: #fff0a6;
-  color: #302b18;
-}
-
-.preview-mystery {
-  background: linear-gradient(135deg, #e7dcff, #b8a0ff);
-  color: #302044;
-}
-
-.preview-sunset {
-  background: linear-gradient(135deg, #ffe0c9, #ff9e66);
-  color: #4b2b1c;
 }
 
 .notice {
@@ -328,15 +305,7 @@ button.danger {
   margin: 8px 0;
 }
 
-.inventory-item {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.inventory-item .theme-preview {
-  height: 75px;
-}
+.inventory-item .theme-preview { height: 75px; }
 
 .empty {
   text-align: center;
@@ -347,6 +316,41 @@ button.danger {
   grid-column: 1 / -1;
 }
 
+/* Home page update announcement */
+
+.update-notice {
+  position: relative;
+  background: var(--surface);
+  border: 2px solid var(--yellow);
+  border-radius: 16px;
+  padding: 22px;
+  margin: 22px 0;
+  box-shadow: var(--shadow);
+}
+
+.update-notice h2 {
+  margin: 0 0 12px;
+}
+
+.update-notice p {
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.update-notice .close-notice {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--yellow-light);
+  cursor: pointer;
+  font-size: 20px;
+}
+
 footer {
   text-align: center;
   color: var(--muted);
@@ -355,23 +359,11 @@ footer {
   background: var(--surface);
 }
 
-@media (max-width: 650px) {
-  .header-inner {
-    justify-content: center;
-  }
-
-  nav {
-    justify-content: center;
-  }
-
-  .hero {
-    padding: 25px 18px;
-  }
-
-  .hero img {
-    width: 90px;
-    height: 90px;
-  }
+@media (max-width:650px) {
+  .header-inner { justify-content: center; }
+  nav { justify-content: center; }
+  .hero { padding: 25px 18px; }
+  .hero img { width: 90px; height: 90px; }
 }
 </style>
 </head>
@@ -399,20 +391,32 @@ footer {
 
 <main>
 
-  <!-- HOME -->
+  <!-- HOME PAGE -->
   <section id="home" class="page active">
     <div class="hero">
       <div>
         <h1>Welcome to DuckWeb</h1>
         <p>
-          Your place for games, Duck Coins, daily rewards, and website themes.
+          Your place for games, Duck Coins, daily rewards, and mystery themes.
           Explore the games and collect coins while you spend time on DuckWeb.
         </p>
         <button class="action" onclick="showPage('games')">Explore Games</button>
         <button class="action secondary" onclick="showPage('shop')">Visit Shop</button>
       </div>
-
       <img src="logo.png" alt="DuckWeb logo">
+    </div>
+
+    <div class="update-notice" id="updateNotice">
+      <button class="close-notice" onclick="dismissNotice()" aria-label="Dismiss update">×</button>
+      <h2>📢 Website Update Notice</h2>
+      <p>
+        All games that have saved data are currently broken right now.
+        Please be patient with us while we work on fixing these issues.
+      </p>
+      <p>
+        Please note that Poker is also broken and will not work right now.
+        Thank you for supporting us!
+      </p>
     </div>
 
     <div class="card">
@@ -427,18 +431,16 @@ footer {
     <div id="featuredGames" class="grid"></div>
   </section>
 
-  <!-- GAMES -->
+  <!-- GAMES PAGE -->
   <section id="games" class="page">
     <h1>Games</h1>
     <p class="notice">Choose a game to open it inside DuckWeb.</p>
-
     <div id="gamesGrid" class="grid"></div>
 
     <div id="gameViewer" class="card">
       <div class="game-viewer-top">
         <h2 id="gameTitle" style="margin:0">Game</h2>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="game-buttons">
           <button class="action" onclick="fullscreenGame()">⛶ Full Screen</button>
           <button class="action secondary" onclick="closeGame()">Close Game</button>
         </div>
@@ -453,93 +455,71 @@ footer {
       </iframe>
 
       <p class="notice">
-        If a game does not load, its host may block embedding. DuckWeb cannot
-        override that restriction from this page.
+        If a game does not load, its host may block embedding.
+        DuckWeb cannot override that restriction from this page.
       </p>
     </div>
   </section>
 
-  <!-- SHOP -->
+  <!-- SHOP PAGE -->
   <section id="shop" class="page">
     <h1>DuckWeb Shop</h1>
-
     <p class="notice">
-      Spend Duck Coins on website themes. Purchased themes are saved in your inventory.
+      Spend Duck Coins on mystery themes. Purchased themes appear in your inventory.
     </p>
 
-    <!-- DAILY REWARDS -->
     <section id="dailyReward">
       <h2>Daily Rewards</h2>
-
       <div class="card reward-card">
         <div>
           <h3>Daily Duck Coins</h3>
           <div class="reward-amount">+5 Duck Coins</div>
           <p id="dailyStatus" class="notice">Check your daily reward status.</p>
         </div>
-
         <button id="claimDailyButton" class="action" onclick="claimDailyReward()">
           Claim 5 Coins
         </button>
       </div>
-
       <div id="dailyMessage" class="status" aria-live="polite"></div>
     </section>
 
-    <!-- MYSTERY THEME SHOP -->
     <section id="themesSection">
       <h2>Website Themes</h2>
-
       <div class="shop-grid">
         <article class="card shop-item">
-          <div class="theme-preview preview-mystery">?</div>
-
+          <div class="theme-preview" style="background:linear-gradient(135deg,#e7dcff,#b8a0ff);color:#302044">
+            ?
+          </div>
           <h3>Mystery Theme</h3>
-
           <p>
-            Open a mystery box to unlock one random website theme.
-            You won't know which theme you get until you buy it!
+            Open a mystery box to unlock a random website theme.
+            You won't know which one you get until after your purchase!
           </p>
-
           <strong>30 Duck Coins</strong>
-
-          <button
-            id="buyMysteryButton"
-            class="action"
-            onclick="buyMysteryTheme()">
+          <button id="buyMysteryButton" class="action" onclick="buyMysteryTheme()">
             Open Mystery Theme
           </button>
-
           <div class="small-text">12 possible surprise themes</div>
         </article>
       </div>
-
       <div id="shopMessage" class="status" aria-live="polite"></div>
     </section>
 
-    <!-- INVENTORY -->
     <section id="inventorySection">
       <h2>Inventory</h2>
-
-      <p class="notice">
-        Your purchased themes appear here. Equip any theme you own.
-      </p>
-
+      <p class="notice">Equip any theme you have unlocked.</p>
       <div id="inventoryGrid" class="shop-grid"></div>
-
       <div id="inventoryMessage" class="status" aria-live="polite"></div>
     </section>
   </section>
 
 </main>
 
-<footer>
-  DuckWeb
-</footer>
+<footer>DuckWeb</footer>
 
 <script>
 const games = [
-  { name: "Duck Rogue", url: "https://pressonion.github.io/duck-rogue/", icon: "" },
+  { name: "Duck Rogue", url: "https://pressonion.github.io/duck-rogue/", icon: "duck" },
   { name: "Doodle Action", url: "https://pressonion.github.io/Doodle-Action/", icon: "draw" },
   { name: "Getting Over", url: "https://pressonion.github.io/Getting-over/", icon: "mountain" },
   { name: "Duck RNG", url: "https://pressonion.github.io/DUCK-RNG/", icon: "dice" },
@@ -553,119 +533,88 @@ const games = [
   { name: "pol.io", url: "https://pressonion.github.io/pol.io/", icon: "globe" },
   { name: "Locker Fairy", url: "https://pressonion.github.io/Locker-Fairy/", icon: "lock" },
   { name: "Mini Golf", url: "https://pressonion.github.io/mini-golf/", icon: "golf" },
-  { name: "Desktop Duck", url: "https://pressonion.github.io/Desktop-duck/", icon: "monitor" },
   { name: "ValoAim", url: "https://pressonion.github.io/Valo/", icon: "crosshair" }
 ];
+
+const featuredNames = ["Goose Hunt", "Duck Rogue", "Duck RNG"];
 
 const iconPaths = {
   draw: '<path d="m4 20 4-1 11-11-3-3L5 16l-1 4Z"/><path d="m14 6 3 3"/>',
   mountain: '<path d="m3 19 7-13 4 7 2-3 5 9H3Z"/>',
   dice: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/>',
   cards: '<rect x="5" y="3" width="12" height="16" rx="2"/><path d="M9 7h.01M13 11h.01"/><path d="M9 21h10a2 2 0 0 0 2-2V7"/>',
-  car: '<path d="m5 11 2-5h10l2 5"/><path d="M3 11h18v7H3z"/><path d="M6 18v2m12-2v2M6 14h.01M18 14h.01"/>',
-  shield: '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/>',
+  car: '<path d="m5 11 2-5h10l2 5"/><path d="M3 11h18v7H3z"/><path d="M6 18v2m12-2v2"/>',
+  shield: '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/>',
   chart: '<path d="M4 19V5m0 14h17"/><path d="m7 15 4-5 3 2 5-7"/>',
-  keyboard: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M10 10h.01M13 10h.01M16 10h.01M7 13h.01M10 13h.01M13 13h.01M16 13h.01M9 16h6"/>',
+  keyboard: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M10 10h.01M13 10h.01M16 10h.01M9 16h6"/>',
   box: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="M3 8v9l9 5 9-5V8M12 13v9"/>',
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
-  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18"/>',
   lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
   golf: '<path d="M12 21V3l7 4-7 4"/><path d="M4 21h16"/>',
-  monitor: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>',
-  crosshair: '<circle cx="12" cy="12" r="7"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>'
+  crosshair: '<circle cx="12" cy="12" r="7"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>',
+  duck: '<path d="M4 15c0-4 3-7 7-7h3l3 3c3 0 4 2 4 4s-2 4-5 4H9c-3 0-5-1-5-4Z"/><circle cx="14" cy="10" r="1"/><path d="m20 13 3 1-3 1"/>'
 };
-
-const defaultCoins = 0;
-
-const today = () => {
-  const d = new Date();
-
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-};
-
-function readNumber(key, fallback = 0) {
-  const value = Number(localStorage.getItem(key));
-
-  return Number.isFinite(value) && value >= 0 ? value : fallback;
-}
-
-/*
-  Every theme has:
-  1. Main accent color
-  2. Light accent color
-  3. Page background
-  4. Card/header background
-  5. Main text color
-  6. Muted text color
-  7. Border color
-*/
 
 const themeCatalog = {
   classic: {
     name: "Classic",
-    colors: ["#ffd83d", "#fff0a6", "#fffdf4", "#ffffff", "#302b18", "#77715e", "#eee4b9"]
+    colors: ["#ffd83d","#fff0a6","#fffdf4","#ffffff","#302b18","#77715e","#eee4b9"]
   },
-
   ocean: {
     name: "Ocean",
-    colors: ["#35c9e8", "#d5f7ff", "#effbff", "#ffffff", "#123047", "#547b8d", "#c5e9f2"]
+    colors: ["#35c9e8","#d5f7ff","#effbff","#ffffff","#123047","#547b8d","#c5e9f2"]
   },
-
   forest: {
     name: "Forest",
-    colors: ["#56bd78", "#d9f7df", "#f1fff4", "#ffffff", "#173d26", "#5b8065", "#cce8d2"]
+    colors: ["#56bd78","#d9f7df","#f1fff4","#ffffff","#173d26","#5b8065","#cce8d2"]
   },
-
   sunset: {
     name: "Sunset",
-    colors: ["#ff9e66", "#ffe0c9", "#fff7f1", "#ffffff", "#4b2b1c", "#876b5b", "#f4d8c7"]
+    colors: ["#ff9e66","#ffe0c9","#fff7f1","#ffffff","#4b2b1c","#876b5b","#f4d8c7"]
   },
-
   midnight: {
     name: "Midnight",
-    colors: ["#8b7cff", "#29264f", "#141528", "#20213a", "#f5f2ff", "#b5b2d1", "#393957"]
+    colors: ["#8b7cff","#29264f","#141528","#20213a","#f5f2ff","#b5b2d1","#393957"]
   },
-
   rose: {
     name: "Rose",
-    colors: ["#f47da8", "#ffe0eb", "#fff5f8", "#ffffff", "#54243a", "#916779", "#f2ccda"]
+    colors: ["#f47da8","#ffe0eb","#fff5f8","#ffffff","#54243a","#916779","#f2ccda"]
   },
-
   lava: {
     name: "Lava",
-    colors: ["#ff573d", "#ffd4c9", "#fff4f0", "#ffffff", "#4a2019", "#8e625b", "#f1d2ca"]
+    colors: ["#ff573d","#ffd4c9","#fff4f0","#ffffff","#4a2019","#8e625b","#f1d2ca"]
   },
-
   lavender: {
     name: "Lavender",
-    colors: ["#b8a0ff", "#e6dcff", "#f7f3ff", "#ffffff", "#302044", "#78688c", "#e2d7f5"]
+    colors: ["#b8a0ff","#e6dcff","#f7f3ff","#ffffff","#302044","#78688c","#e2d7f5"]
   },
-
   mint: {
     name: "Mint",
-    colors: ["#39c6a0", "#d3fff2", "#f0fffa", "#ffffff", "#174638", "#5d877b", "#c6eee2"]
+    colors: ["#39c6a0","#d3fff2","#f0fffa","#ffffff","#174638","#5d877b","#c6eee2"]
   },
-
   cyber: {
     name: "Cyber",
-    colors: ["#00e5ff", "#183c56", "#071521", "#102535", "#e8fbff", "#8bb6c5", "#254658"]
+    colors: ["#00e5ff","#183c56","#071521","#102535","#e8fbff","#8bb6c5","#254658"]
   },
-
   cocoa: {
     name: "Cocoa",
-    colors: ["#bd8a5b", "#f0dfcd", "#fbf5ee", "#ffffff", "#3e2b1e", "#877463", "#e5d5c3"]
+    colors: ["#bd8a5b","#f0dfcd","#fbf5ee","#ffffff","#3e2b1e","#877463","#e5d5c3"]
   },
-
   lemon: {
     name: "Lemon",
-    colors: ["#c4d93b", "#f1f7b7", "#fbfdec", "#ffffff", "#343b12", "#777d4d", "#e1e8b2"]
+    colors: ["#c4d93b","#f1f7b7","#fbfdec","#ffffff","#343b12","#777d4d","#e1e8b2"]
   },
-
   arctic: {
     name: "Arctic",
-    colors: ["#78aefc", "#dcecff", "#f5f9ff", "#ffffff", "#1c3150", "#6a7e9b", "#d0deef"]
+    colors: ["#78aefc","#dcecff","#f5f9ff","#ffffff","#1c3150","#6a7e9b","#d0deef"]
   }
 };
+
+function readNumber(key, fallback = 0) {
+  const value = Number(localStorage.getItem(key));
+  return Number.isFinite(value) && value >= 0 ? value : fallback;
+}
 
 function readOwnedThemes() {
   try {
@@ -674,9 +623,7 @@ function readOwnedThemes() {
     if (Array.isArray(saved)) {
       return [...new Set([
         "classic",
-        ...saved
-          .map(theme => theme === "mystery" ? "lavender" : theme)
-          .filter(theme => themeCatalog[theme])
+        ...saved.filter(theme => themeCatalog[theme])
       ])];
     }
   } catch (error) {}
@@ -684,34 +631,22 @@ function readOwnedThemes() {
   return ["classic"];
 }
 
-let coins = readNumber("duckwebCoins", defaultCoins);
+let coins = readNumber("duckwebCoins", 0);
 let ownedThemes = readOwnedThemes();
+let equippedTheme = localStorage.getItem("duckwebEquippedTheme") || "classic";
 
-let equippedTheme =
-  localStorage.getItem("duckwebEquippedTheme") || "classic";
-
-if (equippedTheme === "mystery") {
-  equippedTheme = "lavender";
-}
-
-if (!ownedThemes.includes(equippedTheme) || !themeCatalog[equippedTheme]) {
+if (!themeCatalog[equippedTheme] || !ownedThemes.includes(equippedTheme)) {
   equippedTheme = "classic";
 }
 
 function saveData() {
   localStorage.setItem("duckwebCoins", String(coins));
-
-  localStorage.setItem(
-    "duckwebOwnedThemes",
-    JSON.stringify(ownedThemes)
-  );
-
+  localStorage.setItem("duckwebOwnedThemes", JSON.stringify(ownedThemes));
   localStorage.setItem("duckwebEquippedTheme", equippedTheme);
 }
 
 function updateCoins() {
   document.getElementById("coinBalance").textContent = coins;
-
   updateShopButtons();
 }
 
@@ -723,50 +658,31 @@ function showPage(pageName) {
   document.getElementById(pageName).classList.add("active");
 
   document.querySelectorAll("nav button").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.page === pageName
-    );
+    button.classList.toggle("active", button.dataset.page === pageName);
   });
 
   closeGame();
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function createGameCard(game) {
   const card = document.createElement("article");
-
   card.className = "card game-card";
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", "Open " + game.name);
 
-  if (game.icon) {
-    const icon = document.createElement("div");
-
-    icon.className = "game-icon";
-
-    icon.innerHTML = `
-      <svg viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true">
-        ${iconPaths[game.icon] || ""}
-      </svg>
-    `;
-
-    card.appendChild(icon);
-  }
+  const icon = document.createElement("div");
+  icon.className = "game-icon";
+  icon.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true">
+      ${iconPaths[game.icon] || iconPaths.duck}
+    </svg>`;
+  card.appendChild(icon);
 
   const textWrap = document.createElement("div");
-
   const name = document.createElement("div");
   name.className = "game-name";
   name.textContent = game.name;
@@ -776,17 +692,14 @@ function createGameCard(game) {
   subtitle.textContent = "Play on DuckWeb";
 
   textWrap.append(name, subtitle);
-
   card.appendChild(textWrap);
 
-  const open = () => openGame(game);
-
-  card.addEventListener("click", open);
+  card.addEventListener("click", () => openGame(game));
 
   card.addEventListener("keydown", event => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      open();
+      openGame(game);
     }
   });
 
@@ -797,12 +710,16 @@ function renderGames() {
   const gamesGrid = document.getElementById("gamesGrid");
   const featured = document.getElementById("featuredGames");
 
+  gamesGrid.innerHTML = "";
+  featured.innerHTML = "";
+
   games.forEach(game => {
     gamesGrid.appendChild(createGameCard(game));
   });
 
-  games.slice(0, 4).forEach(game => {
-    featured.appendChild(createGameCard(game));
+  featuredNames.forEach(name => {
+    const game = games.find(item => item.name === name);
+    if (game) featured.appendChild(createGameCard(game));
   });
 }
 
@@ -810,9 +727,7 @@ function openGame(game) {
   showPage("games");
 
   document.getElementById("gameTitle").textContent = game.name;
-
   document.getElementById("gameViewer").style.display = "block";
-
   document.getElementById("gameFrame").src = game.url;
 
   document.getElementById("gameViewer").scrollIntoView({
@@ -824,116 +739,131 @@ function closeGame() {
   const viewer = document.getElementById("gameViewer");
   const frame = document.getElementById("gameFrame");
 
-  if (viewer) {
-    viewer.style.display = "none";
+  if (document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
   }
 
-  if (frame) {
-    frame.src = "about:blank";
+  if (viewer) viewer.style.display = "none";
+  if (frame) frame.src = "about:blank";
+}
+
+async function fullscreenGame() {
+  const frame = document.getElementById("gameFrame");
+
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else if (frame.requestFullscreen) {
+      await frame.requestFullscreen();
+    } else {
+      alert("Fullscreen is not supported by this browser.");
+    }
+  } catch (error) {
+    alert("Fullscreen could not be opened. Try clicking the button again.");
   }
 }
 
-/* DAILY REWARDS */
+/*
+  Prevent arrow keys and Space from scrolling the OUTER DuckWeb page
+  while the game viewer is open.
+
+  Cross-origin iframe games handle their own keyboard events, so this
+  cannot override keyboard scrolling or gameplay inside every game.
+*/
+window.addEventListener("keydown", event => {
+  const viewer = document.getElementById("gameViewer");
+  if (!viewer || viewer.style.display === "none") return;
+
+  const scrollingKeys = [
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    " "
+  ];
+
+  if (scrollingKeys.includes(event.key) &&
+      event.target === document.body) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+/* Daily rewards */
+
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
 
 function claimDailyReward() {
   const lastClaim = localStorage.getItem("duckwebLastDailyClaim");
-
   const status = document.getElementById("dailyMessage");
 
   if (lastClaim === today()) {
-    status.textContent =
-      "You have already claimed today's reward. Come back tomorrow.";
-
+    status.textContent = "You have already claimed today's reward. Come back tomorrow.";
     updateDailyUI();
-
     return;
   }
 
   coins += 5;
-
   localStorage.setItem("duckwebLastDailyClaim", today());
 
   saveData();
-
   updateCoins();
-
   updateDailyUI();
 
   status.textContent = "You received 5 Duck Coins.";
 }
 
 function updateDailyUI() {
-  const claimed =
-    localStorage.getItem("duckwebLastDailyClaim") === today();
-
+  const claimed = localStorage.getItem("duckwebLastDailyClaim") === today();
   const button = document.getElementById("claimDailyButton");
-
   const status = document.getElementById("dailyStatus");
 
   button.disabled = claimed;
-
-  button.textContent = claimed
-    ? "Already Claimed"
-    : "Claim 5 Coins";
+  button.textContent = claimed ? "Already Claimed" : "Claim 5 Coins";
 
   status.textContent = claimed
     ? "You have claimed today's 5 Duck Coins. Your next reward is available tomorrow."
     : "Your daily reward is ready. Claim 5 Duck Coins today.";
 }
 
-/* MYSTERY THEME PURCHASE */
+/* Mystery theme purchase */
 
 function buyMysteryTheme() {
   const message = document.getElementById("shopMessage");
 
-  // Only themes not already owned can be randomly selected.
   const available = Object.keys(themeCatalog).filter(theme =>
     theme !== "classic" && !ownedThemes.includes(theme)
   );
 
-  if (!available.length) {
-    message.textContent =
-      "You've discovered every mystery theme! Check your inventory to equip one.";
-
+  if (available.length === 0) {
+    message.textContent = "You've discovered every mystery theme! Check your inventory.";
     updateShopButtons();
-
     return;
   }
 
   if (coins < 30) {
-    message.textContent =
-      `You need ${30 - coins} more Duck Coins to open a Mystery Theme.`;
-
+    message.textContent = `You need ${30 - coins} more Duck Coins to open a Mystery Theme.`;
     return;
   }
 
-  // Choose a random theme from the themes the player does not own.
   const randomIndex = Math.floor(Math.random() * available.length);
-
   const theme = available[randomIndex];
 
-  // Charge 30 coins and add the new theme to the inventory.
   coins -= 30;
-
   ownedThemes.push(theme);
 
   saveData();
-
   updateCoins();
-
   renderInventory();
 
   message.textContent =
     `Surprise! You unlocked the ${themeCatalog[theme].name} Theme. Find it in your inventory.`;
 }
 
-function themeNameFor(theme) {
-  return (themeCatalog[theme]?.name || "Unknown") + " Theme";
-}
-
 function updateShopButtons() {
   const button = document.getElementById("buyMysteryButton");
-
   if (!button) return;
 
   const available = Object.keys(themeCatalog).some(theme =>
@@ -944,102 +874,17 @@ function updateShopButtons() {
 
   button.textContent = !available
     ? "All Themes Discovered"
-    : (coins < 30 ? "Need 30 Coins" : "Open Mystery Theme");
+    : coins < 30
+      ? "Need 30 Coins"
+      : "Open Mystery Theme";
 }
 
-/* EQUIP A THEME */
-
-function equipTheme(theme) {
-  const message = document.getElementById("inventoryMessage");
-
-  if (!ownedThemes.includes(theme)) {
-    message.textContent = "You do not own that theme.";
-    return;
-  }
-
-  equippedTheme = theme;
-
-  applyTheme(theme);
-
-  saveData();
-
-  renderInventory();
-
-  message.textContent = `${themeNameFor(theme)} equipped.`;
-}
-
-/* INVENTORY */
-
-function renderInventory() {
-  const grid = document.getElementById("inventoryGrid");
-
-  grid.innerHTML = "";
-
-  ownedThemes.forEach(theme => {
-    const info = themeCatalog[theme];
-
-    if (!info) return;
-
-    const card = document.createElement("article");
-
-    card.className = "card inventory-item";
-
-    const preview = document.createElement("div");
-
-    preview.className = "theme-preview";
-
-    preview.style.background =
-      `linear-gradient(135deg, ${info.colors[1]}, ${info.colors[0]})`;
-
-    preview.style.color = info.colors[4];
-
-    preview.textContent = info.name;
-
-    const title = document.createElement("h3");
-
-    title.textContent = themeNameFor(theme);
-
-    const description = document.createElement("p");
-
-    description.className = "notice";
-
-    description.textContent = theme === "classic"
-      ? "The original DuckWeb colors."
-      : `A surprise ${info.name.toLowerCase()} color theme.`;
-
-    const button = document.createElement("button");
-
-    button.className = "action";
-
-    button.textContent = equippedTheme === theme
-      ? "Currently Equipped"
-      : "Equip Theme";
-
-    button.disabled = equippedTheme === theme;
-
-    button.addEventListener("click", () => {
-      equipTheme(theme);
-    });
-
-    card.append(preview, title, description, button);
-
-    grid.appendChild(card);
-  });
-
-  if (!ownedThemes.length) {
-    grid.innerHTML =
-      '<div class="empty">Your inventory is empty.</div>';
-  }
-
-  updateShopButtons();
-}
-
-/* APPLY THEME COLORS */
+/* Themes and inventory */
 
 function applyTheme(theme) {
   const info = themeCatalog[theme] || themeCatalog.classic;
 
-  const vars = [
+  const variables = [
     "--yellow",
     "--yellow-light",
     "--background",
@@ -1049,46 +894,80 @@ function applyTheme(theme) {
     "--border"
   ];
 
-  vars.forEach((variable, index) => {
+  variables.forEach((variable, index) => {
     document.body.style.setProperty(variable, info.colors[index]);
   });
 
   document.body.dataset.theme = theme;
 }
 
-/* FULL-SCREEN GAME BUTTON */
+function equipTheme(theme) {
+  const message = document.getElementById("inventoryMessage");
 
-async function fullscreenGame() {
-  const frame = document.getElementById("gameFrame");
-
-  try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    } else if (frame.requestFullscreen) {
-      await frame.requestFullscreen();
-    } else if (frame.webkitRequestFullscreen) {
-      frame.webkitRequestFullscreen();
-    } else {
-      alert("Fullscreen is not supported by this browser.");
-    }
-  } catch (error) {
-    alert(
-      "Fullscreen was blocked by the browser. Try clicking the button again."
-    );
+  if (!ownedThemes.includes(theme) || !themeCatalog[theme]) {
+    message.textContent = "You do not own that theme.";
+    return;
   }
+
+  equippedTheme = theme;
+  applyTheme(theme);
+  saveData();
+  renderInventory();
+
+  message.textContent = `${themeCatalog[theme].name} Theme equipped.`;
 }
 
-/* START WEBSITE */
+function renderInventory() {
+  const grid = document.getElementById("inventoryGrid");
+  grid.innerHTML = "";
+
+  ownedThemes.forEach(theme => {
+    const info = themeCatalog[theme];
+    if (!info) return;
+
+    const card = document.createElement("article");
+    card.className = "card inventory-item";
+
+    const preview = document.createElement("div");
+    preview.className = "theme-preview";
+    preview.style.background =
+      `linear-gradient(135deg, ${info.colors[1]}, ${info.colors[0]})`;
+    preview.style.color = info.colors[4];
+    preview.textContent = info.name;
+
+    const title = document.createElement("h3");
+    title.textContent = info.name + " Theme";
+
+    const description = document.createElement("p");
+    description.className = "notice";
+    description.textContent = theme === "classic"
+      ? "The original DuckWeb colors."
+      : `Your unlocked ${info.name.toLowerCase()} color theme.`;
+
+    const button = document.createElement("button");
+    button.className = "action";
+    button.textContent = equippedTheme === theme
+      ? "Currently Equipped"
+      : "Equip Theme";
+    button.disabled = equippedTheme === theme;
+    button.addEventListener("click", () => equipTheme(theme));
+
+    card.append(preview, title, description, button);
+    grid.appendChild(card);
+  });
+
+  updateShopButtons();
+}
+
+function dismissNotice() {
+  document.getElementById("updateNotice").style.display = "none";
+}
 
 function initialize() {
   applyTheme(equippedTheme);
-
   renderGames();
-
   renderInventory();
-
   updateCoins();
-
   updateDailyUI();
 }
 
