@@ -7,1232 +7,843 @@
 <title>DuckWeb</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap');
-
 :root {
-  --yellow: #ffdc59;
-  --yellow-dark: #b99520;
-  --yellow-light: #fff8df;
-  --white: #ffffff;
-  --background: #fffefa;
-  --text: #302f27;
-  --muted: #898577;
-  --border: #eee9d8;
+  --yellow: #ffd83d;
+  --yellow-light: #fff0a6;
+  --background: #fffdf4;
+  --surface: #ffffff;
+  --text: #302b18;
+  --muted: #77715e;
+  --border: #eee4b9;
+  --shadow: 0 5px 18px rgba(91, 72, 0, 0.08);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+}
 
 body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
   background: var(--background);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  line-height: 1.6;
+  transition: background .25s, color .25s;
 }
 
-button, input { font: inherit; }
-button { cursor: pointer; }
-button:disabled { cursor: not-allowed; }
-a { color: inherit; text-decoration: none; }
+body[data-theme="mystery"] {
+  --yellow: #b8a0ff;
+  --yellow-light: #e6dcff;
+  --background: #f7f3ff;
+  --surface: #ffffff;
+  --text: #302044;
+  --muted: #78688c;
+  --border: #e2d7f5;
+  --shadow: 0 5px 18px rgba(76, 42, 120, .09);
+}
 
-.navbar {
-  min-height: 72px;
-  padding: 0 5%;
+body[data-theme="sunset"] {
+  --yellow: #ff9e66;
+  --yellow-light: #ffe0c9;
+  --background: #fff7f1;
+  --surface: #ffffff;
+  --text: #4b2b1c;
+  --muted: #876b5b;
+  --border: #f4d8c7;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  background: white;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
 .brand {
-  border: 0;
-  background: none;
-  color: var(--text);
-  font: 900 26px 'Nunito', sans-serif;
-  letter-spacing: -1.5px;
-  white-space: nowrap;
-}
-
-.brand span { color: var(--yellow-dark); }
-
-.nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text);
+  cursor: pointer;
 }
 
-.nav-link {
-  border: none;
+.brand img {
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+nav button {
+  border: 0;
   background: transparent;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 800;
+  color: var(--text);
+  padding: 10px 13px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.nav-link:hover,
-.nav-link.active { color: #9a7810; }
+nav button:hover,
+nav button.active {
+  background: var(--yellow-light);
+}
 
 .coin-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 11px;
   background: var(--yellow-light);
-  border: 1px solid #f1e5b7;
-  border-radius: 9px;
-  font-size: 11px;
+  padding: 10px 13px;
+  border-radius: 12px;
   font-weight: 800;
   white-space: nowrap;
 }
 
-.coin-symbol {
-  width: 17px;
-  height: 17px;
-  background: var(--yellow);
-  border: 2px solid var(--yellow-dark);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.menu-toggle {
-  display: none;
-  border: 0;
-  background: none;
-  font-size: 13px;
-  font-weight: 800;
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px 20px 55px;
 }
 
 .page {
   display: none;
-  min-height: calc(100vh - 145px);
-  animation: appear .2s ease;
 }
 
-.page.active { display: block; }
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+.page.active {
+  display: block;
 }
 
-.page-content {
-  max-width: 1250px;
-  padding: 55px 5% 75px;
-  margin: auto;
-}
-
-.eyebrow {
-  font-size: 10px;
-  letter-spacing: 2px;
-  font-weight: 800;
-  color: #a18113;
-  margin-bottom: 12px;
-}
-
-h1, h2, h3 {
-  font-family: 'Nunito', sans-serif;
-  line-height: 1.2;
-}
-
-.page-header { margin-bottom: 28px; }
-
-.page-header h1 {
-  font-size: clamp(36px, 4vw, 48px);
-  letter-spacing: -2px;
-}
-
-.page-header h1 span { color: var(--yellow-dark); }
-
-.page-description {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 10px;
-}
-
-/* HOME */
-
-.home-hero {
-  max-width: 1200px;
-  margin: auto;
-  padding: 75px 7%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 45px;
-}
-
-.home-hero h1 {
-  font-size: clamp(43px, 5vw, 64px);
-  letter-spacing: -3px;
-  font-weight: 900;
-}
-
-.home-hero h1 span { color: var(--yellow-dark); }
-
-.description {
-  max-width: 420px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.9;
-  margin: 20px 0 25px;
-}
-
-.button-row { display: flex; flex-wrap: wrap; gap: 10px; }
-
-.button {
-  padding: 12px 17px;
-  border: 0;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.button-yellow { background: var(--yellow); color: var(--text); }
-.button-light { background: #f3f0e6; color: var(--text); }
-
-.logo-panel {
-  min-height: 340px;
+.hero {
+  background: var(--yellow-light);
+  border: 1px solid var(--border);
   border-radius: 22px;
-  background: #fff2c8;
+  padding: 35px 25px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  justify-content: space-between;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 
-.logo-circle {
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  background: #f4dc8e;
+.hero h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  margin: 0 0 12px;
 }
 
-.logo-image {
-  position: relative;
-  z-index: 2;
-  width: 75%;
-  height: 75%;
+.hero p {
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 550px;
+}
+
+.hero img {
+  width: 130px;
+  height: 130px;
   object-fit: contain;
 }
 
-.logo-label {
-  position: absolute;
-  z-index: 3;
-  top: 17px;
-  left: 17px;
-  padding: 9px 13px;
-  background: white;
-  border-radius: 8px;
-  font-size: 10px;
-  font-weight: 800;
+h2 {
+  margin: 25px 0 14px;
 }
 
-.home-shortcuts {
-  max-width: 1100px;
-  padding: 0 7%;
-  margin: 0 auto 65px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+h3 {
+  margin-top: 0;
 }
 
-.shortcut {
-  padding: 20px;
-  background: white;
+.card {
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  gap: 13px;
+}
+
+.game-card {
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 85px;
   cursor: pointer;
+  transition: transform .15s, border-color .15s;
 }
 
-.shortcut:hover { border-color: #e5cf76; }
-.shortcut-label { font-size: 9px; font-weight: 800; color: #a18113; }
-.shortcut h3 { font-size: 16px; margin: 10px 0 5px; }
-.shortcut p { font-size: 11px; color: var(--muted); }
-
-/* GAMES */
-
-.games-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 17px;
-  flex-wrap: wrap;
-}
-
-.games-count {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.search-box {
-  width: 235px;
-  max-width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 9px 12px;
-  outline: none;
-  background: white;
-  color: var(--text);
-  font-size: 11px;
-}
-
-.search-box:focus { border-color: var(--yellow-dark); }
-
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.game-btn {
-  min-width: 0;
-  min-height: 66px;
-  padding: 10px 11px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-align: left;
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--text);
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 800;
-  overflow: hidden;
-  transition: background .16s, border-color .16s, transform .16s;
-}
-
-.game-btn:hover,
-.game-btn:focus-visible,
-.game-btn.selected {
-  background: var(--yellow-light);
-  border-color: #e5c957;
+.game-card:hover {
   transform: translateY(-2px);
-  outline: none;
+  border-color: var(--yellow);
 }
 
-.btn-icon {
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #81691b;
-  background: #fff4c7;
-  border: 1px solid #f1e4ae;
-  border-radius: 8px;
+.game-icon {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: var(--yellow-light);
+  border-radius: 12px;
+  color: var(--text);
 }
 
-.btn-icon svg {
-  width: 21px;
-  height: 21px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.btn-icon.blank {
-  background: transparent;
-  border-color: transparent;
+.game-icon svg {
+  width: 25px;
+  height: 25px;
 }
 
 .game-name {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  line-height: 1.35;
-}
-
-.game-btn[hidden] { display: none; }
-
-.game-info-panel {
-  margin-top: 18px;
-  min-height: 104px;
-  padding: 17px 20px;
-  border: 1px solid #eee1a9;
-  background: #fff9e5;
-  border-radius: 11px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 20px;
-}
-
-.game-info-panel h3 { font-size: 16px; margin-bottom: 5px; }
-.game-info-panel p { font-size: 11px; color: var(--muted); }
-.game-controls { margin-top: 5px; }
-.info-label { font-size: 9px; font-weight: 800; color: #a18113; letter-spacing: 1px; }
-
-.play-selected {
-  border: 0;
-  border-radius: 8px;
-  padding: 11px 16px;
-  background: var(--yellow);
-  font-size: 11px;
   font-weight: 800;
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
-.play-selected:hover { background: #f0cb43; }
-.play-selected:disabled { opacity: .5; }
+.small-text {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 5px;
+}
 
-.no-results {
+button.action {
+  border: 0;
+  background: var(--yellow);
+  color: #332800;
+  padding: 11px 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+button.action:hover {
+  filter: brightness(.97);
+}
+
+button.action:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: var(--yellow-light);
+}
+
+button.danger {
+  background: #f5e5e1;
+  color: #8a3023;
+}
+
+#gameViewer {
   display: none;
   margin-top: 20px;
-  color: var(--muted);
-  font-size: 12px;
-  text-align: center;
-  padding: 30px;
-  border: 1px dashed var(--border);
-  border-radius: 10px;
 }
 
-/* EMBEDDED GAME VIEWER */
-
-.game-viewer {
-  margin-top: 24px;
-  overflow: hidden;
-  border: 1px solid #eee2b4;
-  border-radius: 12px;
-  background: white;
-  scroll-margin-top: 90px;
-}
-
-.game-viewer-header {
+.game-viewer-top {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
   flex-wrap: wrap;
-  padding: 14px 16px;
-  background: #fff8df;
+  gap: 10px;
+  margin-bottom: 12px;
 }
-
-.game-viewer-header strong {
-  display: block;
-  font-size: 14px;
-}
-
-.game-viewer-header span {
-  display: block;
-  color: var(--muted);
-  font-size: 10px;
-}
-
-.viewer-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.viewer-actions button {
-  padding: 8px 11px;
-  border: 1px solid #eee2b4;
-  border-radius: 7px;
-  background: white;
-  color: var(--text);
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.viewer-actions button:hover { background: var(--yellow-light); }
 
 #gameFrame {
-  display: block;
   width: 100%;
-  height: 70vh;
-  min-height: 400px;
-  border: 0;
+  height: min(72vh, 760px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
   background: white;
 }
 
-.viewer-note {
-  padding: 10px 15px;
-  background: #fffdf5;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 10px;
-}
-
-/* EMPTY GALLERY */
-
-.empty-panel {
-  min-height: 290px;
-  border: 1px dashed #e7dba8;
-  border-radius: 14px;
-  background: #fffdf5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px;
-}
-
-.empty-mark {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: var(--yellow-light);
-  border: 1px solid #f1e4ae;
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.empty-mark::before,
-.empty-mark::after {
-  content: "";
-  position: absolute;
-  background: #d7b33a;
-  border-radius: 3px;
-}
-
-.empty-mark::before { width: 22px; height: 3px; left: 14px; top: 24px; }
-.empty-mark::after { width: 3px; height: 22px; top: 14px; left: 24px; }
-
-.empty-panel h2 { font-size: 22px; margin-bottom: 9px; }
-.empty-panel p { color: var(--muted); font-size: 12px; max-width: 350px; }
-
-/* SHOP */
-
-.shop-balance {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 20px;
-  background: #fff8dc;
-  border: 1px solid #f0e2a6;
-  border-radius: 12px;
-  margin-bottom: 32px;
-}
-
-.coin-large {
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  border: 4px solid #dfb52b;
-  background: var(--yellow);
-  flex-shrink: 0;
-}
-
-.shop-balance h2 { font-size: 17px; }
-.shop-balance p { font-size: 11px; color: var(--muted); margin-top: 3px; }
-.balance-amount { margin-left: auto; font: 900 26px 'Nunito', sans-serif; }
-
-.shop-section-title { font-size: 23px; }
-.shop-section-description { color: var(--muted); font-size: 11px; margin: 8px 0 20px; }
-
-.shop-empty {
-  min-height: 195px;
-  background: #fffdf5;
-  border: 1px dashed #e7dba8;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 25px;
-}
-
-.shop-empty h3 { font-size: 18px; margin-bottom: 8px; }
-.shop-empty p { color: var(--muted); font-size: 11px; max-width: 350px; }
-
-.shop-information {
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
-}
-
-.shop-information h2 { font-size: 23px; margin-bottom: 17px; }
-
-.info-grid {
+.shop-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 15px;
+}
+
+.shop-item {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
-.info-card {
-  border: 1px solid var(--border);
-  background: white;
-  padding: 17px;
-  border-radius: 10px;
+.shop-item p {
+  color: var(--muted);
+  line-height: 1.5;
+  flex-grow: 1;
 }
 
-.info-number { font-size: 9px; font-weight: 800; color: #a18113; }
-.info-card h3 { font-size: 13px; margin: 8px 0; }
-.info-card p { color: var(--muted); font-size: 10px; line-height: 1.8; }
+.theme-preview {
+  height: 90px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 22px;
+}
+
+.preview-classic {
+  background: #fff0a6;
+  color: #302b18;
+}
+
+.preview-mystery {
+  background: linear-gradient(135deg, #e7dcff, #b8a0ff);
+  color: #302044;
+}
+
+.preview-sunset {
+  background: linear-gradient(135deg, #ffe0c9, #ff9e66);
+  color: #4b2b1c;
+}
+
+.notice {
+  margin-top: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.status {
+  min-height: 22px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.reward-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.reward-amount {
+  font-size: 30px;
+  font-weight: 900;
+  margin: 8px 0;
+}
+
+.inventory-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inventory-item .theme-preview {
+  height: 75px;
+}
+
+.empty {
+  text-align: center;
+  padding: 28px;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  grid-column: 1 / -1;
+}
 
 footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  padding: 24px 5%;
+  text-align: center;
+  color: var(--muted);
+  padding: 20px;
   border-top: 1px solid var(--border);
-  background: white;
+  background: var(--surface);
 }
 
-footer p { color: var(--muted); font-size: 10px; }
-.footer-button { background: none; border: 0; color: #98760d; font-size: 10px; font-weight: 800; }
-
-@media (min-width: 1200px) {
-  .games-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-}
-
-@media (max-width: 850px) {
-  .navbar { padding: 0 3%; gap: 12px; }
-  .nav-links { gap: 13px; }
-  .nav-link { font-size: 11px; }
-  .games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .home-hero { padding: 55px 5%; gap: 25px; }
-}
-
-@media (max-width: 620px) {
-  .navbar { min-height: 66px; }
-  .menu-toggle { display: block; }
-
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 65px;
-    left: 0;
-    right: 0;
-    padding: 18px 6%;
-    background: white;
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
+@media (max-width: 650px) {
+  .header-inner {
+    justify-content: center;
   }
 
-  .nav-links.open { display: flex; }
-  .home-hero { grid-template-columns: 1fr; padding-top: 45px; }
-  .home-hero h1 { font-size: 46px; }
-  .logo-panel { min-height: 285px; }
-  .home-shortcuts { grid-template-columns: 1fr; }
-  .games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .game-btn { min-height: 59px; padding: 8px; gap: 7px; font-size: 10px; }
-  .btn-icon { width: 29px; height: 29px; flex-basis: 29px; }
-  .btn-icon svg { width: 18px; height: 18px; }
-  .page-content { padding: 40px 5% 55px; }
-  .info-grid { grid-template-columns: 1fr; }
-  .game-info-panel { grid-template-columns: 1fr; gap: 12px; }
-  .play-selected { width: 100%; }
-  #gameFrame { height: 65vh; min-height: 350px; }
-  .shop-balance { gap: 10px; padding: 14px; }
-  .balance-amount { font-size: 22px; }
-}
+  nav {
+    justify-content: center;
+  }
 
-@media (max-width: 360px) {
-  .brand { font-size: 22px; }
-  .coin-display { padding: 7px; gap: 5px; font-size: 9px; }
-  .games-grid { grid-template-columns: 1fr 1fr; }
+  .hero {
+    padding: 25px 18px;
+  }
+
+  .hero img {
+    width: 90px;
+    height: 90px;
+  }
 }
 </style>
 </head>
 
-<body>
+<body data-theme="classic">
 
-<!-- Custom SVG icon library -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-  <symbol id="icon-pencil" viewBox="0 0 24 24">
-    <path d="M4 16.5L16.5 4a2.8 2.8 0 0 1 4 4L8 20.5 3 21z"/>
-    <path d="M14 6.5l4 4M4 16.5l4 4"/>
-  </symbol>
-  <symbol id="icon-hammer" viewBox="0 0 24 24">
-    <path d="M14 5l5 5M10 9l5-5 5 5-5 5z"/>
-    <path d="M13 12L5 21M3 19l3 3"/>
-  </symbol>
-  <symbol id="icon-dice" viewBox="0 0 24 24">
-    <rect x="3" y="3" width="18" height="18" rx="4"/>
-    <path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/>
-  </symbol>
-  <symbol id="icon-cards" viewBox="0 0 24 24">
-    <rect x="3" y="5" width="13" height="16" rx="2"/>
-    <path d="M8 3h11a2 2 0 0 1 2 2v13M7 10l2 2 2-2"/>
-  </symbol>
-  <symbol id="icon-car" viewBox="0 0 24 24">
-    <path d="M5 11l2-5h10l2 5 2 2v6h-3v-2H6v2H3v-6z"/>
-    <path d="M5 11h14M6 14h.01M18 14h.01"/>
-  </symbol>
-  <symbol id="icon-shield" viewBox="0 0 24 24">
-    <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
-    <path d="M9 12l2 2 4-5"/>
-  </symbol>
-  <symbol id="icon-chart" viewBox="0 0 24 24">
-    <path d="M3 3v18h18M7 14l4-4 4 3 6-7"/>
-    <path d="M16 6h5v5"/>
-  </symbol>
-  <symbol id="icon-keyboard" viewBox="0 0 24 24">
-    <rect x="2" y="5" width="20" height="14" rx="2"/>
-    <path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 15h8"/>
-  </symbol>
-  <symbol id="icon-box" viewBox="0 0 24 24">
-    <path d="M3 7l9-5 9 5v10l-9 5-9-5z"/>
-    <path d="M3 7l9 5 9-5M12 12v10M8 4l9 5"/>
-  </symbol>
-  <symbol id="icon-target" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9"/>
-    <circle cx="12" cy="12" r="5"/>
-    <circle cx="12" cy="12" r="1"/>
-  </symbol>
-  <symbol id="icon-arrow" viewBox="0 0 24 24">
-    <path d="M4 12h16M13 5l7 7-7 7"/>
-  </symbol>
-  <symbol id="icon-lock" viewBox="0 0 24 24">
-    <rect x="4" y="10" width="16" height="11" rx="2"/>
-    <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>
-  </symbol>
-  <symbol id="icon-golf" viewBox="0 0 24 24">
-    <path d="M4 21h16M12 20V3l8 4-8 4"/>
-    <circle cx="6" cy="17" r="2"/>
-  </symbol>
-  <symbol id="icon-monitor" viewBox="0 0 24 24">
-    <rect x="3" y="3" width="18" height="14" rx="2"/>
-    <path d="M8 21h8M12 17v4M8 10l2 2 5-5"/>
-  </symbol>
-  <symbol id="icon-crosshair" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="7"/>
-    <circle cx="12" cy="12" r="2"/>
-    <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-  </symbol>
-</svg>
+<header>
+  <div class="header-inner">
+    <div class="brand" onclick="showPage('home')">
+      <img src="logo.png" alt="DuckWeb logo">
+      <span>DuckWeb</span>
+    </div>
 
-<header class="navbar">
-  <button class="brand" data-page="home">Duck<span>Web</span></button>
+    <nav>
+      <button class="active" data-page="home" onclick="showPage('home')">Home</button>
+      <button data-page="games" onclick="showPage('games')">Games</button>
+      <button data-page="shop" onclick="showPage('shop')">Shop</button>
+    </nav>
 
-  <nav class="nav-links" id="navLinks">
-    <button class="nav-link active" data-page="home">Home</button>
-    <button class="nav-link" data-page="games">Games</button>
-    <button class="nav-link" data-page="gallery">Duck Gallery</button>
-    <button class="nav-link" data-page="shop">Shop</button>
-  </nav>
-
-  <div class="coin-display">
-    <span class="coin-symbol"></span>
-    <span id="headerCoins">0</span>
-    <span>Duck Coins</span>
+    <div class="coin-display">
+      Duck Coins: <span id="coinBalance">0</span>
+    </div>
   </div>
-
-  <button class="menu-toggle" id="menuToggle"
-          aria-expanded="false" aria-controls="navLinks">Menu</button>
 </header>
 
 <main>
 
-  <!-- HOME PAGE -->
-  <section class="page active" id="home">
-    <div class="home-hero">
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <div class="hero">
       <div>
-        <div class="eyebrow">WELCOME TO DUCKWEB</div>
-        <h1>Your corner of<br>the internet, <span>your way.</span></h1>
-        <p class="description">
-          Welcome to DuckWeb. Explore the game collection,
-          visit the Duck Gallery, and collect Duck Coins while
-          you spend time on the website.
+        <h1>Welcome to DuckWeb</h1>
+        <p>
+          Your place for games, Duck Coins, daily rewards, and website themes.
+          Explore the games and collect coins while you spend time on DuckWeb.
         </p>
-        <div class="button-row">
-          <button class="button button-yellow" data-page="games">Explore games</button>
-          <button class="button button-light" data-page="shop">Visit the shop</button>
-        </div>
+        <button class="action" onclick="showPage('games')">Explore Games</button>
+        <button class="action secondary" onclick="showPage('shop')">Visit Shop</button>
       </div>
-
-      <div class="logo-panel">
-        <div class="logo-circle"></div>
-        <div class="logo-label">DUCKWEB</div>
-        <img class="logo-image" src="logo.png" alt="DuckWeb logo"
-             onerror="this.style.display='none';document.getElementById('logoError').style.display='block';">
-        <div id="logoError" style="display:none;position:relative;z-index:3;text-align:center">
-          <strong>Logo not found</strong>
-          <p style="font-size:12px">Put logo.png next to index.html.</p>
-        </div>
-      </div>
+      <img src="logo.png" alt="DuckWeb logo">
     </div>
 
-    <div class="home-shortcuts">
-      <article class="shortcut" data-page="games" tabindex="0" role="button">
-        <span class="shortcut-label">01 / PLAY</span>
-        <h3>Game collection</h3>
-        <p>Browse all the games in one place.</p>
-      </article>
-      <article class="shortcut" data-page="gallery" tabindex="0" role="button">
-        <span class="shortcut-label">02 / EXPLORE</span>
-        <h3>Duck Gallery</h3>
-        <p>A dedicated place for duck pictures.</p>
-      </article>
-      <article class="shortcut" data-page="shop" tabindex="0" role="button">
-        <span class="shortcut-label">03 / COLLECT</span>
-        <h3>Duck Coin Shop</h3>
-        <p>Save coins for future items.</p>
-      </article>
+    <div class="card">
+      <h2>Daily Rewards</h2>
+      <p>Visit DuckWeb each day to claim 5 Duck Coins.</p>
+      <button class="action" onclick="showPage('shop'); document.getElementById('dailyReward').scrollIntoView({behavior:'smooth'});">
+        Claim Daily Reward
+      </button>
     </div>
+
+    <h2>Featured Games</h2>
+    <div id="featuredGames" class="grid"></div>
   </section>
 
-  <!-- GAMES PAGE -->
-  <section class="page" id="games">
-    <div class="page-content">
-      <div class="page-header">
-        <div class="eyebrow">THE GAME COLLECTION</div>
-        <h1>All <span>Games.</span></h1>
-        <p class="page-description">
-          Choose a game to play inside DuckWeb. Hover over a card to see its description and controls.
-        </p>
+  <!-- GAMES -->
+  <section id="games" class="page">
+    <h1>Games</h1>
+    <p class="notice">Choose a game to open it inside DuckWeb.</p>
+    <div id="gamesGrid" class="grid"></div>
+
+    <div id="gameViewer" class="card">
+      <div class="game-viewer-top">
+        <h2 id="gameTitle" style="margin:0">Game</h2>
+        <button class="action secondary" onclick="closeGame()">Close Game</button>
       </div>
-
-      <div class="games-toolbar">
-        <span class="games-count"><span id="visibleCount">16</span> games in the collection</span>
-        <input class="search-box" id="gameSearch" type="search" placeholder="Search games..." aria-label="Search games">
-      </div>
-
-      <div class="games-grid" id="gamesGrid">
-
-        <button class="game-btn" data-name="Duck Rogue" data-url="https://pressonion.github.io/duck-rogue/" data-description="Battle endless rooms as a brave duck!" data-controls="Arrow Keys to move, Space to dash">
-          <div class="btn-icon blank"></div>
-          <span class="game-name">Duck Rogue</span>
-        </button>
-
-        <button class="game-btn" data-name="Doodle Action" data-url="https://pressonion.github.io/Doodle-Action/" data-description="A fast-paced drawn action game." data-controls="WASD to move, Mouse to aim and shoot">
-          <div class="btn-icon"><svg><use href="#icon-pencil"/></svg></div>
-          <span class="game-name">Doodle Action</span>
-        </button>
-
-        <button class="game-btn" data-name="Getting Over" data-url="https://pressonion.github.io/Getting-over/" data-description="A frustratingly fun physics game." data-controls="Mouse movement controls the hammer">
-          <div class="btn-icon"><svg><use href="#icon-hammer"/></svg></div>
-          <span class="game-name">Getting Over</span>
-        </button>
-
-        <button class="game-btn" data-name="Duck RNG" data-url="https://pressonion.github.io/DUCK-RNG/" data-description="Test your luck and roll for the rarest ducks." data-controls="Click the button to roll">
-          <div class="btn-icon"><svg><use href="#icon-dice"/></svg></div>
-          <span class="game-name">Duck RNG</span>
-        </button>
-
-        <button class="game-btn" data-name="Poker" data-url="https://pressonion.github.io/Poker/" data-description="Test your card skills." data-controls="Mouse to play your hand">
-          <div class="btn-icon"><svg><use href="#icon-cards"/></svg></div>
-          <span class="game-name">Poker</span>
-        </button>
-
-        <button class="game-btn" data-name="Car Game" data-url="https://pressonion.github.io/Car/" data-description="Drive fast and drift around corners." data-controls="Arrow keys to steer and drive">
-          <div class="btn-icon"><svg><use href="#icon-car"/></svg></div>
-          <span class="game-name">Car Game</span>
-        </button>
-
-        <button class="game-btn" data-name="Defender's Realm" data-url="https://pressonion.github.io/Defenders-Realm/" data-description="Defend your realm against waves of enemies!" data-controls="Mouse to aim, shoot, and build">
-          <div class="btn-icon"><svg><use href="#icon-shield"/></svg></div>
-          <span class="game-name">Defender's Realm</span>
-        </button>
-
-        <button class="game-btn" data-name="StonksBuy" data-url="https://pressonion.github.io/StocksBuy/" data-description="Buy stocks and try to make a profit." data-controls="Buy and sell">
-          <div class="btn-icon"><svg><use href="#icon-chart"/></svg></div>
-          <span class="game-name">StonksBuy</span>
-        </button>
-
-        <button class="game-btn" data-name="Keyboard" data-url="https://pressonion.github.io/keyboard/" data-description="Type for fun and practice." data-controls="Type and have fun">
-          <div class="btn-icon"><svg><use href="#icon-keyboard"/></svg></div>
-          <span class="game-name">Keyboard</span>
-        </button>
-
-        <button class="game-btn" data-name="CyberLoot" data-url="https://pressonion.github.io/CyberLoot/" data-description="Open cases and collect different rewards." data-controls="Choose and open cases">
-          <div class="btn-icon"><svg><use href="#icon-box"/></svg></div>
-          <span class="game-name">CyberLoot</span>
-        </button>
-
-        <button class="game-btn" data-name="Goose Hunt" data-url="https://pressonion.github.io/Goose-hunt/" data-description="Hunt geese and earn money." data-controls="Aim and shoot">
-          <div class="btn-icon"><svg><use href="#icon-target"/></svg></div>
-          <span class="game-name">Goose Hunt</span>
-        </button>
-
-        <button class="game-btn" data-name="pol.io" data-url="https://pressonion.github.io/pol.io/" data-description="A multiplayer game focused on eliminating opponents and upgrading." data-controls="Eliminate opponents and upgrade">
-          <div class="btn-icon"><svg><use href="#icon-arrow"/></svg></div>
-          <span class="game-name">pol.io</span>
-        </button>
-
-        <button class="game-btn" data-name="Locker Fairy" data-url="https://pressonion.github.io/Locker-Fairy/" data-description="Lock it backwards." data-controls="Lock the locks backwards">
-          <div class="btn-icon"><svg><use href="#icon-lock"/></svg></div>
-          <span class="game-name">Locker Fairy</span>
-        </button>
-
-        <button class="game-btn" data-name="Mini Golf" data-url="https://pressonion.github.io/mini-golf/" data-description="Play mini golf." data-controls="Drag to shoot">
-          <div class="btn-icon"><svg><use href="#icon-golf"/></svg></div>
-          <span class="game-name">Mini Golf</span>
-        </button>
-
-        <button class="game-btn" data-name="Desktop Duck" data-url="https://pressonion.github.io/Desktop-duck/" data-description="Visit the Desktop Duck page to find the download." data-controls="Follow the download instructions on the page">
-          <div class="btn-icon"><svg><use href="#icon-monitor"/></svg></div>
-          <span class="game-name">Desktop Duck</span>
-        </button>
-
-        <button class="game-btn" data-name="ValoAim" data-url="https://pressonion.github.io/Valo/" data-description="Practice your aim and improve your accuracy." data-controls="Aim and shoot">
-          <div class="btn-icon"><svg><use href="#icon-crosshair"/></svg></div>
-          <span class="game-name">ValoAim</span>
-        </button>
-
-      </div>
-
-      <div class="no-results" id="noResults">No games match your search.</div>
-
-      <div class="game-info-panel" id="gameInfo" aria-live="polite">
-        <div>
-          <div class="info-label">GAME DETAILS</div>
-          <h3 id="infoTitle">Choose a game</h3>
-          <p id="infoDescription">Hover over any game card to see its details.</p>
-          <p class="game-controls" id="infoControls">Controls will appear here.</p>
-        </div>
-        <button class="play-selected" id="playSelected" disabled>Play game</button>
-      </div>
-
-      <!-- Games open here instead of a new tab -->
-      <div class="game-viewer" id="gameViewer" style="display:none">
-        <div class="game-viewer-header">
-          <div>
-            <strong id="viewerTitle">Game</strong>
-            <span>Playing on DuckWeb</span>
-          </div>
-          <div class="viewer-actions">
-            <button id="fullscreenGame">Fullscreen</button>
-            <button id="closeGame">Close Game</button>
-          </div>
-        </div>
-
-        <iframe
-          id="gameFrame"
-          title="DuckWeb Game"
-          src="about:blank"
-          allow="fullscreen; autoplay; gamepad"
-          allowfullscreen>
-        </iframe>
-
-        <div class="viewer-note">
-          If a game cannot be displayed, its host may block embedded playback.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DUCK GALLERY: INTENTIONALLY EMPTY -->
-  <section class="page" id="gallery">
-    <div class="page-content">
-      <div class="page-header">
-        <div class="eyebrow">THE COLLECTION</div>
-        <h1>Duck <span>Gallery.</span></h1>
-        <p class="page-description">A dedicated place for duck pictures and designs.</p>
-      </div>
-      <!-- No gallery items yet, as requested. -->
+      <iframe
+        id="gameFrame"
+        title="DuckWeb game player"
+        allow="fullscreen; autoplay; gamepad"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+      <p class="notice">
+        If a game does not load, its host may block embedding. DuckWeb cannot
+        override that restriction from this page.
+      </p>
     </div>
   </section>
 
   <!-- SHOP -->
-  <section class="page" id="shop">
-    <div class="page-content">
-      <div class="page-header">
-        <div class="eyebrow">THE DUCKWEB STORE</div>
-        <h1>The <span>Shop.</span></h1>
-        <p class="page-description">Collect Duck Coins now and spend them on future items.</p>
-      </div>
+  <section id="shop" class="page">
+    <h1>DuckWeb Shop</h1>
+    <p class="notice">
+      Spend Duck Coins on website themes. Purchased themes are saved in your inventory.
+    </p>
 
-      <div class="shop-balance">
-        <div class="coin-large"></div>
+    <section id="dailyReward">
+      <h2>Daily Rewards</h2>
+      <div class="card reward-card">
         <div>
-          <h2>Your Duck Coins</h2>
-          <p>Earn one coin for each full minute on DuckWeb.</p>
+          <h3>Daily Duck Coins</h3>
+          <div class="reward-amount">+5 Duck Coins</div>
+          <p id="dailyStatus" class="notice">Check your daily reward status.</p>
         </div>
-        <div class="balance-amount" id="shopCoins">0</div>
+        <button id="claimDailyButton" class="action" onclick="claimDailyReward()">
+          Claim 5 Coins
+        </button>
       </div>
+      <div id="dailyMessage" class="status" aria-live="polite"></div>
+    </section>
 
-      <h2 class="shop-section-title">Available items</h2>
-      <p class="shop-section-description">Items will appear here when the shop opens.</p>
+    <section id="themesSection">
+      <h2>Website Themes</h2>
+      <div class="shop-grid">
 
-      <div class="shop-empty">
-        <h3>The shop is getting ready</h3>
-        <p>There are no items available yet. Keep collecting coins for the future.</p>
+        <article class="card shop-item">
+          <div class="theme-preview preview-mystery">Mystery</div>
+          <h3>Mystery Theme</h3>
+          <p>
+            Unlock a mysterious purple theme for DuckWeb. Once purchased,
+            it stays in your inventory.
+          </p>
+          <strong>30 Duck Coins</strong>
+          <button id="buyMysteryButton" class="action" onclick="buyTheme('mystery', 30)">
+            Buy Mystery Theme
+          </button>
+        </article>
+
+        <article class="card shop-item">
+          <div class="theme-preview preview-sunset">Sunset</div>
+          <h3>Sunset Theme</h3>
+          <p>
+            A warm orange theme for a different look across the website.
+          </p>
+          <strong>50 Duck Coins</strong>
+          <button id="buySunsetButton" class="action" onclick="buyTheme('sunset', 50)">
+            Buy Sunset Theme
+          </button>
+        </article>
+
       </div>
+      <div id="shopMessage" class="status" aria-live="polite"></div>
+    </section>
 
-      <section class="shop-information">
-        <div class="eyebrow">HOW IT WORKS</div>
-        <h2>About Duck Coins</h2>
-
-        <div class="info-grid">
-          <article class="info-card">
-            <span class="info-number">01 / EARN</span>
-            <h3>Spend time here</h3>
-            <p>Earn one Duck Coin for each full minute the website is open in this browser.</p>
-          </article>
-
-          <article class="info-card">
-            <span class="info-number">02 / SAVE</span>
-            <h3>Build your balance</h3>
-            <p>Your balance is saved in this browser so you can collect coins over time.</p>
-          </article>
-
-          <article class="info-card">
-            <span class="info-number">03 / SPEND</span>
-            <h3>Shop in the future</h3>
-            <p>When shop items arrive, you will be able to use coins to buy them.</p>
-          </article>
-        </div>
-      </section>
-    </div>
+    <!-- INVENTORY IS BELOW THE SHOP, STILL INSIDE THE SHOP PAGE -->
+    <section id="inventorySection">
+      <h2>Inventory</h2>
+      <p class="notice">Your purchased themes appear here. Equip any theme you own.</p>
+      <div id="inventoryGrid" class="shop-grid"></div>
+      <div id="inventoryMessage" class="status" aria-live="polite"></div>
+    </section>
   </section>
 
 </main>
 
 <footer>
-  <button class="brand" data-page="home">Duck<span>Web</span></button>
-  <p>A little corner of the internet.</p>
-  <button class="footer-button" data-page="home">Back to home</button>
+  DuckWeb
 </footer>
 
 <script>
-/* PAGE NAVIGATION */
+const games = [
+  { name: "Duck Rogue", url: "https://pressonion.github.io/duck-rogue/", icon: "" },
+  { name: "Doodle Action", url: "https://pressonion.github.io/Doodle-Action/", icon: "draw" },
+  { name: "Getting Over", url: "https://pressonion.github.io/Getting-over/", icon: "mountain" },
+  { name: "Duck RNG", url: "https://pressonion.github.io/DUCK-RNG/", icon: "dice" },
+  { name: "Poker", url: "https://pressonion.github.io/Poker/", icon: "cards" },
+  { name: "Car Game", url: "https://pressonion.github.io/Car/", icon: "car" },
+  { name: "Defender's Realm", url: "https://pressonion.github.io/Defenders-Realm/", icon: "shield" },
+  { name: "StonksBuy", url: "https://pressonion.github.io/StocksBuy/", icon: "chart" },
+  { name: "Keyboard", url: "https://pressonion.github.io/keyboard/", icon: "keyboard" },
+  { name: "CyberLoot", url: "https://pressonion.github.io/CyberLoot/", icon: "box" },
+  { name: "Goose Hunt", url: "https://pressonion.github.io/Goose-hunt/", icon: "target" },
+  { name: "pol.io", url: "https://pressonion.github.io/pol.io/", icon: "globe" },
+  { name: "Locker Fairy", url: "https://pressonion.github.io/Locker-Fairy/", icon: "lock" },
+  { name: "Mini Golf", url: "https://pressonion.github.io/mini-golf/", icon: "golf" },
+  { name: "Desktop Duck", url: "https://pressonion.github.io/Desktop-duck/", icon: "monitor" },
+  { name: "ValoAim", url: "https://pressonion.github.io/Valo/", icon: "crosshair" }
+];
 
-const pages = document.querySelectorAll('.page');
-const pageButtons = document.querySelectorAll('[data-page]');
-const navLinks = document.querySelectorAll('.nav-link');
-const nav = document.getElementById('navLinks');
-const menuToggle = document.getElementById('menuToggle');
+const iconPaths = {
+  draw: '<path d="m4 20 4-1 11-11-3-3L5 16l-1 4Z"/><path d="m14 6 3 3"/>',
+  mountain: '<path d="m3 19 7-13 4 7 2-3 5 9H3Z"/>',
+  dice: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/>',
+  cards: '<rect x="5" y="3" width="12" height="16" rx="2"/><path d="M9 7h.01M13 11h.01"/><path d="M9 21h10a2 2 0 0 0 2-2V7"/>',
+  car: '<path d="m5 11 2-5h10l2 5"/><path d="M3 11h18v7H3z"/><path d="M6 18v2m12-2v2M6 14h.01M18 14h.01"/>',
+  shield: '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/>',
+  chart: '<path d="M4 19V5m0 14h17"/><path d="m7 15 4-5 3 2 5-7"/>',
+  keyboard: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M10 10h.01M13 10h.01M16 10h.01M7 13h.01M10 13h.01M13 13h.01M16 13h.01M9 16h6"/>',
+  box: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="M3 8v9l9 5 9-5V8M12 13v9"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+  lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+  golf: '<path d="M12 21V3l7 4-7 4"/><path d="M4 21h16"/>',
+  monitor: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>',
+  crosshair: '<circle cx="12" cy="12" r="7"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>'
+};
 
-function showPage(name) {
-  if (!document.getElementById(name)) return;
+const defaultCoins = 0;
+const today = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+};
 
-  pages.forEach(page => {
-    page.classList.toggle('active', page.id === name);
-  });
-
-  navLinks.forEach(link => {
-    link.classList.toggle('active', link.dataset.page === name);
-  });
-
-  nav.classList.remove('open');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.textContent = 'Menu';
-
-  history.replaceState(null, '', '#' + name);
-  window.scrollTo({ top: 0, behavior: 'auto' });
-}
-
-pageButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    showPage(button.dataset.page);
-  });
-});
-
-document.querySelectorAll('.shortcut').forEach(card => {
-  card.addEventListener('keydown', event => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      showPage(card.dataset.page);
-    }
-  });
-});
-
-menuToggle.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuToggle.textContent = open ? 'Close' : 'Menu';
-  menuToggle.setAttribute('aria-expanded', String(open));
-});
-
-function loadPageFromHash() {
-  const name = location.hash.slice(1);
-  showPage(['home', 'games', 'gallery', 'shop'].includes(name) ? name : 'home');
-}
-
-window.addEventListener('hashchange', loadPageFromHash);
-
-/* GAME DETAILS AND EMBEDDED VIEWER */
-
-const gameButtons = [...document.querySelectorAll('.game-btn')];
-const infoTitle = document.getElementById('infoTitle');
-const infoDescription = document.getElementById('infoDescription');
-const infoControls = document.getElementById('infoControls');
-const playSelected = document.getElementById('playSelected');
-const gameSearch = document.getElementById('gameSearch');
-const visibleCount = document.getElementById('visibleCount');
-const noResults = document.getElementById('noResults');
-
-const gameViewer = document.getElementById('gameViewer');
-const gameFrame = document.getElementById('gameFrame');
-const viewerTitle = document.getElementById('viewerTitle');
-
-let selectedGame = null;
-
-function showInfo(game) {
-  selectedGame = game;
-
-  gameButtons.forEach(button => {
-    button.classList.toggle('selected', button === game);
-  });
-
-  infoTitle.textContent = game.dataset.name;
-  infoDescription.textContent = game.dataset.description;
-  infoControls.textContent = 'Controls: ' + game.dataset.controls;
-
-  playSelected.disabled = false;
-}
-
-function hideInfo() {
-  selectedGame = null;
-
-  gameButtons.forEach(button => button.classList.remove('selected'));
-
-  infoTitle.textContent = 'Choose a game';
-  infoDescription.textContent = 'Hover over any game card to see its details.';
-  infoControls.textContent = 'Controls will appear here.';
-  playSelected.disabled = true;
-}
-
-/* Load the game INSIDE DuckWeb */
-function playGame(url, name) {
-  if (!url) return;
-
-  // Only permit the trusted game URLs included in this page.
-  let parsedURL;
-
-  try {
-    parsedURL = new URL(url);
-  } catch {
-    return;
-  }
-
-  if (
-    parsedURL.protocol !== 'https:' ||
-    parsedURL.hostname !== 'pressonion.github.io'
-  ) {
-    return;
-  }
-
-  viewerTitle.textContent = name;
-  gameViewer.style.display = 'block';
-
-  if (gameFrame.src !== parsedURL.href) {
-    gameFrame.src = parsedURL.href;
-  }
-
-  gameViewer.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-}
-
-gameButtons.forEach(game => {
-  game.addEventListener('mouseenter', () => showInfo(game));
-  game.addEventListener('focus', () => showInfo(game));
-
-  game.addEventListener('click', () => {
-    showInfo(game);
-    playGame(game.dataset.url, game.dataset.name);
-  });
-});
-
-playSelected.addEventListener('click', () => {
-  if (selectedGame) {
-    playGame(selectedGame.dataset.url, selectedGame.dataset.name);
-  }
-});
-
-document.getElementById('closeGame').addEventListener('click', () => {
-  gameFrame.src = 'about:blank';
-  gameViewer.style.display = 'none';
-});
-
-document.getElementById('fullscreenGame').addEventListener('click', async () => {
-  try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    } else {
-      await gameFrame.requestFullscreen();
-    }
-  } catch {
-    // Fullscreen may not be supported in every browser.
-  }
-});
-
-/* GAME SEARCH */
-
-gameSearch.addEventListener('input', () => {
-  const query = gameSearch.value.trim().toLowerCase();
-  let count = 0;
-
-  gameButtons.forEach(game => {
-    const matches = game.dataset.name.toLowerCase().includes(query);
-    game.hidden = !matches;
-    if (matches) count++;
-  });
-
-  visibleCount.textContent = count;
-  noResults.style.display = count === 0 ? 'block' : 'none';
-
-  if (selectedGame && selectedGame.hidden) {
-    hideInfo();
-  }
-});
-
-/* DUCK COINS
-   One coin per full minute.
-   This browser-only version saves coins using localStorage.
-*/
-
-const COIN_INTERVAL = 60 * 1000;
-const COINS_KEY = 'duckweb_coins';
-const TIME_KEY = 'duckweb_last_coin_time';
-
-function readNumber(key, fallback) {
-  const raw = localStorage.getItem(key);
-  if (raw === null) return fallback;
-
-  const value = Number(raw);
+function readNumber(key, fallback = 0) {
+  const value = Number(localStorage.getItem(key));
   return Number.isFinite(value) && value >= 0 ? value : fallback;
 }
 
-let coins = Math.floor(readNumber(COINS_KEY, 0));
-let lastCoinTime = readNumber(TIME_KEY, Date.now());
-
-function updateCoinDisplay() {
-  document.getElementById('headerCoins').textContent = coins;
-  document.getElementById('shopCoins').textContent = coins;
+function readOwnedThemes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("duckwebOwnedThemes"));
+    if (Array.isArray(saved)) {
+      return [...new Set(["classic", ...saved.filter(t =>
+        ["mystery", "sunset"].includes(t)
+      )])];
+    }
+  } catch (e) {}
+  return ["classic"];
 }
 
-function saveCoins() {
-  localStorage.setItem(COINS_KEY, String(coins));
-  localStorage.setItem(TIME_KEY, String(lastCoinTime));
+let coins = readNumber("duckwebCoins", defaultCoins);
+let ownedThemes = readOwnedThemes();
+let equippedTheme = localStorage.getItem("duckwebEquippedTheme") || "classic";
+
+if (!ownedThemes.includes(equippedTheme)) {
+  equippedTheme = "classic";
 }
 
-function awardElapsedCoins() {
-  const now = Date.now();
-  const elapsed = Math.max(0, now - lastCoinTime);
-  const earned = Math.floor(elapsed / COIN_INTERVAL);
+function saveData() {
+  localStorage.setItem("duckwebCoins", String(coins));
+  localStorage.setItem("duckwebOwnedThemes", JSON.stringify(ownedThemes));
+  localStorage.setItem("duckwebEquippedTheme", equippedTheme);
+}
 
-  if (earned > 0) {
-    coins += earned;
-    lastCoinTime += earned * COIN_INTERVAL;
+function updateCoins() {
+  document.getElementById("coinBalance").textContent = coins;
+  updateShopButtons();
+}
 
-    saveCoins();
-    updateCoinDisplay();
+function showPage(pageName) {
+  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+  document.getElementById(pageName).classList.add("active");
+
+  document.querySelectorAll("nav button").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === pageName);
+  });
+
+  closeGame();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function createGameCard(game) {
+  const card = document.createElement("article");
+  card.className = "card game-card";
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", "Open " + game.name);
+
+  if (game.icon) {
+    const icon = document.createElement("div");
+    icon.className = "game-icon";
+    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+      aria-hidden="true">${iconPaths[game.icon] || ""}</svg>`;
+    card.appendChild(icon);
   }
+
+  const textWrap = document.createElement("div");
+  const name = document.createElement("div");
+  name.className = "game-name";
+  name.textContent = game.name;
+
+  const subtitle = document.createElement("div");
+  subtitle.className = "small-text";
+  subtitle.textContent = "Play on DuckWeb";
+
+  textWrap.append(name, subtitle);
+  card.appendChild(textWrap);
+
+  const open = () => openGame(game);
+  card.addEventListener("click", open);
+  card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      open();
+    }
+  });
+
+  return card;
 }
 
-updateCoinDisplay();
-awardElapsedCoins();
-setInterval(awardElapsedCoins, 1000);
+function renderGames() {
+  const gamesGrid = document.getElementById("gamesGrid");
+  const featured = document.getElementById("featuredGames");
 
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden) awardElapsedCoins();
-});
+  games.forEach(game => {
+    gamesGrid.appendChild(createGameCard(game));
+  });
 
-window.addEventListener('pageshow', awardElapsedCoins);
+  games.slice(0, 4).forEach(game => {
+    featured.appendChild(createGameCard(game));
+  });
+}
 
-/* INITIAL PAGE */
-loadPageFromHash();
+function openGame(game) {
+  showPage("games");
+  document.getElementById("gameTitle").textContent = game.name;
+  document.getElementById("gameViewer").style.display = "block";
+  document.getElementById("gameFrame").src = game.url;
+  document.getElementById("gameViewer").scrollIntoView({ behavior: "smooth" });
+}
+
+function closeGame() {
+  const viewer = document.getElementById("gameViewer");
+  const frame = document.getElementById("gameFrame");
+  if (viewer) viewer.style.display = "none";
+  if (frame) frame.src = "about:blank";
+}
+
+function claimDailyReward() {
+  const lastClaim = localStorage.getItem("duckwebLastDailyClaim");
+  const status = document.getElementById("dailyMessage");
+
+  if (lastClaim === today()) {
+    status.textContent = "You have already claimed today's reward. Come back tomorrow.";
+    updateDailyUI();
+    return;
+  }
+
+  coins += 5;
+  localStorage.setItem("duckwebLastDailyClaim", today());
+  saveData();
+  updateCoins();
+  updateDailyUI();
+  status.textContent = "You received 5 Duck Coins.";
+}
+
+function updateDailyUI() {
+  const claimed = localStorage.getItem("duckwebLastDailyClaim") === today();
+  const button = document.getElementById("claimDailyButton");
+  const status = document.getElementById("dailyStatus");
+
+  button.disabled = claimed;
+  button.textContent = claimed ? "Already Claimed" : "Claim 5 Coins";
+  status.textContent = claimed
+    ? "You have claimed today's 5 Duck Coins. Your next reward is available tomorrow."
+    : "Your daily reward is ready. Claim 5 Duck Coins today.";
+}
+
+function buyTheme(theme, cost) {
+  const message = document.getElementById("shopMessage");
+
+  if (ownedThemes.includes(theme)) {
+    message.textContent = "You already own this theme. Equip it from your inventory.";
+    return;
+  }
+
+  if (coins < cost) {
+    message.textContent = `You need ${cost - coins} more Duck Coins to buy this theme.`;
+    return;
+  }
+
+  coins -= cost;
+  ownedThemes.push(theme);
+  saveData();
+  updateCoins();
+  renderInventory();
+
+  const themeName = themeNameFor(theme);
+  message.textContent = `${themeName} purchased! It has been added to your inventory.`;
+}
+
+function themeNameFor(theme) {
+  const names = {
+    classic: "Classic Theme",
+    mystery: "Mystery Theme",
+    sunset: "Sunset Theme"
+  };
+  return names[theme] || theme;
+}
+
+function updateShopButtons() {
+  const mystery = document.getElementById("buyMysteryButton");
+  const sunset = document.getElementById("buySunsetButton");
+
+  mystery.disabled = ownedThemes.includes("mystery") || coins < 30;
+  mystery.textContent = ownedThemes.includes("mystery")
+    ? "Owned — Check Inventory"
+    : "Buy Mystery Theme";
+
+  sunset.disabled = ownedThemes.includes("sunset") || coins < 50;
+  sunset.textContent = ownedThemes.includes("sunset")
+    ? "Owned — Check Inventory"
+    : "Buy Sunset Theme";
+}
+
+function equipTheme(theme) {
+  const message = document.getElementById("inventoryMessage");
+
+  if (!ownedThemes.includes(theme)) {
+    message.textContent = "You do not own that theme.";
+    return;
+  }
+
+  equippedTheme = theme;
+  document.body.dataset.theme = theme;
+  saveData();
+  renderInventory();
+  message.textContent = `${themeNameFor(theme)} equipped.`;
+}
+
+function renderInventory() {
+  const grid = document.getElementById("inventoryGrid");
+  grid.innerHTML = "";
+
+  const themeInfo = {
+    classic: { preview: "preview-classic", label: "Classic", description: "The original DuckWeb colors." },
+    mystery: { preview: "preview-mystery", label: "Mystery", description: "A mysterious purple theme." },
+    sunset: { preview: "preview-sunset", label: "Sunset", description: "A warm orange theme." }
+  };
+
+  ownedThemes.forEach(theme => {
+    const info = themeInfo[theme];
+    if (!info) return;
+
+    const card = document.createElement("article");
+    card.className = "card inventory-item";
+
+    const preview = document.createElement("div");
+    preview.className = "theme-preview " + info.preview;
+    preview.textContent = info.label;
+
+    const title = document.createElement("h3");
+    title.textContent = themeNameFor(theme);
+
+    const description = document.createElement("p");
+    description.className = "notice";
+    description.textContent = info.description;
+
+    const button = document.createElement("button");
+    button.className = "action";
+    button.textContent = equippedTheme === theme ? "Currently Equipped" : "Equip Theme";
+    button.disabled = equippedTheme === theme;
+    button.addEventListener("click", () => equipTheme(theme));
+
+    card.append(preview, title, description, button);
+    grid.appendChild(card);
+  });
+
+  if (!ownedThemes.length) {
+    grid.innerHTML = '<div class="empty">Your inventory is empty.</div>';
+  }
+
+  updateShopButtons();
+}
+
+function initialize() {
+  document.body.dataset.theme = equippedTheme;
+  renderGames();
+  renderInventory();
+  updateCoins();
+  updateDailyUI();
+}
+
+initialize();
 </script>
-
 </body>
 </html>
