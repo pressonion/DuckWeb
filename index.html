@@ -1,1433 +1,1238 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ducky's website</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
-            --menu-bg: #2c3e50;
-            --text-main: #2c3e50;
-            --text-light: #555;
-            --box-bg: rgba(255, 255, 255, 0.85);
-            --btn-hover: #f1c40f;
-            --btn-text: #2c3e50;
-            --icon-color: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuckWeb</title>
 
-        body.theme-dark {
-            --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            --menu-bg: #111;
-            --text-main: #eee;
-            --text-light: #ccc;
-            --box-bg: rgba(0, 0, 0, 0.75);
-            --btn-hover: #e67e22;
-            --btn-text: #fff;
-        }
-        body.-ocean {
-            --bg-gradient: linear-gradient(135deg, #020024 0%, #090979 35%, #00d4ff 100%);
-            --menu-bg: #010a26;
-            --text-main: #fff;
-            --text-light: #b3e5fc;
-            --box-bg: rgba(0, 20, 50, 0.8);
-            --btn-hover: #00d4ff;
-            --btn-text: #010a26;
-        }
-        body.theme-neon {
-            --bg-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --menu-bg: #2a0845;
-            --text-main: #fff;
-            --text-light: #ffe6fa;
-            --box-bg: rgba(42, 8, 69, 0.85);
-            --btn-hover: #f093fb;
-            --btn-text: #111;
-        }
-        body.theme-retro {
-            --bg-gradient: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
-            --menu-bg: #001100;
-            --text-main: #00ff41;
-            --text-light: #00cc33;
-            --box-bg: rgba(0, 20, 0, 0.9);
-            --btn-hover: #00ff41;
-            --btn-text: #000;
-            --icon-color: #00ff41;
-        }
-        body.theme-sunset {
-            --bg-gradient: linear-gradient(135deg, #ff6b35 0%, #f7c59f 40%, #e84393 100%);
-            --menu-bg: #7b1e4b;
-            --text-main: #2d0020;
-            --text-light: #5a0035;
-            --box-bg: rgba(255, 220, 200, 0.88);
-            --btn-hover: #e84393;
-            --btn-text: #fff;
-        }
-        body.theme-forest {
-            --bg-gradient: linear-gradient(135deg, #1a2f1a 0%, #2d5a27 50%, #4a7c59 100%);
-            --menu-bg: #0f1f0f;
-            --text-main: #d4edda;
-            --text-light: #a8d5b5;
-            --box-bg: rgba(10, 30, 10, 0.82);
-            --btn-hover: #4a7c59;
-            --btn-text: #d4edda;
-        }
-        body.theme-galaxy {
-            --bg-gradient: linear-gradient(135deg, #0d0015 0%, #1a0030 40%, #2d0060 70%, #0d0015 100%);
-            --menu-bg: #0a0010;
-            --text-main: #e0c3fc;
-            --text-light: #b39ddb;
-            --box-bg: rgba(20, 0, 40, 0.85);
-            --btn-hover: #7c4dff;
-            --btn-text: #fff;
-        }
-        body.theme-bloodmoon {
-            --bg-gradient: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #2d0000 100%);
-            --menu-bg: #0f0000;
-            --text-main: #ff3333;
-            --text-light: #cc0000;
-            --box-bg: rgba(30, 0, 0, 0.88);
-            --btn-hover: #cc0000;
-            --btn-text: #fff;
-            --icon-color: #ff3333;
-        }
-        body.theme-rubberduck {
-            --bg-gradient: linear-gradient(135deg, #ffe600 0%, #ffd000 50%, #ffb700 100%);
-            --menu-bg: #cc9900;
-            --text-main: #3d2c00;
-            --text-light: #5a4000;
-            --box-bg: rgba(255, 230, 0, 0.75);
-            --btn-hover: #ff9900;
-            --btn-text: #fff;
-        }
-        body.theme-winter {
-            --bg-gradient: linear-gradient(135deg, #e8f4f8 0%, #b3d9ea 50%, #7ec8e3 100%);
-            --menu-bg: #1a3a4a;
-            --text-main: #0d2535;
-            --text-light: #2a5f7a;
-            --box-bg: rgba(255, 255, 255, 0.82);
-            --btn-hover: #7ec8e3;
-            --btn-text: #0d2535;
-        }
-        body.theme-vaporwave {
-            --bg-gradient: linear-gradient(135deg, #ff71ce 0%, #b967ff 50%, #05ffa1 100%);
-            --menu-bg: #1a0033;
-            --text-main: #fff;
-            --text-light: #ff71ce;
-            --box-bg: rgba(26, 0, 51, 0.82);
-            --btn-hover: #05ffa1;
-            --btn-text: #1a0033;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap');
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            overflow: hidden;
-            transition: background 0.5s ease;
-        }
+:root {
+  --yellow: #ffdc59;
+  --yellow-dark: #b99520;
+  --yellow-light: #fff8df;
+  --white: #ffffff;
+  --background: #fffefa;
+  --text: #302f27;
+  --muted: #898577;
+  --border: #eee9d8;
+}
 
-        #icon-container {
-            position: fixed; top: 0; left: 0; width: 70px; z-index: 101;
-            background: var(--menu-bg); border-bottom-right-radius: 15px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.5); transition: background 0.3s;
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .side-icon {
-            width: 100%; padding: 15px 0; cursor: pointer; color: var(--icon-color);
-            text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s; display: flex; justify-content: center;
-        }
-        .side-icon svg { width: 28px; height: 28px; }
-        .side-icon:hover { transform: scale(1.2); }
-        #menu-icon { border-top: none; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-        #sidebar {
-            position: absolute; top: 0; left: -320px; width: 320px; height: 100vh;
-            background-color: var(--menu-bg); color: white;
-            transition: left 0.3s ease, background 0.3s; padding-top: 180px;
-            box-sizing: border-box; z-index: 100;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5); overflow-y: auto;
-        }
-        #icon-container:hover ~ #sidebar, #sidebar:hover, #info-panel:hover { left: 0; }
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.6;
+}
 
-        .game-btn {
-            display: flex; align-items: center; width: 100%; background: none; color: white;
-            border: none; border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 20px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s;
-        }
-        .btn-icon { width: 28px; height: 28px; margin-right: 15px; display: flex; justify-content: center; align-items: center; }
-        .game-btn:hover { background-color: var(--btn-hover); color: var(--btn-text); padding-left: 30px; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+a { color: inherit; text-decoration: none; }
 
-        #info-panel {
-            position: fixed; top: 50%; left: -400px; transform: translateY(-50%); width: 300px;
-            background: var(--box-bg); color: var(--text-main); padding: 20px;
-            border-radius: 0 15px 15px 0; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
-            transition: left 0.3s ease; z-index: 99; pointer-events: none;
-        }
-        #info-panel h3 { margin-top: 0; color: var(--btn-hover); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        .controls-text { font-family: monospace; background: rgba(0,0,0,0.1); padding: 5px; border-radius: 5px; }
+.navbar {
+  min-height: 72px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-        #main-content {
-            margin-left: 70px; height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; position: relative;
-        }
-        .menu-screen {
-            text-align: center; background: var(--box-bg); padding: 50px;
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: background 0.5s; position: relative; width: 600px; max-width: 90%;
-        }
-        .menu-screen h1 { font-size: 40px; margin: 0 0 10px 0; }
-        .menu-screen p { font-size: 18px; color: var(--text-light); margin-bottom: 20px; }
+.brand {
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: 900 26px 'Nunito', sans-serif;
+  letter-spacing: -1.5px;
+  white-space: nowrap;
+}
 
-        #main-menu-coins {
-            position: absolute; top: 20px; right: 20px;
-            font-size: 28px; font-weight: bold; display: flex; align-items: center; gap: 8px;
-            background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 20px;
-        }
-        .action-btn {
-            background: var(--menu-bg); color: white; border: none; padding: 12px 20px;
-            font-size: 18px; border-radius: 10px; cursor: pointer; margin: 10px;
-            font-weight: bold; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        .action-btn:hover { transform: scale(1.05); background: var(--btn-hover); color: var(--btn-text); }
+.brand span { color: var(--yellow-dark); }
 
-        #slot-paytable {
-            position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.1);
-            padding: 10px; border-radius: 10px; text-align: left; font-size: 13px;
-        }
-        .reels { display: flex; justify-content: center; gap: 15px; margin: 30px 0; font-size: 50px; }
-        .reel {
-            background: white; border: 4px solid var(--menu-bg); border-radius: 10px;
-            width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-        }
-        #slot-message { font-size: 20px; font-weight: bold; min-height: 30px; margin-bottom: 15px; color: #e74c3c; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
 
-        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-height: 340px; overflow-y: auto; padding-right: 4px; }
-        .theme-item-btn {
-            padding: 12px; font-size: 15px; font-weight: bold; border: 2px solid var(--menu-bg);
-            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.5); transition: 0.2s;
-        }
-        .theme-item-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); }
-        .theme-item-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #999; }
-        .equipped-stamp { color: green; font-weight: bold; display: block; font-size: 12px; margin-top: 5px; }
+.nav-link {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
 
-        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .duck-decoration { width: 50px; height: 50px; display: inline-block; margin: 0 10px; animation: bob 2s infinite ease-in-out; }
-        .duck-decoration:nth-child(2) { animation-delay: 0.3s; }
-        .duck-decoration:nth-child(3) { animation-delay: 0.6s; }
+.nav-link:hover,
+.nav-link.active { color: #9a7810; }
 
-        #loader {
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-gradient); z-index: 50;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        #loader-duck { width: 80px; height: 80px; animation: spin 1s linear infinite; }
-        #game-frame { display: none; width: 100%; height: 100vh; border: none; z-index: 10; }
+.coin-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  background: var(--yellow-light);
+  border: 1px solid #f1e5b7;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
 
-        /* ===== SHOP ===== */
-        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
-        .shop-item {
-            background: rgba(255,255,255,0.4); border: 2px solid var(--menu-bg);
-            border-radius: 12px; padding: 14px; text-align: center; cursor: pointer;
-            transition: 0.2s; font-weight: bold; color: var(--text-main);
-        }
-        .shop-item:hover { background: var(--btn-hover); color: var(--btn-text); transform: scale(1.03); }
-        .shop-item .shop-price { font-size: 13px; opacity: 0.8; margin-top: 4px; }
-        .shop-item .shop-emoji { font-size: 28px; display: block; margin-bottom: 6px; }
+.coin-symbol {
+  width: 17px;
+  height: 17px;
+  background: var(--yellow);
+  border: 2px solid var(--yellow-dark);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
-        /* Coin Flip */
-        #coinflip-coin {
-            font-size: 64px; display: block; margin: 20px auto;
-            transition: transform 0.1s; cursor: default;
-        }
-        @keyframes flipAnim {
-            0%   { transform: scaleX(1); }
-            25%  { transform: scaleX(0); }
-            50%  { transform: scaleX(1); }
-            75%  { transform: scaleX(0); }
-            100% { transform: scaleX(1); }
-        }
-        .flipping { animation: flipAnim 0.6s ease 3; }
+.menu-toggle {
+  display: none;
+  border: 0;
+  background: none;
+  font-size: 13px;
+  font-weight: 800;
+}
 
-        /* Scratch Card */
-        #scratch-canvas-wrap { position: relative; display: inline-block; margin: 16px 0; }
-        #scratch-canvas { border-radius: 12px; cursor: crosshair; display: block; }
-        #scratch-reveal {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 48px; border-radius: 12px; pointer-events: none;
-            background: var(--box-bg);
-        }
+.page {
+  display: none;
+  min-height: calc(100vh - 145px);
+  animation: appear .2s ease;
+}
 
-        /* Name Tag */
-        #nametag-display {
-            font-size: 22px; font-weight: bold; padding: 8px 20px;
-            background: rgba(0,0,0,0.1); border-radius: 20px; display: inline-block;
-            margin: 10px 0; min-width: 120px;
-        }
-        #nametag-input {
-            font-size: 18px; padding: 8px 14px; border-radius: 8px;
-            border: 2px solid var(--menu-bg); background: var(--box-bg);
-            color: var(--text-main); margin: 8px; width: 200px; text-align: center;
-        }
+.page.active { display: block; }
 
-        /* Mega Spin indicator */
-        #mega-spin-indicator {
-            font-size: 13px; font-weight: bold; color: #e67e22;
-            min-height: 18px; margin-bottom: 4px;
-        }
-        #glitter-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
-        }
+@keyframes appear {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-        /* Lucky Roll screen */
-        #lucky-roll-die { font-size: 72px; display: block; margin: 16px auto; min-height: 80px; }
-        @keyframes dieRoll {
-            0%,100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-15deg) scale(1.1); }
-            75% { transform: rotate(15deg) scale(1.1); }
-        }
-        .rolling { animation: dieRoll 0.15s ease infinite; }
+.page-content {
+  max-width: 1250px;
+  padding: 55px 5% 75px;
+  margin: auto;
+}
 
-        /* Mystery Box */
-        @keyframes boxShake {
-            0%,100% { transform: translateX(0); }
-            20% { transform: translateX(-8px) rotate(-4deg); }
-            40% { transform: translateX(8px) rotate(4deg); }
-            60% { transform: translateX(-5px) rotate(-2deg); }
-            80% { transform: translateX(5px) rotate(2deg); }
-        }
-        .shaking { animation: boxShake 0.5s ease 3; }
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: #a18113;
+  margin-bottom: 12px;
+}
 
-        /* Bullseye */
-        .bullseye-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-            margin: 16px auto; max-width: 260px;
-        }
-        .bullseye-btn {
-            padding: 14px; font-size: 22px; border: 2px solid var(--menu-bg);
-            border-radius: 10px; cursor: pointer; background: rgba(255,255,255,0.4);
-            font-weight: bold; color: var(--text-main); transition: 0.2s;
-        }
-        .bullseye-btn:hover:not(:disabled) { background: var(--btn-hover); color: var(--btn-text); transform: scale(1.05); }
-        .bullseye-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .bullseye-btn.hit  { background: #2ecc71 !important; color: #fff !important; }
-        .bullseye-btn.miss { background: #e74c3c !important; color: #fff !important; }
+h1, h2, h3 {
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.2;
+}
 
-        /* ===== UNLOCK POPUP ===== */
-        #unlock-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
-            background: linear-gradient(135deg, #f1c40f, #e67e22);
-            color: #fff; padding: 30px 50px; border-radius: 20px;
-            font-size: 28px; font-weight: bold; text-align: center;
-            box-shadow: 0 0 60px rgba(241,196,15,0.8); z-index: 10000;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-        }
-        #unlock-popup.show { transform: translate(-50%, -50%) scale(1); }
-        #unlock-popup .unlock-emoji { font-size: 50px; display: block; margin-bottom: 10px; }
+.page-header { margin-bottom: 28px; }
 
-        /* Custom alert */
-        #custom-alert-overlay {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.55); z-index: 20000;
-            align-items: center; justify-content: center;
-        }
-        #custom-alert-overlay.show { display: flex; }
-        #custom-alert-box {
-            background: var(--box-bg); color: var(--text-main);
-            padding: 32px 40px; border-radius: 16px; min-width: 280px; max-width: 420px;
-            text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.4); position: relative;
-        }
-        .alert-title { font-size: 26px; font-weight: bold; margin-bottom: 10px; }
-        .alert-msg { font-size: 17px; margin-bottom: 20px; white-space: pre-line; }
-        #custom-alert-ok {
-            background: var(--menu-bg); color: white; border: none; padding: 10px 30px;
-            font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold;
-        }
-        #custom-alert-ok:hover { background: var(--btn-hover); color: var(--btn-text); }
-        #custom-alert-progress {
-            position: absolute; bottom: 0; left: 0; height: 4px;
-            background: var(--btn-hover); border-radius: 0 0 16px 16px; width: 0;
-        }
-    </style>
+.page-header h1 {
+  font-size: clamp(36px, 4vw, 48px);
+  letter-spacing: -2px;
+}
+
+.page-header h1 span { color: var(--yellow-dark); }
+
+.page-description {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* HOME */
+
+.home-hero {
+  max-width: 1200px;
+  margin: auto;
+  padding: 75px 7%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 45px;
+}
+
+.home-hero h1 {
+  font-size: clamp(43px, 5vw, 64px);
+  letter-spacing: -3px;
+  font-weight: 900;
+}
+
+.home-hero h1 span { color: var(--yellow-dark); }
+
+.description {
+  max-width: 420px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 20px 0 25px;
+}
+
+.button-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.button {
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.button-yellow { background: var(--yellow); color: var(--text); }
+.button-light { background: #f3f0e6; color: var(--text); }
+
+.logo-panel {
+  min-height: 340px;
+  border-radius: 22px;
+  background: #fff2c8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-circle {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: #f4dc8e;
+}
+
+.logo-image {
+  position: relative;
+  z-index: 2;
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+}
+
+.logo-label {
+  position: absolute;
+  z-index: 3;
+  top: 17px;
+  left: 17px;
+  padding: 9px 13px;
+  background: white;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.home-shortcuts {
+  max-width: 1100px;
+  padding: 0 7%;
+  margin: 0 auto 65px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.shortcut {
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.shortcut:hover { border-color: #e5cf76; }
+.shortcut-label { font-size: 9px; font-weight: 800; color: #a18113; }
+.shortcut h3 { font-size: 16px; margin: 10px 0 5px; }
+.shortcut p { font-size: 11px; color: var(--muted); }
+
+/* GAMES */
+
+.games-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 17px;
+  flex-wrap: wrap;
+}
+
+.games-count {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.search-box {
+  width: 235px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  outline: none;
+  background: white;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.search-box:focus { border-color: var(--yellow-dark); }
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.game-btn {
+  min-width: 0;
+  min-height: 66px;
+  padding: 10px 11px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text);
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  overflow: hidden;
+  transition: background .16s, border-color .16s, transform .16s;
+}
+
+.game-btn:hover,
+.game-btn:focus-visible,
+.game-btn.selected {
+  background: var(--yellow-light);
+  border-color: #e5c957;
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.btn-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #81691b;
+  background: #fff4c7;
+  border: 1px solid #f1e4ae;
+  border-radius: 8px;
+}
+
+.btn-icon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.btn-icon.blank {
+  background: transparent;
+  border-color: transparent;
+}
+
+.game-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.game-btn[hidden] { display: none; }
+
+.game-info-panel {
+  margin-top: 18px;
+  min-height: 104px;
+  padding: 17px 20px;
+  border: 1px solid #eee1a9;
+  background: #fff9e5;
+  border-radius: 11px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.game-info-panel h3 { font-size: 16px; margin-bottom: 5px; }
+.game-info-panel p { font-size: 11px; color: var(--muted); }
+.game-controls { margin-top: 5px; }
+.info-label { font-size: 9px; font-weight: 800; color: #a18113; letter-spacing: 1px; }
+
+.play-selected {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 16px;
+  background: var(--yellow);
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.play-selected:hover { background: #f0cb43; }
+.play-selected:disabled { opacity: .5; }
+
+.no-results {
+  display: none;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  padding: 30px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+
+/* EMBEDDED GAME VIEWER */
+
+.game-viewer {
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid #eee2b4;
+  border-radius: 12px;
+  background: white;
+  scroll-margin-top: 90px;
+}
+
+.game-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background: #fff8df;
+}
+
+.game-viewer-header strong {
+  display: block;
+  font-size: 14px;
+}
+
+.game-viewer-header span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.viewer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.viewer-actions button {
+  padding: 8px 11px;
+  border: 1px solid #eee2b4;
+  border-radius: 7px;
+  background: white;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.viewer-actions button:hover { background: var(--yellow-light); }
+
+#gameFrame {
+  display: block;
+  width: 100%;
+  height: 70vh;
+  min-height: 400px;
+  border: 0;
+  background: white;
+}
+
+.viewer-note {
+  padding: 10px 15px;
+  background: #fffdf5;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* EMPTY GALLERY */
+
+.empty-panel {
+  min-height: 290px;
+  border: 1px dashed #e7dba8;
+  border-radius: 14px;
+  background: #fffdf5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.empty-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--yellow-light);
+  border: 1px solid #f1e4ae;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.empty-mark::before,
+.empty-mark::after {
+  content: "";
+  position: absolute;
+  background: #d7b33a;
+  border-radius: 3px;
+}
+
+.empty-mark::before { width: 22px; height: 3px; left: 14px; top: 24px; }
+.empty-mark::after { width: 3px; height: 22px; top: 14px; left: 24px; }
+
+.empty-panel h2 { font-size: 22px; margin-bottom: 9px; }
+.empty-panel p { color: var(--muted); font-size: 12px; max-width: 350px; }
+
+/* SHOP */
+
+.shop-balance {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: #fff8dc;
+  border: 1px solid #f0e2a6;
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.coin-large {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  border: 4px solid #dfb52b;
+  background: var(--yellow);
+  flex-shrink: 0;
+}
+
+.shop-balance h2 { font-size: 17px; }
+.shop-balance p { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.balance-amount { margin-left: auto; font: 900 26px 'Nunito', sans-serif; }
+
+.shop-section-title { font-size: 23px; }
+.shop-section-description { color: var(--muted); font-size: 11px; margin: 8px 0 20px; }
+
+.shop-empty {
+  min-height: 195px;
+  background: #fffdf5;
+  border: 1px dashed #e7dba8;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+
+.shop-empty h3 { font-size: 18px; margin-bottom: 8px; }
+.shop-empty p { color: var(--muted); font-size: 11px; max-width: 350px; }
+
+.shop-information {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.shop-information h2 { font-size: 23px; margin-bottom: 17px; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.info-card {
+  border: 1px solid var(--border);
+  background: white;
+  padding: 17px;
+  border-radius: 10px;
+}
+
+.info-number { font-size: 9px; font-weight: 800; color: #a18113; }
+.info-card h3 { font-size: 13px; margin: 8px 0; }
+.info-card p { color: var(--muted); font-size: 10px; line-height: 1.8; }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 24px 5%;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+
+footer p { color: var(--muted); font-size: 10px; }
+.footer-button { background: none; border: 0; color: #98760d; font-size: 10px; font-weight: 800; }
+
+@media (min-width: 1200px) {
+  .games-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 850px) {
+  .navbar { padding: 0 3%; gap: 12px; }
+  .nav-links { gap: 13px; }
+  .nav-link { font-size: 11px; }
+  .games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .home-hero { padding: 55px 5%; gap: 25px; }
+}
+
+@media (max-width: 620px) {
+  .navbar { min-height: 66px; }
+  .menu-toggle { display: block; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    padding: 18px 6%;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .nav-links.open { display: flex; }
+  .home-hero { grid-template-columns: 1fr; padding-top: 45px; }
+  .home-hero h1 { font-size: 46px; }
+  .logo-panel { min-height: 285px; }
+  .home-shortcuts { grid-template-columns: 1fr; }
+  .games-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .game-btn { min-height: 59px; padding: 8px; gap: 7px; font-size: 10px; }
+  .btn-icon { width: 29px; height: 29px; flex-basis: 29px; }
+  .btn-icon svg { width: 18px; height: 18px; }
+  .page-content { padding: 40px 5% 55px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .game-info-panel { grid-template-columns: 1fr; gap: 12px; }
+  .play-selected { width: 100%; }
+  #gameFrame { height: 65vh; min-height: 350px; }
+  .shop-balance { gap: 10px; padding: 14px; }
+  .balance-amount { font-size: 22px; }
+}
+
+@media (max-width: 360px) {
+  .brand { font-size: 22px; }
+  .coin-display { padding: 7px; gap: 5px; font-size: 9px; }
+  .games-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
 </head>
-<body oncontextmenu="return false;">
 
-    <div id="custom-alert-overlay">
-        <div id="custom-alert-box">
-            <div class="alert-title" id="custom-alert-title"></div>
-            <div class="alert-msg" id="custom-alert-msg"></div>
-            <button id="custom-alert-ok" onclick="closeCustomAlert()">OK</button>
-            <div id="custom-alert-progress"></div>
+<body>
+
+<!-- Custom SVG icon library -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-pencil" viewBox="0 0 24 24">
+    <path d="M4 16.5L16.5 4a2.8 2.8 0 0 1 4 4L8 20.5 3 21z"/>
+    <path d="M14 6.5l4 4M4 16.5l4 4"/>
+  </symbol>
+  <symbol id="icon-hammer" viewBox="0 0 24 24">
+    <path d="M14 5l5 5M10 9l5-5 5 5-5 5z"/>
+    <path d="M13 12L5 21M3 19l3 3"/>
+  </symbol>
+  <symbol id="icon-dice" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="18" height="18" rx="4"/>
+    <path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/>
+  </symbol>
+  <symbol id="icon-cards" viewBox="0 0 24 24">
+    <rect x="3" y="5" width="13" height="16" rx="2"/>
+    <path d="M8 3h11a2 2 0 0 1 2 2v13M7 10l2 2 2-2"/>
+  </symbol>
+  <symbol id="icon-car" viewBox="0 0 24 24">
+    <path d="M5 11l2-5h10l2 5 2 2v6h-3v-2H6v2H3v-6z"/>
+    <path d="M5 11h14M6 14h.01M18 14h.01"/>
+  </symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24">
+    <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
+    <path d="M9 12l2 2 4-5"/>
+  </symbol>
+  <symbol id="icon-chart" viewBox="0 0 24 24">
+    <path d="M3 3v18h18M7 14l4-4 4 3 6-7"/>
+    <path d="M16 6h5v5"/>
+  </symbol>
+  <symbol id="icon-keyboard" viewBox="0 0 24 24">
+    <rect x="2" y="5" width="20" height="14" rx="2"/>
+    <path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 15h8"/>
+  </symbol>
+  <symbol id="icon-box" viewBox="0 0 24 24">
+    <path d="M3 7l9-5 9 5v10l-9 5-9-5z"/>
+    <path d="M3 7l9 5 9-5M12 12v10M8 4l9 5"/>
+  </symbol>
+  <symbol id="icon-target" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"/>
+    <circle cx="12" cy="12" r="5"/>
+    <circle cx="12" cy="12" r="1"/>
+  </symbol>
+  <symbol id="icon-arrow" viewBox="0 0 24 24">
+    <path d="M4 12h16M13 5l7 7-7 7"/>
+  </symbol>
+  <symbol id="icon-lock" viewBox="0 0 24 24">
+    <rect x="4" y="10" width="16" height="11" rx="2"/>
+    <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>
+  </symbol>
+  <symbol id="icon-golf" viewBox="0 0 24 24">
+    <path d="M4 21h16M12 20V3l8 4-8 4"/>
+    <circle cx="6" cy="17" r="2"/>
+  </symbol>
+  <symbol id="icon-monitor" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="18" height="14" rx="2"/>
+    <path d="M8 21h8M12 17v4M8 10l2 2 5-5"/>
+  </symbol>
+  <symbol id="icon-crosshair" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="7"/>
+    <circle cx="12" cy="12" r="2"/>
+    <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+  </symbol>
+</svg>
+
+<header class="navbar">
+  <button class="brand" data-page="home">Duck<span>Web</span></button>
+
+  <nav class="nav-links" id="navLinks">
+    <button class="nav-link active" data-page="home">Home</button>
+    <button class="nav-link" data-page="games">Games</button>
+    <button class="nav-link" data-page="gallery">Duck Gallery</button>
+    <button class="nav-link" data-page="shop">Shop</button>
+  </nav>
+
+  <div class="coin-display">
+    <span class="coin-symbol"></span>
+    <span id="headerCoins">0</span>
+    <span>Duck Coins</span>
+  </div>
+
+  <button class="menu-toggle" id="menuToggle"
+          aria-expanded="false" aria-controls="navLinks">Menu</button>
+</header>
+
+<main>
+
+  <!-- HOME PAGE -->
+  <section class="page active" id="home">
+    <div class="home-hero">
+      <div>
+        <div class="eyebrow">WELCOME TO DUCKWEB</div>
+        <h1>Your corner of<br>the internet, <span>your way.</span></h1>
+        <p class="description">
+          Welcome to DuckWeb. Explore the game collection,
+          visit the Duck Gallery, and collect Duck Coins while
+          you spend time on the website.
+        </p>
+        <div class="button-row">
+          <button class="button button-yellow" data-page="games">Explore games</button>
+          <button class="button button-light" data-page="shop">Visit the shop</button>
         </div>
+      </div>
+
+      <div class="logo-panel">
+        <div class="logo-circle"></div>
+        <div class="logo-label">DUCKWEB</div>
+        <img class="logo-image" src="logo.png" alt="DuckWeb logo"
+             onerror="this.style.display='none';document.getElementById('logoError').style.display='block';">
+        <div id="logoError" style="display:none;position:relative;z-index:3;text-align:center">
+          <strong>Logo not found</strong>
+          <p style="font-size:12px">Put logo.png next to index.html.</p>
+        </div>
+      </div>
     </div>
 
-    <canvas id="glitter-canvas"></canvas>
-    <div id="unlock-popup"><span class="unlock-emoji" id="unlock-emoji">🎉</span><span id="unlock-text">Theme Unlocked!</span></div>
-
-    <svg style="display: none;">
-        <symbol id="custom-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#fff"/><rect x="5" y="2" width="6" height="2" fill="#c0392b"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#f1c40f"/><rect x="4" y="7" width="7" height="6" fill="#fff"/><rect x="5" y="9" width="4" height="2" fill="#e0e0e0"/><rect x="5" y="13" width="1" height="2" fill="#f1c40f"/><rect x="8" y="13" width="1" height="2" fill="#f1c40f"/></symbol>
-        <symbol id="main-duck" viewBox="0 0 16 16"><rect x="5" y="2" width="6" height="5" fill="#f1c40f"/><rect x="8" y="4" width="1" height="1" fill="#000"/><rect x="11" y="4" width="4" height="2" fill="#e67e22"/><rect x="4" y="7" width="7" height="6" fill="#f1c40f"/><rect x="5" y="9" width="4" height="2" fill="#f39c12"/><rect x="5" y="13" width="1" height="2" fill="#e67e22"/><rect x="8" y="13" width="1" height="2" fill="#e67e22"/></symbol>
-        <symbol id="quack-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#f1c40f" stroke="#e67e22" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" font-family="sans-serif" fill="#d35400" text-anchor="middle">Q</text></symbol>
-    </svg>
-
-    <div id="icon-container">
-        <div id="menu-icon" class="side-icon" title="Menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </div>
-        <div class="side-icon" onclick="goHome()" title="Back to Main Menu">
-            <svg><use href="#custom-duck"></use></svg>
-        </div>
-        <div class="side-icon" onclick="toggleFullScreen()" title="Fullscreen">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-        </div>
+    <div class="home-shortcuts">
+      <article class="shortcut" data-page="games" tabindex="0" role="button">
+        <span class="shortcut-label">01 / PLAY</span>
+        <h3>Game collection</h3>
+        <p>Browse all the games in one place.</p>
+      </article>
+      <article class="shortcut" data-page="gallery" tabindex="0" role="button">
+        <span class="shortcut-label">02 / EXPLORE</span>
+        <h3>Duck Gallery</h3>
+        <p>A dedicated place for duck pictures.</p>
+      </article>
+      <article class="shortcut" data-page="shop" tabindex="0" role="button">
+        <span class="shortcut-label">03 / COLLECT</span>
+        <h3>Duck Coin Shop</h3>
+        <p>Save coins for future items.</p>
+      </article>
     </div>
+  </section>
 
-    <div id="sidebar">
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/duck-rogue/')" onmouseover="showInfo('Duck Rogue','Battle endless rooms as a brave duck!','Arrow Keys to move, Space to dash')" onmouseout="hideInfo()"><div class="btn-icon"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div> Duck Rogue</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Doodle-Action/')" onmouseover="showInfo('Doodle Action','A fast-paced drawn action game.','WASD to move, Mouse to aim and shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🫟</div> Doodle Action</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Getting-over/')" onmouseover="showInfo('Getting Over','A frustratingly fun physics game.','Mouse movement controls the hammer')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⛏</div> Getting Over</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/DUCK-RNG/')" onmouseover="showInfo('Duck RNG','Test your luck! Roll for the rarest ducks.','Click the button to roll')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🎲</div> Duck RNG</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Poker/')" onmouseover="showInfo('Poker','Test your card skills.','Mouse to play your hand')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⛀⛁</div> Poker</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Car/')" onmouseover="showInfo('Car Game','Drive fast and drift around corners.','Arrow keys to steer and drive')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🚘</div> Car Game</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Defenders-Realm/')" onmouseover="showInfo('Defender\'s Realm','Defend your realm against waves of enemies!','Mouse to aim and shoot/build')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🛡️</div> Defender's Realm</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/StocksBuy/')" onmouseover="showInfo('StocksBuy','Buy Stocks Make Profit!!','buy and sell')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">📈</div> StonksBuy</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/keyboard/')" onmouseover="showInfo('Keyboard','type for fun and practice','have fun')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⌨️</div> Keyboard</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/CyberLoot/')" onmouseover="showInfo('CyberLoot','go gambling on cases','I  enjoy this game')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">📦</div> CyberLoot</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Goose-hunt/')" onmouseover="showInfo('Goose hunt','shoot goose get money','to much work to explain')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">𖦏</div> Goose hunt</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/pol.io/')" onmouseover="showInfo('Goose hunt','multiplayer','kill then upgrade')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⬆️</div> pol.io</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Locker-Fairy/')" onmouseover="showInfo('Locker Fairy','lock it backwards','lock the locks backwards')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🔒</div> Locker Fairy</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/mini-golf/')" onmouseover="showInfo('Mini Golf','PLAY MINI GOLF!','drag to shoot')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">⛳</div> Mini Golf</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Desktop-duck/')" onmouseover="showInfo('DESKTOP DUCK','THIS IS WHERE TO DOWNLOAD','fun')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px">🦆</div> Desktop duck</button>
-        <button class="game-btn" onclick="playGame('https://pressonion.github.io/Valo/')" onmouseover="showInfo('ValoAim','practice your aim','to get better')" onmouseout="hideInfo()"><div class="btn-icon" style="font-size:22px"> </div> ValoAim</button>
+  <!-- GAMES PAGE -->
+  <section class="page" id="games">
+    <div class="page-content">
+      <div class="page-header">
+        <div class="eyebrow">THE GAME COLLECTION</div>
+        <h1>All <span>Games.</span></h1>
+        <p class="page-description">
+          Choose a game to play inside DuckWeb. Hover over a card to see its description and controls.
+        </p>
+      </div>
+
+      <div class="games-toolbar">
+        <span class="games-count"><span id="visibleCount">16</span> games in the collection</span>
+        <input class="search-box" id="gameSearch" type="search" placeholder="Search games..." aria-label="Search games">
+      </div>
+
+      <div class="games-grid" id="gamesGrid">
+
+        <button class="game-btn" data-name="Duck Rogue" data-url="https://pressonion.github.io/duck-rogue/" data-description="Battle endless rooms as a brave duck!" data-controls="Arrow Keys to move, Space to dash">
+          <div class="btn-icon blank"></div>
+          <span class="game-name">Duck Rogue</span>
+        </button>
+
+        <button class="game-btn" data-name="Doodle Action" data-url="https://pressonion.github.io/Doodle-Action/" data-description="A fast-paced drawn action game." data-controls="WASD to move, Mouse to aim and shoot">
+          <div class="btn-icon"><svg><use href="#icon-pencil"/></svg></div>
+          <span class="game-name">Doodle Action</span>
+        </button>
+
+        <button class="game-btn" data-name="Getting Over" data-url="https://pressonion.github.io/Getting-over/" data-description="A frustratingly fun physics game." data-controls="Mouse movement controls the hammer">
+          <div class="btn-icon"><svg><use href="#icon-hammer"/></svg></div>
+          <span class="game-name">Getting Over</span>
+        </button>
+
+        <button class="game-btn" data-name="Duck RNG" data-url="https://pressonion.github.io/DUCK-RNG/" data-description="Test your luck and roll for the rarest ducks." data-controls="Click the button to roll">
+          <div class="btn-icon"><svg><use href="#icon-dice"/></svg></div>
+          <span class="game-name">Duck RNG</span>
+        </button>
+
+        <button class="game-btn" data-name="Poker" data-url="https://pressonion.github.io/Poker/" data-description="Test your card skills." data-controls="Mouse to play your hand">
+          <div class="btn-icon"><svg><use href="#icon-cards"/></svg></div>
+          <span class="game-name">Poker</span>
+        </button>
+
+        <button class="game-btn" data-name="Car Game" data-url="https://pressonion.github.io/Car/" data-description="Drive fast and drift around corners." data-controls="Arrow keys to steer and drive">
+          <div class="btn-icon"><svg><use href="#icon-car"/></svg></div>
+          <span class="game-name">Car Game</span>
+        </button>
+
+        <button class="game-btn" data-name="Defender's Realm" data-url="https://pressonion.github.io/Defenders-Realm/" data-description="Defend your realm against waves of enemies!" data-controls="Mouse to aim, shoot, and build">
+          <div class="btn-icon"><svg><use href="#icon-shield"/></svg></div>
+          <span class="game-name">Defender's Realm</span>
+        </button>
+
+        <button class="game-btn" data-name="StonksBuy" data-url="https://pressonion.github.io/StocksBuy/" data-description="Buy stocks and try to make a profit." data-controls="Buy and sell">
+          <div class="btn-icon"><svg><use href="#icon-chart"/></svg></div>
+          <span class="game-name">StonksBuy</span>
+        </button>
+
+        <button class="game-btn" data-name="Keyboard" data-url="https://pressonion.github.io/keyboard/" data-description="Type for fun and practice." data-controls="Type and have fun">
+          <div class="btn-icon"><svg><use href="#icon-keyboard"/></svg></div>
+          <span class="game-name">Keyboard</span>
+        </button>
+
+        <button class="game-btn" data-name="CyberLoot" data-url="https://pressonion.github.io/CyberLoot/" data-description="Open cases and collect different rewards." data-controls="Choose and open cases">
+          <div class="btn-icon"><svg><use href="#icon-box"/></svg></div>
+          <span class="game-name">CyberLoot</span>
+        </button>
+
+        <button class="game-btn" data-name="Goose Hunt" data-url="https://pressonion.github.io/Goose-hunt/" data-description="Hunt geese and earn money." data-controls="Aim and shoot">
+          <div class="btn-icon"><svg><use href="#icon-target"/></svg></div>
+          <span class="game-name">Goose Hunt</span>
+        </button>
+
+        <button class="game-btn" data-name="pol.io" data-url="https://pressonion.github.io/pol.io/" data-description="A multiplayer game focused on eliminating opponents and upgrading." data-controls="Eliminate opponents and upgrade">
+          <div class="btn-icon"><svg><use href="#icon-arrow"/></svg></div>
+          <span class="game-name">pol.io</span>
+        </button>
+
+        <button class="game-btn" data-name="Locker Fairy" data-url="https://pressonion.github.io/Locker-Fairy/" data-description="Lock it backwards." data-controls="Lock the locks backwards">
+          <div class="btn-icon"><svg><use href="#icon-lock"/></svg></div>
+          <span class="game-name">Locker Fairy</span>
+        </button>
+
+        <button class="game-btn" data-name="Mini Golf" data-url="https://pressonion.github.io/mini-golf/" data-description="Play mini golf." data-controls="Drag to shoot">
+          <div class="btn-icon"><svg><use href="#icon-golf"/></svg></div>
+          <span class="game-name">Mini Golf</span>
+        </button>
+
+        <button class="game-btn" data-name="Desktop Duck" data-url="https://pressonion.github.io/Desktop-duck/" data-description="Visit the Desktop Duck page to find the download." data-controls="Follow the download instructions on the page">
+          <div class="btn-icon"><svg><use href="#icon-monitor"/></svg></div>
+          <span class="game-name">Desktop Duck</span>
+        </button>
+
+        <button class="game-btn" data-name="ValoAim" data-url="https://pressonion.github.io/Valo/" data-description="Practice your aim and improve your accuracy." data-controls="Aim and shoot">
+          <div class="btn-icon"><svg><use href="#icon-crosshair"/></svg></div>
+          <span class="game-name">ValoAim</span>
+        </button>
+
+      </div>
+
+      <div class="no-results" id="noResults">No games match your search.</div>
+
+      <div class="game-info-panel" id="gameInfo" aria-live="polite">
+        <div>
+          <div class="info-label">GAME DETAILS</div>
+          <h3 id="infoTitle">Choose a game</h3>
+          <p id="infoDescription">Hover over any game card to see its details.</p>
+          <p class="game-controls" id="infoControls">Controls will appear here.</p>
+        </div>
+        <button class="play-selected" id="playSelected" disabled>Play game</button>
+      </div>
+
+      <!-- Games open here instead of a new tab -->
+      <div class="game-viewer" id="gameViewer" style="display:none">
+        <div class="game-viewer-header">
+          <div>
+            <strong id="viewerTitle">Game</strong>
+            <span>Playing on DuckWeb</span>
+          </div>
+          <div class="viewer-actions">
+            <button id="fullscreenGame">Fullscreen</button>
+            <button id="closeGame">Close Game</button>
+          </div>
+        </div>
+
+        <iframe
+          id="gameFrame"
+          title="DuckWeb Game"
+          src="about:blank"
+          allow="fullscreen; autoplay; gamepad"
+          allowfullscreen>
+        </iframe>
+
+        <div class="viewer-note">
+          If a game cannot be displayed, its host may block embedded playback.
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div id="info-panel">
-        <h3 id="info-title">Game Title</h3>
-        <p id="info-desc">Description goes here.</p>
-        <strong>Controls:</strong>
-        <p class="controls-text" id="info-controls">Controls go here.</p>
+  <!-- DUCK GALLERY: INTENTIONALLY EMPTY -->
+  <section class="page" id="gallery">
+    <div class="page-content">
+      <div class="page-header">
+        <div class="eyebrow">THE COLLECTION</div>
+        <h1>Duck <span>Gallery.</span></h1>
+        <p class="page-description">A dedicated place for duck pictures and designs.</p>
+      </div>
+      <!-- No gallery items yet, as requested. -->
     </div>
+  </section>
 
-    <div id="main-content">
-        <!-- WELCOME -->
-        <div id="welcome-screen" class="menu-screen">
-            <div id="main-menu-coins">
-                <svg width="32" height="32"><use href="#quack-coin"></use></svg> = <span id="coin-display-home">0</span>
-            </div>
-            <div id="home-nametag"></div>
-            <h1>Welcome to Ducky's website</h1>
-            <p>Hover your mouse over the <b>☰ menu</b> on the left to browse and play my games</p>
-            <pre style=" text-decoration: underline; font-weight: bold; color: #ff5733; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px;">
-NEW UPDATE IS OUT1.0
-Locker Fairy: new code enter put to get to levle 50
-Goose Hunt: MASSIVE UPDATE NEW WORLDS up to 5 AND MUCH MORE TO COLLECT ADN MASSIVE CHANGES
+  <!-- SHOP -->
+  <section class="page" id="shop">
+    <div class="page-content">
+      <div class="page-header">
+        <div class="eyebrow">THE DUCKWEB STORE</div>
+        <h1>The <span>Shop.</span></h1>
+        <p class="page-description">Collect Duck Coins now and spend them on future items.</p>
+      </div>
 
-
-update 1.1
-new game mini golf  
-            </pre>
-            <div style="margin: 20px 0;">
-                <button class="action-btn" onclick="openMenu('slot-screen')">🎰 Slot Machine (3 Coins)</button>
-                <button class="action-btn" onclick="openMenu('themes-screen')">🎨 Equip Themes</button>
-                <button class="action-btn" onclick="openMenu('shop-screen')">🛒 Shop</button>
-            </div>
-            <div>
-                <div class="duck-decoration"><svg width="100%" height="100%"><use href="#main-duck"></use></svg></div>
-                <div class="duck-decoration"><svg width="100%" height="100%"><use href="#main-duck"></use></svg></div>
-                <div class="duck-decoration"><svg width="100%" height="100%"><use href="#main-duck"></use></svg></div>
-            </div>
+      <div class="shop-balance">
+        <div class="coin-large"></div>
+        <div>
+          <h2>Your Duck Coins</h2>
+          <p>Earn one coin for each full minute on DuckWeb.</p>
         </div>
+        <div class="balance-amount" id="shopCoins">0</div>
+      </div>
 
-        <!-- SLOTS -->
-        <div id="slot-screen" class="menu-screen" style="display: none;">
-            <div id="slot-paytable">
-                🎁 Match 3 to win!<br>
-                <i>(Any 2 matching = 1 Coin back)</i>
-            </div>
-            <h2>🎰 Ducky Slots 🎰</h2>
-            <p>Coins: <strong id="coin-display-slots">0</strong></p>
-            <div class="reels">
-                <div class="reel" id="reel1">❓</div>
-                <div class="reel" id="reel2">❓</div>
-                <div class="reel" id="reel3">❓</div>
-            </div>
-            <div id="slot-message">Match 3 to win!</div>
-            <div id="mega-spin-indicator"></div>
-            <button class="action-btn" id="spin-btn" onclick="randomGoofyAssFunction()">Spin (Cost: 3 Coins)</button>
-            <button class="action-btn" id="mega-btn" onclick="megaSpin()" style="background:#e67e22">⚡ Mega Spin (9 Coins)</button>
-            <br>
-            <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
-        </div>
+      <h2 class="shop-section-title">Available items</h2>
+      <p class="shop-section-description">Items will appear here when the shop opens.</p>
 
-        <!-- THEMES -->
-        <div id="themes-screen" class="menu-screen" style="display: none;">
-            <h2>🎨Owned Themes🎨</h2>
-            <p>Win themes at the slot machine!</p>
-            <div class="theme-grid" id="theme-grid-container"></div>
-            <br>
-            <button class="action-btn" style="background: gray;" onclick="openMenu('welcome-screen')">⬅ Back</button>
-        </div>
+      <div class="shop-empty">
+        <h3>The shop is getting ready</h3>
+        <p>There are no items available yet. Keep collecting coins for the future.</p>
+      </div>
 
-        <!-- SHOP -->
-        <div id="shop-screen" class="menu-screen" style="display:none;">
-            <h2>🛒 Quack Shop</h2>
-            <p>Spend your hard-earned coins!</p>
-            <p style="font-size:15px;">Your coins: <strong id="coin-display-shop">0</strong> &nbsp;|&nbsp; Duck Coins: <strong id="duck-coin-display">?</strong></p>
-            <div class="shop-grid">
-                <div class="shop-item" onclick="openMenu('coinflip-screen')">
-                    <span class="shop-emoji">🪙</span>
-                    Coin Flip
-                    <div class="shop-price">Bet 1–10 coins, double or nothing</div>
-                </div>
-                <div class="shop-item" onclick="openScratch()">
-                    <span class="shop-emoji">🎫</span>
-                    Scratch Card
-                    <div class="shop-price">2 coins — mystery prize</div>
-                </div>
-                <div class="shop-item" onclick="openMenu('nametag-screen')">
-                    <span class="shop-emoji">🏷️</span>
-                    Name Tag
-                    <div class="shop-price">5 coins — set your username</div>
-                </div>
-                <div class="shop-item" onclick="peekTheme()">
-                    <span class="shop-emoji">👁️</span>
-                    Theme Peek
-                    <div class="shop-price">2 coins — reveal a locked theme name for 5s</div>
-                </div>
-                <div class="shop-item" onclick="openMenu('luckyroll-screen')">
-                    <span class="shop-emoji">🎲</span>
-                    Lucky Roll
-                    <div class="shop-price">3 coins — roll a d6, win that many coins</div>
-                </div>
-                <div class="shop-item" onclick="openMysteryBox()">
-                    <span class="shop-emoji">🎁</span>
-                    Mystery Box
-                    <div class="shop-price">5 coins — could be amazing, could be trash</div>
-                </div>
-                <div class="shop-item" onclick="openMenu('bullseye-screen')">
-                    <span class="shop-emoji">🎯</span>
-                    Bullseye
-                    <div class="shop-price">2 coins — pick 1–6, hit it for 8× payout</div>
-                </div>
-                <div class="shop-item" onclick="claimDailyBonus()">
-                    <span class="shop-emoji">📅</span>
-                    Daily Bonus
-                    <div class="shop-price">Free! Claim 3 coins once per day</div>
-                </div>
-                <div class="shop-item" onclick="buyFreeSpin()">
-                    <span class="shop-emoji">⚡</span>
-                    Free Spin Token
-                    <div class="shop-price">8 coins — bank a free slot spin for later</div>
-                </div>
-            </div>
-            <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('welcome-screen')">⬅ Back</button>
-        </div>
+      <section class="shop-information">
+        <div class="eyebrow">HOW IT WORKS</div>
+        <h2>About Duck Coins</h2>
 
-        <!-- COIN FLIP -->
-        <div id="coinflip-screen" class="menu-screen" style="display:none;">
-            <h2>🪙 Coin Flip</h2>
-            <p>Double or nothing. Pick a side.</p>
-            <p>Coins: <strong id="coin-display-flip">0</strong></p>
-            <div style="margin:10px 0;">
-                Bet: <input id="flip-bet" type="number" min="1" max="10" value="1"
-                    style="width:60px;font-size:18px;padding:4px 8px;border-radius:6px;border:2px solid var(--menu-bg);background:var(--box-bg);color:var(--text-main);text-align:center;">
-                coins
-            </div>
-            <span id="coinflip-coin">🪙</span>
-            <div id="flip-result" style="font-size:20px;font-weight:bold;min-height:30px;color:#e74c3c;"></div>
-            <div style="margin:10px 0;">
-                <button class="action-btn" onclick="doFlip('heads')" id="flip-heads">🦆 Heads</button>
-                <button class="action-btn" onclick="doFlip('tails')" id="flip-tails">🐟 Tails</button>
-            </div>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
-        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <span class="info-number">01 / EARN</span>
+            <h3>Spend time here</h3>
+            <p>Earn one Duck Coin for each full minute the website is open in this browser.</p>
+          </article>
 
-        <!-- SCRATCH CARD -->
-        <div id="scratch-screen" class="menu-screen" style="display:none;">
-            <h2>🎫 Scratch Card</h2>
-            <p id="scratch-desc">Scratch to reveal your prize!</p>
-            <div id="scratch-canvas-wrap">
-                <div id="scratch-reveal"></div>
-                <canvas id="scratch-canvas" width="220" height="220"></canvas>
-            </div>
-            <div id="scratch-result" style="font-size:18px;font-weight:bold;min-height:24px;"></div>
-            <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
-        </div>
+          <article class="info-card">
+            <span class="info-number">02 / SAVE</span>
+            <h3>Build your balance</h3>
+            <p>Your balance is saved in this browser so you can collect coins over time.</p>
+          </article>
 
-        <!-- NAME TAG -->
-        <div id="nametag-screen" class="menu-screen" style="display:none;">
-            <h2>🏷️ Name Tag</h2>
-            <p>Set your username on the site (5 coins)</p>
-            <div id="nametag-display">Guest</div>
-            <br>
-            <input id="nametag-input" type="text" maxlength="16" placeholder="Enter name...">
-            <br>
-            <button class="action-btn" onclick="setNametag()">✅ Set Name (5 coins)</button>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
+          <article class="info-card">
+            <span class="info-number">03 / SPEND</span>
+            <h3>Shop in the future</h3>
+            <p>When shop items arrive, you will be able to use coins to buy them.</p>
+          </article>
         </div>
-
-        <!-- LUCKY ROLL -->
-        <div id="luckyroll-screen" class="menu-screen" style="display:none;">
-            <h2>🎲 Lucky Roll</h2>
-            <p>Pay 3 coins, roll a d6 — win that many coins back!</p>
-            <p>Coins: <strong id="luckyroll-coins">0</strong></p>
-            <span id="lucky-roll-die">🎲</span>
-            <div id="lucky-roll-result" style="font-size:20px;font-weight:bold;min-height:28px;"></div>
-            <button class="action-btn" id="lucky-roll-btn" onclick="doLuckyRoll()" style="background:#27ae60;color:white">Roll! (3 coins)</button>
-            <br>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
-        </div>
-
-        <!-- BULLSEYE -->
-        <div id="bullseye-screen" class="menu-screen" style="display:none;">
-            <h2>🎯 Bullseye</h2>
-            <p>Pay 2 coins, pick a number 1–6. Hit it for <strong>8×</strong> your bet back!</p>
-            <p>Coins: <strong id="bullseye-coins">0</strong></p>
-            <div class="bullseye-grid" id="bullseye-grid">
-                <button class="bullseye-btn" onclick="doBullseye(1)">1</button>
-                <button class="bullseye-btn" onclick="doBullseye(2)">2</button>
-                <button class="bullseye-btn" onclick="doBullseye(3)">3</button>
-                <button class="bullseye-btn" onclick="doBullseye(4)">4</button>
-                <button class="bullseye-btn" onclick="doBullseye(5)">5</button>
-                <button class="bullseye-btn" onclick="doBullseye(6)">6</button>
-            </div>
-            <div id="bullseye-roll" style="font-size:26px;min-height:36px;"></div>
-            <div id="bullseye-result" style="font-size:18px;font-weight:bold;min-height:26px;"></div>
-            <button class="action-btn" style="background:gray" onclick="openMenu('shop-screen')">⬅ Back</button>
-        </div>
-
-        <div id="loader">
-            <div id="loader-duck"><svg width="100%" height="100%"><use href="#custom-duck"></use></svg></div>
-            <div id="loader-text">Loading Game...</div>
-        </div>
-        <iframe id="game-frame" src="" oncontextmenu="return false;"></iframe>
+      </section>
     </div>
+  </section>
 
-    <script>
-    (async function() {
-        let loadTimer;
-        let isSpinning = false;
-        let particles = [];
-        let animating = false;
-        let absolutelyNothingThatisImportantlol = 0;
-        let unlockedThemes = ['default'];
-        let activeTheme = 'default';
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode === 123) event.preventDefault();
-            if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||
-                (event.ctrlKey && event.shiftKey && event.keyCode === 74) ||
-                (event.ctrlKey && event.shiftKey && event.keyCode === 67)) event.preventDefault();
-            if (event.ctrlKey && event.keyCode === 85) event.preventDefault();
-        });
+</main>
 
-        const themeData = {
-            'default':        { name: '☀️ Daylight (Default)', emoji: '☀️' },
-            'theme-dark':     { name: '🌙 Dark Mode',          emoji: '🌙' },
-            'theme-ocean':    { name: '🌊 Ocean Blue',         emoji: '🌊' },
-            'theme-retro':    { name: '🖥️ Retro Terminal',     emoji: '🖥️' },
-            'theme-sunset':   { name: '🌅 Sunset',             emoji: '🌅' },
-            'theme-forest':   { name: '🌲 Forest',             emoji: '🌲' },
-            'theme-galaxy':   { name: '✨ Galaxy',             emoji: '✨' },
-            'theme-rubberduck':{ name: '🐥 Rubber Duck',       emoji: '🐥' },
-            'theme-winter':   { name: '❄️ Winter',             emoji: '❄️' },
-        };
+<footer>
+  <button class="brand" data-page="home">Duck<span>Web</span></button>
+  <p>A little corner of the internet.</p>
+  <button class="footer-button" data-page="home">Back to home</button>
+</footer>
 
-        const canvas = document.getElementById('glitter-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+<script>
+/* PAGE NAVIGATION */
 
-        function spawnGlitter() {
-            const colors = ['#f1c40f','#e74c3c','#3498db','#2ecc71','#9b59b6','#e67e22','#ff71ce','#05ffa1','#fff'];
-            for (let i = 0; i < 180; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height * 0.5,
-                    vx: (Math.random() - 0.5) * 4,
-                    vy: Math.random() * 3 + 1,
-                    size: Math.random() * 10 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    rotation: Math.random() * 360,
-                    rotSpeed: (Math.random() - 0.5) * 8,
-                    life: 1,
-                    decay: Math.random() * 0.012 + 0.008,
-                    shape: Math.random() > 0.5 ? 'rect' : 'circle'
-                });
-            }
-            if (!animating) animateGlitter();
-        }
+const pages = document.querySelectorAll('.page');
+const pageButtons = document.querySelectorAll('[data-page]');
+const navLinks = document.querySelectorAll('.nav-link');
+const nav = document.getElementById('navLinks');
+const menuToggle = document.getElementById('menuToggle');
 
-        function animateGlitter() {
-            animating = true;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles = particles.filter(p => p.life > 0);
-            for (const p of particles) {
-                ctx.save();
-                ctx.globalAlpha = p.life;
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                if (p.shape === 'rect') {
-                    ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-                p.x += p.vx; p.y += p.vy; p.vy += 0.05;
-                p.rotation += p.rotSpeed; p.life -= p.decay;
-            }
-            if (particles.length > 0) requestAnimationFrame(animateGlitter);
-            else { animating = false; ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        }
+function showPage(name) {
+  if (!document.getElementById(name)) return;
 
-        function showUnlockPopup(themeName, emoji) {
-            const popup = document.getElementById('unlock-popup');
-            document.getElementById('unlock-emoji').innerText = emoji;
-            document.getElementById('unlock-text').innerText = themeName + ' Unlocked!';
-            popup.classList.add('show');
-            spawnGlitter();
-            setTimeout(() => popup.classList.remove('show'), 2800);
-        }
+  pages.forEach(page => {
+    page.classList.toggle('active', page.id === name);
+  });
 
-        function updateUI() {
-            document.getElementById('coin-display-home').innerText = absolutelyNothingThatisImportantlol;
-            document.getElementById('coin-display-slots').innerText = absolutelyNothingThatisImportantlol;
-            document.body.className = activeTheme || '';
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.page === name);
+  });
 
-            const grid = document.getElementById('theme-grid-container');
-            grid.innerHTML = '';
-            for (const [themeId, data] of Object.entries(themeData)) {
-                const btn = document.createElement('button');
-                btn.className = 'theme-item-btn';
-                if (unlockedThemes.includes(themeId)) {
-                    btn.innerHTML = data.name;
-                    if (activeTheme === themeId) {
-                        btn.innerHTML += '<span class="equipped-stamp">✔ Equipped</span>';
-                        btn.style.borderColor = 'green';
-                    } else {
-                        btn.onclick = () => { activeTheme = themeId; hoihpohivpoweahovropagh4p9h8g4(); };
-                    }
-                } else {
-                    btn.innerText = '🔒 ???';
-                    btn.disabled = true;
-                }
-                grid.appendChild(btn);
-            }
-        }
+  nav.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.textContent = 'Menu';
 
-        // ===== SAVE SYSTEM =====
-        const SAVE_KEY = "ihg398g231f1g3ig1f13f";
-        const _skr = "gf2378g8o32843g7p243f";
-        const _mfk = "gvg437v2g7937v9g329";
-        const _mfv = "f3h4w9g83g7vvq283g7v7q83gqv30874gv83qgv84g3q80v";
-        const _v3k = "pZ9&kL2#mN8vR4xQ9@yB6cA3sT7dV5fG1hJ0kL8nP4qW9rE6tY3uU1iO0pA7sD4fF9gG6hH3jJ0kK9lL8";
-        const _v3s = "g42h3g90487gf80g3802gf7802gf780g2180fg81g387f3g2780fg34gfg283gf08g138fg842gfgyiofsiogfuiodgfiuogfuog42q8g84g378fg834gv7894gv6794567g67967^&*%^&*%&*%&*&*f8o4h8fg84g38og8o4$%#%^%#&#$!&34g78g894g3789ghv348q";
+  history.replaceState(null, '', '#' + name);
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
 
-        function _b64ToArr(b64) {
-            const bin = atob(b64);
-            const arr = new Uint8Array(bin.length);
-            for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-            return arr;
-        }
-        function _arrToB64(arr) {
-            let bin = '';
-            arr.forEach(b => bin += String.fromCharCode(b));
-            return btoa(bin);
-        }
-        async function _deriveKey(rawKeyB64, saltArr) {
-            const rawBytes = _b64ToArr(rawKeyB64);
-            const baseKey = await crypto.subtle.importKey('raw', rawBytes, 'PBKDF2', false, ['deriveKey']);
-            return crypto.subtle.deriveKey(
-                { name: 'PBKDF2', salt: saltArr, iterations: 310000, hash: 'SHA-512' },
-                baseKey, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
-            );
-        }
-        async function _getOrCreateMaterial() {
-            let rawB64 = localStorage.getItem(_v3k);
-            let saltB64 = localStorage.getItem(_v3s);
-            if (!rawB64 || !saltB64) {
-                const raw = crypto.getRandomValues(new Uint8Array(64));
-                const salt = crypto.getRandomValues(new Uint8Array(32));
-                rawB64 = _arrToB64(raw); saltB64 = _arrToB64(salt);
-                localStorage.setItem(_v3k, rawB64); localStorage.setItem(_v3s, saltB64);
-            }
-            return _deriveKey(rawB64, _b64ToArr(saltB64));
-        }
-        async function encode(data) {
-            const key = await _getOrCreateMaterial();
-            const iv = crypto.getRandomValues(new Uint8Array(12));
-            const plain = new TextEncoder().encode(JSON.stringify(data));
-            const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain);
-            const combined = new Uint8Array(iv.byteLength + cipher.byteLength);
-            combined.set(iv, 0); combined.set(new Uint8Array(cipher), iv.byteLength);
-            return _arrToB64(combined);
-        }
-        async function decode(str) {
-            try {
-                const key = await _getOrCreateMaterial();
-                const combined = _b64ToArr(str);
-                const iv = combined.slice(0, 12), cipher = combined.slice(12);
-                const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher);
-                return JSON.parse(new TextDecoder().decode(plain));
-            } catch { return null; }
-        }
-        function _legacyDecodeV2(str, secret) {
-            try {
-                let dec = decodeURIComponent(escape(atob(str)));
-                if (!dec.endsWith(secret)) return null;
-                return JSON.parse(dec.slice(0, -secret.length));
-            } catch { return null; }
-        }
+pageButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    showPage(button.dataset.page);
+  });
+});
 
-        async function hugh43go278872() {
-            const validThemes = Object.keys(themeData);
-            const alreadyMigrated = localStorage.getItem(_mfk) === _mfv;
-            const encrypted = localStorage.getItem(SAVE_KEY);
-            if (encrypted) {
-                const data = await decode(encrypted);
-                if (data && typeof data === 'object') return data;
-                if (!alreadyMigrated) {
-                    const legacySecret = localStorage.getItem(_skr);
-                    if (legacySecret) {
-                        const legacyData = _legacyDecodeV2(encrypted, legacySecret);
-                        if (legacyData && typeof legacyData === 'object') {
-                            let themes = Array.isArray(legacyData.unlockedThemes) ? legacyData.unlockedThemes : ['default'];
-                            themes = themes.filter(t => validThemes.includes(t));
-                            const coins = Math.min(parseInt(legacyData.absolutelyNothingThatisImportantlol || legacyData.coins || 0), 50);
-                            const active = validThemes.includes(legacyData.activeTheme) ? legacyData.activeTheme : 'default';
-                            const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
-                            localStorage.setItem(SAVE_KEY, await encode(newSave));
-                            localStorage.removeItem(_skr); localStorage.setItem(_mfk, _mfv);
-                            return newSave;
-                        }
-                    }
-                }
-            }
-            if (!alreadyMigrated) {
-                const OLD_KEY = "duckSecureV2", OLD_SECRET = "duck_key_v2_secure";
-                const oldRaw = localStorage.getItem(OLD_KEY);
-                if (oldRaw) {
-                    try {
-                        const oldData = _legacyDecodeV2(oldRaw, OLD_SECRET);
-                        if (oldData) {
-                            let themes = Array.isArray(oldData.unlockedThemes) ? oldData.unlockedThemes : ['default'];
-                            themes = themes.filter(t => validThemes.includes(t));
-                            const coins = Math.min(parseInt(oldData.coins || oldData.absolutelyNothingThatisImportantlol || 0), 50);
-                            const active = validThemes.includes(oldData.activeTheme) ? oldData.activeTheme : 'default';
-                            const newSave = { absolutelyNothingThatisImportantlol: coins, unlockedThemes: themes.length ? themes : ['default'], activeTheme: active };
-                            localStorage.setItem(SAVE_KEY, await encode(newSave));
-                            localStorage.removeItem(OLD_KEY); localStorage.setItem(_mfk, _mfv);
-                            return newSave;
-                        }
-                    } catch(e) { localStorage.removeItem(OLD_KEY); }
-                }
-                const oldCoins = localStorage.getItem('quackCoins');
-                const oldThemes = localStorage.getItem('unlockedThemes');
-                const oldActive = localStorage.getItem('activeTheme');
-                if (oldCoins !== null || oldThemes !== null || oldActive !== null) {
-                    let parsedThemes;
-                    try { parsedThemes = JSON.parse(oldThemes); } catch { parsedThemes = ['default']; }
-                    if (!Array.isArray(parsedThemes)) parsedThemes = ['default'];
-                    parsedThemes = parsedThemes.filter(t => validThemes.includes(t));
-                    const newSave = {
-                        absolutelyNothingThatisImportantlol: Math.min(parseInt(oldCoins) || 0, 50),
-                        unlockedThemes: parsedThemes.length ? parsedThemes : ['default'],
-                        activeTheme: validThemes.includes(oldActive) ? oldActive : 'default'
-                    };
-                    localStorage.setItem(SAVE_KEY, await encode(newSave));
-                    localStorage.removeItem('quackCoins'); localStorage.removeItem('unlockedThemes'); localStorage.removeItem('activeTheme');
-                    localStorage.setItem(_mfk, _mfv);
-                    return newSave;
-                }
-            }
-            return { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
-        }
+document.querySelectorAll('.shortcut').forEach(card => {
+  card.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      showPage(card.dataset.page);
+    }
+  });
+});
 
-        async function hoihpohivpoweahovropagh4p9h8g4(dataOverride = null) {
-            const data = dataOverride ? dataOverride : {
-                absolutelyNothingThatisImportantlol: absolutelyNothingThatisImportantlol || 0,
-                unlockedThemes: unlockedThemes || ['default'],
-                activeTheme: activeTheme || 'default'
-            };
-            localStorage.setItem(SAVE_KEY, await encode(data));
-            updateUI();
-        }
+menuToggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('open');
+  menuToggle.textContent = open ? 'Close' : 'Menu';
+  menuToggle.setAttribute('aria-expanded', String(open));
+});
 
-        let save = await hugh43go278872();
-        if (!save || typeof save !== 'object') save = { absolutelyNothingThatisImportantlol: 0, unlockedThemes: ['default'], activeTheme: 'default' };
-        absolutelyNothingThatisImportantlol = save.absolutelyNothingThatisImportantlol || 0;
-        unlockedThemes = save.unlockedThemes || ['default'];
-        activeTheme = save.activeTheme || 'default';
-        updateUI();
-        let activeSeconds = 0;
-        let lastInteraction = Date.now();
-        window.addEventListener('mousemove', () => lastInteraction = Date.now());
-        window.addEventListener('keydown',   () => lastInteraction = Date.now());
-        window.addEventListener('click',     () => lastInteraction = Date.now());
+function loadPageFromHash() {
+  const name = location.hash.slice(1);
+  showPage(['home', 'games', 'gallery', 'shop'].includes(name) ? name : 'home');
+}
 
-        setInterval(() => {
-            let _45230X4xc = absolutelyNothingThatisImportantlol;
-            let isIframeActive = document.activeElement === document.getElementById('game-frame');
-            let isWindowActive = (Date.now() - lastInteraction) < 10000;
-            if (_45230X4xc != absolutelyNothingThatisImportantlol) {
-                absolutelyNothingThatisImportantlol = 0; _45230X4xc = 0; showAlert("CHEATER", "🚨");
-            }
-            if (isIframeActive || (isWindowActive && document.getElementById('game-frame').style.display !== 'none')) {
-                activeSeconds++;
-                if (activeSeconds >= 6000) {
-                    absolutelyNothingThatisImportantlol += 10;
-                    _45230X4xc = absolutelyNothingThatisImportantlol;
-                    hoihpohivpoweahovropagh4p9h8g4();
-                    activeSeconds = 0;
-                }
-            }
-        }, 10);
-        const symbols = ['🍒','🦆','💎','🎰','🖥️','🌅','🌲','✨','🔴','🐥','❄️','🌊'];
-        let freeSpins = 0;
+window.addEventListener('hashchange', loadPageFromHash);
 
-        function randomGoofyAssFunction() {
-            if (isSpinning) return;
-            const cost = freeSpins > 0 ? 0 : 3;
-            if (absolutelyNothingThatisImportantlol < cost) { showAlert("You need 3 Quack Coins to spin!", "🎰"); return; }
-            if (freeSpins > 0) {
-                freeSpins--;
-                document.getElementById('mega-spin-indicator').innerText = freeSpins > 0 ? `⚡ Free Spins left: ${freeSpins}` : '';
-            } else {
-                absolutelyNothingThatisImportantlol -= 3;
-            }
-            hoihpohivpoweahovropagh4p9h8g4();
-            isSpinning = true;
-            document.getElementById('spin-btn').disabled = true;
-            document.getElementById('slot-message').innerText = "Spinning...";
-            let ticks = 0;
-            const spinInterval = setInterval(() => {
-                document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                ticks++;
-                if (ticks > 20) { clearInterval(spinInterval); finishSpin(); }
-            }, 50);
-        }
-        function finishSpin() {
-            const r1 = document.getElementById('reel1').innerText;
-            const r2 = document.getElementById('reel2').innerText;
-            const r3 = document.getElementById('reel3').innerText;
-            if (r1 === r2 && r2 === r3) {
-                if      (r1 === '🍒') grantReward('coins',           5,  "Jackpot! +5 Coins!");
-                else if (r1 === '🦆') grantReward('theme-dark',      10, "You unlocked DARK MODE!");
-                else if (r1 === '💎') grantReward('theme-ocean',     15, "You unlocked OCEAN BLUE!");
-                else if (r1 === '🎰') grantReward('theme-neon',      25, "You unlocked NEON PINK!");
-                else if (r1 === '🖥️') grantReward('theme-retro',     20, "You unlocked RETRO TERMINAL!");
-                else if (r1 === '🌅') grantReward('theme-sunset',    20, "You unlocked SUNSET!");
-                else if (r1 === '🌲') grantReward('theme-forest',    20, "You unlocked FOREST!");
-                else if (r1 === '✨') grantReward('theme-galaxy',    30, "You unlocked GALAXY!");
-                else if (r1 === '🔴') grantReward('theme-bloodmoon', 35, "You unlocked BLOOD MOON!");
-                else if (r1 === '🐥') grantReward('theme-rubberduck',15, "You unlocked RUBBER DUCK!");
-                else if (r1 === '❄️') grantReward('theme-winter',    20, "You unlocked WINTER!");
-                else if (r1 === '🌊') grantReward('theme-vaporwave', 25, "You unlocked VAPORWAVE!");
-            } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                grantReward('coins', 1, "Two matched! +1 Coin back.");
-            } else {
-                document.getElementById('slot-message').innerText = "No luck this time. Try again!";
-            }
-            isSpinning = false;
-            document.getElementById('spin-btn').disabled = false;
-        }
-        function grantReward(type, coinFallback, successMsg) {
-            let isNewUnlock = false;
-            if (type === 'coins') {
-                absolutelyNothingThatisImportantlol += coinFallback;
-            } else {
-                if (unlockedThemes.includes(type)) {
-                    absolutelyNothingThatisImportantlol += coinFallback;
-                    successMsg = `Already owned! Here are ${coinFallback} Coins instead.`;
-                } else {
-                    unlockedThemes.push(type);
-                    isNewUnlock = true;
-                }
-            }
-            document.getElementById('slot-message').innerText = successMsg;
-            hoihpohivpoweahovropagh4p9h8g4();
-            if (isNewUnlock) {
-                const data = themeData[type];
-                showUnlockPopup(data.name.replace(/^.{2}/, '').trim(), data.emoji);
-            }
-        }
-        function megaSpin() {
-            if (isSpinning) return;
-            if (absolutelyNothingThatisImportantlol < 9) { showAlert("Need 9 Quack Coins for Mega Spin!", "⚡"); return; }
-            absolutelyNothingThatisImportantlol -= 9;
-            hoihpohivpoweahovropagh4p9h8g4();
-            let spinsLeft = 3;
-            document.getElementById('mega-spin-indicator').innerText = `⚡ Mega Spin: ${spinsLeft} spins left`;
-            document.getElementById('spin-btn').disabled = true;
-            document.getElementById('mega-btn').disabled = true;
-            isSpinning = true;
+/* GAME DETAILS AND EMBEDDED VIEWER */
 
-            function runOneSpin() {
-                document.getElementById('slot-message').innerText = "Spinning...";
-                let ticks = 0;
-                const spinInterval = setInterval(() => {
-                    document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                    document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                    document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                    ticks++;
-                    if (ticks > 20) {
-                        clearInterval(spinInterval);
-                        finishSpin();
-                        spinsLeft--;
-                        document.getElementById('mega-spin-indicator').innerText = spinsLeft > 0 ? `⚡ Mega Spin: ${spinsLeft} spins left` : '';
-                        if (spinsLeft > 0) setTimeout(runOneSpin, 800);
-                        else {
-                            isSpinning = false;
-                            document.getElementById('spin-btn').disabled = false;
-                            document.getElementById('mega-btn').disabled = false;
-                        }
-                    }
-                }, 50);
-            }
-            runOneSpin();
-        }
-        let alertTimeout = null;
-        function showAlert(msg, title = '', autoDismiss = 0) {
-            document.getElementById('custom-alert-title').innerText = title;
-            document.getElementById('custom-alert-msg').innerText = msg;
-            document.getElementById('custom-alert-overlay').classList.add('show');
-            const prog = document.getElementById('custom-alert-progress');
-            prog.style.transition = 'none'; prog.style.width = '100%';
-            if (alertTimeout) clearTimeout(alertTimeout);
-            if (autoDismiss > 0) {
-                setTimeout(() => { prog.style.transition = `width ${autoDismiss}ms linear`; prog.style.width = '0%'; }, 50);
-                alertTimeout = setTimeout(closeCustomAlert, autoDismiss);
-            } else { prog.style.width = '0%'; }
-        }
-        function closeCustomAlert() {
-            document.getElementById('custom-alert-overlay').classList.remove('show');
-            if (alertTimeout) { clearTimeout(alertTimeout); alertTimeout = null; }
-        }
+const gameButtons = [...document.querySelectorAll('.game-btn')];
+const infoTitle = document.getElementById('infoTitle');
+const infoDescription = document.getElementById('infoDescription');
+const infoControls = document.getElementById('infoControls');
+const playSelected = document.getElementById('playSelected');
+const gameSearch = document.getElementById('gameSearch');
+const visibleCount = document.getElementById('visibleCount');
+const noResults = document.getElementById('noResults');
 
-        function refreshHomeNametag() {
-            const stored = localStorage.getItem('qw_nametag');
-            const el = document.getElementById('home-nametag');
-            if (stored) {
-                try { el.innerText = '🏷️ ' + atob(stored); el.style.display = 'block'; }
-                catch { el.style.display = 'none'; }
-            } else { el.style.display = 'none'; }
-        }
-        refreshHomeNametag();
-        function getDuckSave() {
-            try {
-                const raw = localStorage.getItem('duckV12Accounts');
-                if (!raw) return null;
-                const parsed = JSON.parse(decodeURIComponent(atob(raw))); // match Duck RNG's d102mc84
-                const key = Object.keys(parsed)[0];
-                return { key, data: parsed[key] };
-            } catch { return null; }
-        }
-        function getDuckCoins() {
-            const s = getDuckSave();
-            return s ? (s.data.saveData?.coins || 0) : null;
-        }
-        function isDuckBanned() {
-            const s = getDuckSave();
-            return s ? !!(s.data.saveData?.banned) : false;
-        }
-        function setDuckField(field, value) {
-            try {
-                const raw    = localStorage.getItem('duckV12Accounts');
-                const parsed = JSON.parse(decodeURIComponent(atob(raw)));
-                const key    = Object.keys(parsed)[0];
-                parsed[key].saveData[field] = value;
-                localStorage.setItem('duckV12Accounts', btoa(encodeURIComponent(JSON.stringify(parsed))));
-                return true;
-            } catch { return false; }
-        }
-        function setDuckCoins(amount) { return setDuckField('coins', amount); }
-        function refreshDuckDisplay() {
-            const dc = getDuckCoins();
-            const el = document.getElementById('duck-coin-display');
-            if (el) el.innerText = dc !== null ? dc : 'N/A (play Duck RNG first)';
-            const elShop = document.getElementById('coin-display-shop');
-            if (elShop) elShop.innerText = absolutelyNothingThatisImportantlol;
-        }
+const gameViewer = document.getElementById('gameViewer');
+const gameFrame = document.getElementById('gameFrame');
+const viewerTitle = document.getElementById('viewerTitle');
 
-        function exchangeToDuck() {
-            if (absolutelyNothingThatisImportantlol < 1) { showAlert("Need at least 1 Quack Coin!", "❌"); return; }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            absolutelyNothingThatisImportantlol--;
-            setDuckCoins(dc + 10000);
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert("✅ -1 Quack Coin → +10,000 Duck Coins!", "🔄", 3000);
-        }
-        function exchangeToQuack() {
-            if (isDuckBanned()) {
-                showAlert("Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.", "🔨 Banned");
-                return;
-            }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 10000) { showAlert("Need 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
-            setDuckCoins(dc - 10000);
-            absolutelyNothingThatisImportantlol++;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert("✅ -10,000 Duck Coins → +1 Quack Coin!", "🔃", 3000);
-        }
-        function exchangeAllToQuack() {
-            if (isDuckBanned()) {
-                showAlert("Your Duck RNG account is banned.\nYou cannot convert Duck Coins while banned.\nUse 'Unban Duck RNG' to lift the ban first.", "🔨 Banned");
-                return;
-            }
-            const dc = getDuckCoins();
-            if (dc === null) { showAlert("No Duck RNG save found. Play Duck RNG first!", "🦆"); return; }
-            if (dc < 10000) { showAlert("Need at least 10,000 Duck Coins! You have " + dc + ".", "🔃"); return; }
-            const quackGain = Math.floor(dc / 10000);
-            const remainder = dc % 10000;
-            setDuckCoins(remainder);
-            absolutelyNothingThatisImportantlol += quackGain;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            showAlert(`✅ Converted ${quackGain * 10000} Duck Coins → +${quackGain} Quack Coins!\n${remainder > 0 ? remainder + " Duck Coins left over." : ""}`, "⚡ Convert All", 4000);
-        }
-        function unbanDuck() {
-            if (!isDuckBanned()) { showAlert("Your Duck RNG account is not banned!", "✅", 3000); return; }
-            if (absolutelyNothingThatisImportantlol < 100) {
-                showAlert("Need 100 Quack Coins to unban. You have " + absolutelyNothingThatisImportantlol + ".", "🔨");
-                return;
-            }
-            absolutelyNothingThatisImportantlol -= 100;
-            setDuckField('banned', false);
-            setDuckField('strikes', 0);
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshDuckDisplay();
-            spawnGlitter();
-            showAlert("✅ Duck RNG account unbanned! Strikes reset. Don't get caught again.", "🕊️ Unbanned", 4000);
-        }
-        let flipInProgress = false;
-        function doFlip(choice) {
-            if (flipInProgress) return;
-            const bet = Math.max(1, Math.min(10, parseInt(document.getElementById('flip-bet').value) || 1));
-            if (absolutelyNothingThatisImportantlol < bet) { showAlert(`Need ${bet} coins! You have ${absolutelyNothingThatisImportantlol}.`, "❌"); return; }
-            flipInProgress = true;
-            document.getElementById('flip-heads').disabled = true;
-            document.getElementById('flip-tails').disabled = true;
-            document.getElementById('flip-result').innerText = '';
-            const coin = document.getElementById('coinflip-coin');
-            coin.classList.add('flipping');
-            setTimeout(() => {
-                coin.classList.remove('flipping');
-                const result = Math.random() < 0.5 ? 'heads' : 'tails';
-                const won = result === choice;
-                if (won) {
-                    absolutelyNothingThatisImportantlol += bet;
-                    document.getElementById('flip-result').style.color = '#2ecc71';
-                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You won +${bet} coins!`;
-                    spawnGlitter();
-                } else {
-                    absolutelyNothingThatisImportantlol -= bet;
-                    document.getElementById('flip-result').style.color = '#e74c3c';
-                    document.getElementById('flip-result').innerText = `${result === 'heads' ? '🦆' : '🐟'} ${result.toUpperCase()}! You lost ${bet} coins.`;
-                }
-                coin.innerText = result === 'heads' ? '🦆' : '🐟';
-                document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-                hoihpohivpoweahovropagh4p9h8g4();
-                flipInProgress = false;
-                document.getElementById('flip-heads').disabled = false;
-                document.getElementById('flip-tails').disabled = false;
-            }, 1900);
-        }
-        let scratchActive = false, scratchPrize = null;
-        function openScratch() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins for a scratch card!", "🎫"); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const prizes = [
-                { emoji: '💰', label: '+5 Coins',  action: () => { absolutelyNothingThatisImportantlol += 5;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💰', label: '+5 Coins',  action: () => { absolutelyNothingThatisImportantlol += 5;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '🪙', label: '+1 Coin',   action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💎', label: '+10 Coins', action: () => { absolutelyNothingThatisImportantlol += 10; hoihpohivpoweahovropagh4p9h8g4(); spawnGlitter(); } },
-                { emoji: '🦆', label: '+3 Coins',  action: () => { absolutelyNothingThatisImportantlol += 3;  hoihpohivpoweahovropagh4p9h8g4(); } },
-                { emoji: '💸', label: 'Nothing',   action: () => {} },
-                { emoji: '💸', label: 'Nothing',   action: () => {} },
-                { emoji: '💸', label: 'Nothing',   action: () => {} },
-            ];
-            scratchPrize = prizes[Math.floor(Math.random() * prizes.length)];
-            document.getElementById('scratch-reveal').innerText = scratchPrize.emoji;
-            document.getElementById('scratch-result').innerText = '';
-            document.getElementById('scratch-desc').innerText = 'Scratch the card to reveal your prize!';
-            scratchActive = true;
-            openMenu('scratch-screen');
-            setTimeout(() => {
-                const c = document.getElementById('scratch-canvas');
-                const cx = c.getContext('2d');
-                cx.clearRect(0, 0, c.width, c.height);
-                cx.fillStyle = '#aaa'; cx.fillRect(0, 0, c.width, c.height);
-                cx.fillStyle = '#888'; cx.font = 'bold 18px sans-serif'; cx.textAlign = 'center';
-                cx.fillText('SCRATCH HERE', c.width / 2, c.height / 2);
-                let scratched = false;
-                function scratch(e) {
-                    if (!scratchActive) return;
-                    const rect = c.getBoundingClientRect();
-                    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
-                    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
-                    cx.globalCompositeOperation = 'destination-out';
-                    cx.beginPath(); cx.arc(x, y, 22, 0, Math.PI * 2); cx.fill();
-                    if (!scratched) {
-                        const id = cx.getImageData(0, 0, c.width, c.height);
-                        let cleared = 0;
-                        for (let i = 3; i < id.data.length; i += 4) if (id.data[i] === 0) cleared++;
-                        if (cleared / (c.width * c.height) > 0.45) {
-                            scratched = true; scratchActive = false;
-                            cx.clearRect(0, 0, c.width, c.height);
-                            scratchPrize.action();
-                            document.getElementById('scratch-result').innerText = `🎉 ${scratchPrize.label}!`;
-                            hoihpohivpoweahovropagh4p9h8g4();
-                        }
-                    }
-                }
-                c.addEventListener('mousemove', e => { if (e.buttons === 1) scratch(e); });
-                c.addEventListener('touchmove', e => { e.preventDefault(); scratch(e); }, { passive: false });
-            }, 50);
-        }
-        function peekTheme() {
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 Quack Coins to peek!", "👁️"); return; }
-            const locked = Object.entries(themeData).filter(([id]) => !unlockedThemes.includes(id));
-            if (locked.length === 0) { showAlert("You've unlocked everything already! 👑", "👑", 3000); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const [id, data] = locked[Math.floor(Math.random() * locked.length)];
-            showAlert(`👁️ Peek: ${data.name}\n\nAuto-dismissing in 5 seconds...`, "👁️ Theme Peek", 5000);
-        }
-        function setNametag() {
-            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 Quack Coins!", "🏷️"); return; }
-            const name = document.getElementById('nametag-input').value.trim();
-            if (!name) { showAlert("Enter a name first!", "🏷️"); return; }
-            if (name.length > 16) { showAlert("Max 16 characters!", "🏷️"); return; }
-            absolutelyNothingThatisImportantlol -= 5;
-            localStorage.setItem('qw_nametag', btoa(name));
-            document.getElementById('nametag-display').innerText = name;
-            hoihpohivpoweahovropagh4p9h8g4();
-            refreshHomeNametag();
-            showAlert(`✅ Name set to "${name}"!`, "🏷️");
-        }
-        function loadNametag() {
-            const stored = localStorage.getItem('qw_nametag');
-            if (stored) { try { document.getElementById('nametag-display').innerText = atob(stored); } catch {} }
-        }
-        const dieFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-        let luckyRolling = false;
-        function doLuckyRoll() {
-            if (luckyRolling) return;
-            if (absolutelyNothingThatisImportantlol < 3) { showAlert("Need 3 coins to roll!", "🎲"); return; }
-            absolutelyNothingThatisImportantlol -= 3;
-            hoihpohivpoweahovropagh4p9h8g4();
-            luckyRolling = true;
-            document.getElementById('lucky-roll-btn').disabled = true;
-            document.getElementById('lucky-roll-result').innerText = '';
-            const die = document.getElementById('lucky-roll-die');
-            die.classList.add('rolling');
-            let ticks = 0;
-            const iv = setInterval(() => {
-                die.innerText = dieFaces[Math.floor(Math.random() * 6)];
-                ticks++;
-                if (ticks > 18) {
-                    clearInterval(iv);
-                    die.classList.remove('rolling');
-                    const result = Math.floor(Math.random() * 6) + 1;
-                    die.innerText = dieFaces[result - 1];
-                    absolutelyNothingThatisImportantlol += result;
-                    if (result >= 5) spawnGlitter();
-                    document.getElementById('lucky-roll-result').innerText = `Rolled ${result}! +${result} coins 🎉`;
-                    document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
-                    hoihpohivpoweahovropagh4p9h8g4();
-                    luckyRolling = false;
-                    document.getElementById('lucky-roll-btn').disabled = false;
-                }
-            }, 60);
-        }
-        function openMysteryBox() {
-            if (absolutelyNothingThatisImportantlol < 5) { showAlert("Need 5 coins for a Mystery Box!", "🎁"); return; }
-            absolutelyNothingThatisImportantlol -= 5;
-            hoihpohivpoweahovropagh4p9h8g4();
-            const outcomes = [
-                { msg: "💩 It's empty. Just a box.", delta: 0 },
-                { msg: "🪙 You found 2 coins!",      delta: 2 },
-                { msg: "🪙 You found 2 coins!",      delta: 2 },
-                { msg: "🎉 +8 coins! Nice haul!",    delta: 8 },
-                { msg: "🎉 +8 coins! Nice haul!",    delta: 8 },
-                { msg: "💎 JACKPOT! +20 coins!!!",   delta: 20 },
-                { msg: "💀 Cursed box! -1 coin.",    delta: -1 },
-                { msg: "🦆 A rubber duck fell out. +4 coins!", delta: 4 },
-                { msg: "🌈 Rainbow dust! +6 coins.", delta: 6 },
-                { msg: "📦 Another box inside? +1 coin I guess.", delta: 1 },
-            ];
-            const pick = outcomes[Math.floor(Math.random() * outcomes.length)];
-            absolutelyNothingThatisImportantlol = Math.max(0, absolutelyNothingThatisImportantlol + pick.delta);
-            if (pick.delta >= 8) spawnGlitter();
-            hoihpohivpoweahovropagh4p9h8g4();
-            showAlert(pick.msg, "🎁 Mystery Box", 4000);
-        }
-        let bullseyeActive = true;
-        function doBullseye(pick) {
-            if (!bullseyeActive) return;
-            if (absolutelyNothingThatisImportantlol < 2) { showAlert("Need 2 coins to play Bullseye!", "🎯"); return; }
-            absolutelyNothingThatisImportantlol -= 2;
-            hoihpohivpoweahovropagh4p9h8g4();
-            bullseyeActive = false;
-            document.querySelectorAll('.bullseye-btn').forEach(b => b.disabled = true);
-            const roll = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('bullseye-roll').innerText = `🎲 Rolled: ${roll}`;
-            const btns = document.querySelectorAll('.bullseye-btn');
-            btns[roll - 1].classList.add('hit');
-            if (pick !== roll) btns[pick - 1].classList.add('miss');
-            let msg = '';
-            if (pick === roll) {
-                const win = 2 * 8;
-                absolutelyNothingThatisImportantlol += win;
-                msg = `🎯 BULLSEYE! +${win} coins!`;
-                spawnGlitter();
-            } else {
-                msg = `😬 Rolled ${roll}, not ${pick}. Lost 2 coins.`;
-            }
-            document.getElementById('bullseye-result').innerText = msg;
-            document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
-            hoihpohivpoweahovropagh4p9h8g4();
-            setTimeout(() => {
-                bullseyeActive = true;
-                document.querySelectorAll('.bullseye-btn').forEach(b => {
-                    b.disabled = false;
-                    b.classList.remove('hit', 'miss');
-                });
-                document.getElementById('bullseye-roll').innerText = '';
-                document.getElementById('bullseye-result').innerText = '';
-            }, 2200);
-        }
-        function claimDailyBonus() {
-            const today = new Date().toDateString();
-            const lastClaim = localStorage.getItem('qw_daily');
-            if (lastClaim === today) {
-                showAlert("Already claimed today! Come back tomorrow 🌅", "📅", 3000);
-                return;
-            }
-            absolutelyNothingThatisImportantlol += 3;
-            localStorage.setItem('qw_daily', today);
-            hoihpohivpoweahovropagh4p9h8g4();
-            spawnGlitter();
-            showAlert("🎉 +3 Coins! See you tomorrow!", "📅 Daily Bonus", 3000);
-        }
-        function buyFreeSpin() {
-            if (absolutelyNothingThatisImportantlol < 8) { showAlert("Need 8 coins for a Free Spin Token!", "⚡"); return; }
-            absolutelyNothingThatisImportantlol -= 8;
-            freeSpins++;
-            hoihpohivpoweahovropagh4p9h8g4();
-            document.getElementById('mega-spin-indicator').innerText = `⚡ Free Spins banked: ${freeSpins}`;
-            showAlert(`⚡ Free Spin banked! You now have ${freeSpins}. Use it at the slot machine!`, "⚡", 3000);
-        }
-        const ALL_SCREENS = [
-            'welcome-screen','slot-screen','themes-screen','shop-screen',
-            'coinflip-screen','scratch-screen','nametag-screen',
-            'luckyroll-screen','bullseye-screen'
-        ];
+let selectedGame = null;
 
-        function playGame(gameUrl) {
-            clearTimeout(loadTimer);
-            openMenu('welcome-screen');
-            document.getElementById('welcome-screen').style.display = 'none';
-            const sidebar = document.getElementById('sidebar');
-            sidebar.style.display = 'none';
-            setTimeout(() => { sidebar.style.display = ''; }, 100);
-            const loader = document.getElementById('loader');
-            loader.style.display = 'flex';
-            loadTimer = setTimeout(() => {
-                loader.style.display = 'none';
-                const frame = document.getElementById('game-frame');
-                frame.style.display = 'block';
-                frame.src = gameUrl + "?v=" + new Date().getTime();
-                frame.focus();
-            }, 2000);
-        }
-        function goHome() {
-            clearTimeout(loadTimer);
-            document.getElementById('game-frame').src = '';
-            document.getElementById('loader').style.display = 'none';
-            openMenu('welcome-screen');
-        }
-        function toggleFullScreen() {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => showAlert(`Error: ${err.message}`, "❌"));
-            else document.exitFullscreen();
-        }
-        function showInfo(title, desc, controls) {
-            document.getElementById('info-title').innerText = title;
-            document.getElementById('info-desc').innerText = desc;
-            document.getElementById('info-controls').innerText = controls;
-            document.getElementById('info-panel').style.left = '320px';
-        }
-        function hideInfo() { document.getElementById('info-panel').style.left = '-400px'; }
-        function openMenu(menuId) {
-            ALL_SCREENS.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.style.display = 'none';
-            });
-            document.getElementById('game-frame').style.display = 'none';
-            document.getElementById(menuId).style.display = 'block';
-            if (menuId === 'shop-screen')       refreshDuckDisplay();
-            if (menuId === 'welcome-screen')    refreshHomeNametag();
-            if (menuId === 'coinflip-screen')   document.getElementById('coin-display-flip').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'nametag-screen')    loadNametag();
-            if (menuId === 'luckyroll-screen')  document.getElementById('luckyroll-coins').innerText = absolutelyNothingThatisImportantlol;
-            if (menuId === 'bullseye-screen') {
-                document.getElementById('bullseye-coins').innerText = absolutelyNothingThatisImportantlol;
-                bullseyeActive = true;
-                document.querySelectorAll('.bullseye-btn').forEach(b => { b.disabled = false; b.classList.remove('hit','miss'); });
-                document.getElementById('bullseye-roll').innerText = '';
-                document.getElementById('bullseye-result').innerText = '';
-            }
-        }
-        window.gameState = {};
-        window.randomGoofyAssFunction = randomGoofyAssFunction;
-        window.megaSpin = megaSpin;
-        window.openMenu = openMenu;
-        window.playGame = playGame;
-        window.goHome = goHome;
-        window.toggleFullScreen = toggleFullScreen;
-        window.showInfo = showInfo;
-        window.hideInfo = hideInfo;
-        window.doFlip = doFlip;
-        window.openScratch = openScratch;
-        window.setNametag = setNametag;
-        window.peekTheme = peekTheme;
-        window.exchangeToDuck = exchangeToDuck;
-        window.exchangeToQuack = exchangeToQuack;
-        window.unbanDuck = unbanDuck;
-        window.doLuckyRoll = doLuckyRoll;
-        window.openMysteryBox = openMysteryBox;
-        window.doBullseye = doBullseye;
-        window.claimDailyBonus = claimDailyBonus;
-        window.buyFreeSpin = buyFreeSpin;
-        window.closeCustomAlert = closeCustomAlert;
-        window.exchangeAllToQuack = exchangeAllToQuack;
-        window.grantReward = grantReward;
-        window.gameState.absolutelyNothingThatisImportantlol = absolutelyNothingThatisImportantlol;
-        window.gameState.unlockedThemes = unlockedThemes;
-        window.gameState.activeTheme = activeTheme;
-        window.hoihpohivpoweahovropagh4p9h8g4 = hoihpohivpoweahovropagh4p9h8g4;
-    })();
-    </script>
+function showInfo(game) {
+  selectedGame = game;
+
+  gameButtons.forEach(button => {
+    button.classList.toggle('selected', button === game);
+  });
+
+  infoTitle.textContent = game.dataset.name;
+  infoDescription.textContent = game.dataset.description;
+  infoControls.textContent = 'Controls: ' + game.dataset.controls;
+
+  playSelected.disabled = false;
+}
+
+function hideInfo() {
+  selectedGame = null;
+
+  gameButtons.forEach(button => button.classList.remove('selected'));
+
+  infoTitle.textContent = 'Choose a game';
+  infoDescription.textContent = 'Hover over any game card to see its details.';
+  infoControls.textContent = 'Controls will appear here.';
+  playSelected.disabled = true;
+}
+
+/* Load the game INSIDE DuckWeb */
+function playGame(url, name) {
+  if (!url) return;
+
+  // Only permit the trusted game URLs included in this page.
+  let parsedURL;
+
+  try {
+    parsedURL = new URL(url);
+  } catch {
+    return;
+  }
+
+  if (
+    parsedURL.protocol !== 'https:' ||
+    parsedURL.hostname !== 'pressonion.github.io'
+  ) {
+    return;
+  }
+
+  viewerTitle.textContent = name;
+  gameViewer.style.display = 'block';
+
+  if (gameFrame.src !== parsedURL.href) {
+    gameFrame.src = parsedURL.href;
+  }
+
+  gameViewer.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
+
+gameButtons.forEach(game => {
+  game.addEventListener('mouseenter', () => showInfo(game));
+  game.addEventListener('focus', () => showInfo(game));
+
+  game.addEventListener('click', () => {
+    showInfo(game);
+    playGame(game.dataset.url, game.dataset.name);
+  });
+});
+
+playSelected.addEventListener('click', () => {
+  if (selectedGame) {
+    playGame(selectedGame.dataset.url, selectedGame.dataset.name);
+  }
+});
+
+document.getElementById('closeGame').addEventListener('click', () => {
+  gameFrame.src = 'about:blank';
+  gameViewer.style.display = 'none';
+});
+
+document.getElementById('fullscreenGame').addEventListener('click', async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await gameFrame.requestFullscreen();
+    }
+  } catch {
+    // Fullscreen may not be supported in every browser.
+  }
+});
+
+/* GAME SEARCH */
+
+gameSearch.addEventListener('input', () => {
+  const query = gameSearch.value.trim().toLowerCase();
+  let count = 0;
+
+  gameButtons.forEach(game => {
+    const matches = game.dataset.name.toLowerCase().includes(query);
+    game.hidden = !matches;
+    if (matches) count++;
+  });
+
+  visibleCount.textContent = count;
+  noResults.style.display = count === 0 ? 'block' : 'none';
+
+  if (selectedGame && selectedGame.hidden) {
+    hideInfo();
+  }
+});
+
+/* DUCK COINS
+   One coin per full minute.
+   This browser-only version saves coins using localStorage.
+*/
+
+const COIN_INTERVAL = 60 * 1000;
+const COINS_KEY = 'duckweb_coins';
+const TIME_KEY = 'duckweb_last_coin_time';
+
+function readNumber(key, fallback) {
+  const raw = localStorage.getItem(key);
+  if (raw === null) return fallback;
+
+  const value = Number(raw);
+  return Number.isFinite(value) && value >= 0 ? value : fallback;
+}
+
+let coins = Math.floor(readNumber(COINS_KEY, 0));
+let lastCoinTime = readNumber(TIME_KEY, Date.now());
+
+function updateCoinDisplay() {
+  document.getElementById('headerCoins').textContent = coins;
+  document.getElementById('shopCoins').textContent = coins;
+}
+
+function saveCoins() {
+  localStorage.setItem(COINS_KEY, String(coins));
+  localStorage.setItem(TIME_KEY, String(lastCoinTime));
+}
+
+function awardElapsedCoins() {
+  const now = Date.now();
+  const elapsed = Math.max(0, now - lastCoinTime);
+  const earned = Math.floor(elapsed / COIN_INTERVAL);
+
+  if (earned > 0) {
+    coins += earned;
+    lastCoinTime += earned * COIN_INTERVAL;
+
+    saveCoins();
+    updateCoinDisplay();
+  }
+}
+
+updateCoinDisplay();
+awardElapsedCoins();
+setInterval(awardElapsedCoins, 1000);
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) awardElapsedCoins();
+});
+
+window.addEventListener('pageshow', awardElapsedCoins);
+
+/* INITIAL PAGE */
+loadPageFromHash();
+</script>
+
 </body>
 </html>
