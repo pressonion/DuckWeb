@@ -1,7 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DuckWeb</title>
@@ -368,7 +365,7 @@ footer {
 </style>
 </head>
 
-<body data-theme="classic">
+<body data-theme="classic" style="--yellow: #ffd83d; --yellow-light: #fff0a6; --background: #fffdf4; --surface: #ffffff; --text: #302b18; --muted: #77715e; --border: #eee4b9;">
 
 <header>
   <div class="header-inner">
@@ -378,8 +375,8 @@ footer {
     </div>
 
     <nav>
-      <button class="active" data-page="home" onclick="showPage('home')">Home</button>
-      <button data-page="games" onclick="showPage('games')">Games</button>
+      <button class="" data-page="home" onclick="showPage('home')">Home</button>
+      <button data-page="games" onclick="showPage('games')" class="active">Games</button>
       <button data-page="shop" onclick="showPage('shop')">Shop</button>
     </nav>
 
@@ -392,7 +389,7 @@ footer {
 <main>
 
   <!-- HOME PAGE -->
-  <section id="home" class="page active">
+  <section id="home" class="page">
     <div class="hero">
       <div>
         <h1>Welcome to DuckWeb</h1>
@@ -428,30 +425,79 @@ footer {
     </div>
 
     <h2>Featured Games</h2>
-    <div id="featuredGames" class="grid"></div>
+    <div id="featuredGames" class="grid"><article class="card game-card" tabindex="0" role="button" aria-label="Open Goose Hunt"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle>
+    </svg></div><div><div class="game-name">Goose Hunt</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Duck Rogue"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 15c0-4 3-7 7-7h3l3 3c3 0 4 2 4 4s-2 4-5 4H9c-3 0-5-1-5-4Z"></path><circle cx="14" cy="10" r="1"></circle><path d="m20 13 3 1-3 1"></path>
+    </svg></div><div><div class="game-name">Duck Rogue</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Duck RNG"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"></path>
+    </svg></div><div><div class="game-name">Duck RNG</div><div class="small-text">Play on DuckWeb</div></div></article></div>
   </section>
 
   <!-- GAMES PAGE -->
-  <section id="games" class="page">
+  <section id="games" class="page active">
     <h1>Games</h1>
     <p class="notice">Choose a game to open it inside DuckWeb.</p>
-    <div id="gamesGrid" class="grid"></div>
+    <div id="gamesGrid" class="grid"><article class="card game-card" tabindex="0" role="button" aria-label="Open Duck Rogue"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 15c0-4 3-7 7-7h3l3 3c3 0 4 2 4 4s-2 4-5 4H9c-3 0-5-1-5-4Z"></path><circle cx="14" cy="10" r="1"></circle><path d="m20 13 3 1-3 1"></path>
+    </svg></div><div><div class="game-name">Duck Rogue</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Doodle Action"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m4 20 4-1 11-11-3-3L5 16l-1 4Z"></path><path d="m14 6 3 3"></path>
+    </svg></div><div><div class="game-name">Doodle Action</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Getting Over"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m3 19 7-13 4 7 2-3 5 9H3Z"></path>
+    </svg></div><div><div class="game-name">Getting Over</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Duck RNG"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"></path>
+    </svg></div><div><div class="game-name">Duck RNG</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Poker"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="5" y="3" width="12" height="16" rx="2"></rect><path d="M9 7h.01M13 11h.01"></path><path d="M9 21h10a2 2 0 0 0 2-2V7"></path>
+    </svg></div><div><div class="game-name">Poker</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Car Game"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m5 11 2-5h10l2 5"></path><path d="M3 11h18v7H3z"></path><path d="M6 18v2m12-2v2"></path>
+    </svg></div><div><div class="game-name">Car Game</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Defender's Realm"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path>
+    </svg></div><div><div class="game-name">Defender's Realm</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open StonksBuy"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 19V5m0 14h17"></path><path d="m7 15 4-5 3 2 5-7"></path>
+    </svg></div><div><div class="game-name">StonksBuy</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Keyboard"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h.01M10 10h.01M13 10h.01M16 10h.01M9 16h6"></path>
+    </svg></div><div><div class="game-name">Keyboard</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open CyberLoot"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="M3 8v9l9 5 9-5V8M12 13v9"></path>
+    </svg></div><div><div class="game-name">CyberLoot</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Goose Hunt"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle>
+    </svg></div><div><div class="game-name">Goose Hunt</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open pol.io"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18"></path>
+    </svg></div><div><div class="game-name">pol.io</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Locker Fairy"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+    </svg></div><div><div class="game-name">Locker Fairy</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open Mini Golf"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21V3l7 4-7 4"></path><path d="M4 21h16"></path>
+    </svg></div><div><div class="game-name">Mini Golf</div><div class="small-text">Play on DuckWeb</div></div></article><article class="card game-card" tabindex="0" role="button" aria-label="Open ValoAim"><div class="game-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="7"></circle><path d="M12 2v4m0 12v4M2 12h4m12 0h4"></path>
+    </svg></div><div><div class="game-name">ValoAim</div><div class="small-text">Play on DuckWeb</div></div></article></div>
 
-    <div id="gameViewer" class="card">
+    <div id="gameViewer" class="card" style="display: block;">
       <div class="game-viewer-top">
-        <h2 id="gameTitle" style="margin:0">Game</h2>
+        <h2 id="gameTitle" style="margin:0">Locker Fairy</h2>
         <div class="game-buttons">
           <button class="action" onclick="fullscreenGame()">⛶ Full Screen</button>
           <button class="action secondary" onclick="closeGame()">Close Game</button>
         </div>
       </div>
 
-      <iframe
-        id="gameFrame"
-        title="DuckWeb game player"
-        allow="fullscreen; autoplay; gamepad"
-        allowfullscreen
-        referrerpolicy="strict-origin-when-cross-origin">
+      <iframe id="gameFrame" title="DuckWeb game player" allow="fullscreen; autoplay; gamepad" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin" src="https://pressonion.github.io/Locker-Fairy/">
       </iframe>
 
       <p class="notice">
@@ -474,11 +520,9 @@ footer {
         <div>
           <h3>Daily Duck Coins</h3>
           <div class="reward-amount">+5 Duck Coins</div>
-          <p id="dailyStatus" class="notice">Check your daily reward status.</p>
+          <p id="dailyStatus" class="notice">Your daily reward is ready. Claim 5 Duck Coins today.</p>
         </div>
-        <button id="claimDailyButton" class="action" onclick="claimDailyReward()">
-          Claim 5 Coins
-        </button>
+        <button id="claimDailyButton" class="action" onclick="claimDailyReward()">Claim 5 Coins</button>
       </div>
       <div id="dailyMessage" class="status" aria-live="polite"></div>
     </section>
@@ -496,9 +540,7 @@ footer {
             You won't know which one you get until after your purchase!
           </p>
           <strong>30 Duck Coins</strong>
-          <button id="buyMysteryButton" class="action" onclick="buyMysteryTheme()">
-            Open Mystery Theme
-          </button>
+          <button id="buyMysteryButton" class="action" onclick="buyMysteryTheme()" disabled="">Need 30 Coins</button>
           <div class="small-text">12 possible surprise themes</div>
         </article>
       </div>
@@ -508,7 +550,7 @@ footer {
     <section id="inventorySection">
       <h2>Inventory</h2>
       <p class="notice">Equip any theme you have unlocked.</p>
-      <div id="inventoryGrid" class="shop-grid"></div>
+      <div id="inventoryGrid" class="shop-grid"><article class="card inventory-item"><div class="theme-preview" style="background: linear-gradient(135deg, rgb(255, 240, 166), rgb(255, 216, 61)); color: rgb(48, 43, 24);">Classic</div><h3>Classic Theme</h3><p class="notice">The original DuckWeb colors.</p><button class="action" disabled="">Currently Equipped</button></article></div>
       <div id="inventoryMessage" class="status" aria-live="polite"></div>
     </section>
   </section>
@@ -618,7 +660,7 @@ function readNumber(key, fallback = 0) {
 
 function readOwnedThemes() {
   try {
-    const saved = JSON.parse(localStorage.getItem("duckwebOwnedThemes"));
+    const saved = JSON.parse(localStorage.getItem("dw_9f4c2a71_uniqueSave_v1_ownedThemes"));
 
     if (Array.isArray(saved)) {
       return [...new Set([
@@ -631,18 +673,18 @@ function readOwnedThemes() {
   return ["classic"];
 }
 
-let coins = readNumber("duckwebCoins", 0);
+let coins = readNumber("dw_9f4c2a71_uniqueSave_v1_coins", 0);
 let ownedThemes = readOwnedThemes();
-let equippedTheme = localStorage.getItem("duckwebEquippedTheme") || "classic";
+let equippedTheme = localStorage.getItem("dw_9f4c2a71_uniqueSave_v1_equippedTheme") || "classic";
 
 if (!themeCatalog[equippedTheme] || !ownedThemes.includes(equippedTheme)) {
   equippedTheme = "classic";
 }
 
 function saveData() {
-  localStorage.setItem("duckwebCoins", String(coins));
-  localStorage.setItem("duckwebOwnedThemes", JSON.stringify(ownedThemes));
-  localStorage.setItem("duckwebEquippedTheme", equippedTheme);
+  localStorage.setItem("dw_9f4c2a71_uniqueSave_v1_coins", String(coins));
+  localStorage.setItem("dw_9f4c2a71_uniqueSave_v1_ownedThemes", JSON.stringify(ownedThemes));
+  localStorage.setItem("dw_9f4c2a71_uniqueSave_v1_equippedTheme", equippedTheme);
 }
 
 function updateCoins() {
@@ -796,7 +838,7 @@ function today() {
 }
 
 function claimDailyReward() {
-  const lastClaim = localStorage.getItem("duckwebLastDailyClaim");
+  const lastClaim = localStorage.getItem("dw_9f4c2a71_uniqueSave_v1_lastDailyClaim");
   const status = document.getElementById("dailyMessage");
 
   if (lastClaim === today()) {
@@ -806,7 +848,7 @@ function claimDailyReward() {
   }
 
   coins += 5;
-  localStorage.setItem("duckwebLastDailyClaim", today());
+  localStorage.setItem("dw_9f4c2a71_uniqueSave_v1_lastDailyClaim", today());
 
   saveData();
   updateCoins();
@@ -816,7 +858,7 @@ function claimDailyReward() {
 }
 
 function updateDailyUI() {
-  const claimed = localStorage.getItem("duckwebLastDailyClaim") === today();
+  const claimed = localStorage.getItem("dw_9f4c2a71_uniqueSave_v1_lastDailyClaim") === today();
   const button = document.getElementById("claimDailyButton");
   const status = document.getElementById("dailyStatus");
 
@@ -974,5 +1016,5 @@ function initialize() {
 initialize();
 </script>
 
-</body>
-</html>
+
+</body></html>
